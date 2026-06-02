@@ -148,3 +148,30 @@ O(n²)
 
 ### Space Complexity
 O(1)
+
+# Pattern 6 - Inverted Number Pattern
+
+## Description
+This program prints an inverted number pattern. The first row prints numbers from 1 to 5, and each subsequent row prints one less number than the previous row.
+
+## Output
+
+```text
+12345
+1234
+123
+12
+1
+```
+
+## How It Works
+
+- The outer loop controls the rows.
+- The inner loop prints numbers from 1 to the current row value.
+- The number of digits printed decreases by one in each row.
+- This creates an inverted number pattern.
+
+## Complexity
+
+- Time Complexity: O(n²)
+- Space Complexity: O(1)
