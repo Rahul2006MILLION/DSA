@@ -385,4 +385,87 @@ O(1)
 
 This pattern is commonly referred to as the **Diamond Star Pattern** in DSA pattern-printing problems.
 
+# Pattern 10 - Half Diamond Star Pattern
+
+## Problem Statement
+Print a half diamond pattern using stars (`*`).
+
+### Output for n = 4
+
+```
+*
+**
+***
+****
+***
+**
+*
+```
+
+## Approach
+
+The pattern is divided into two parts:
+
+### Upper Half
+- The number of stars increases by one in each row.
+- Row number and star count are the same.
+
+### Lower Half
+- The number of stars decreases by one in each row.
+- Starts from `n - 1` stars and ends with `1` star.
+
+Combining both halves creates a half diamond shape.
+
+## Dry Run
+
+### Upper Half
+
+| Row | Stars |
+|------|--------|
+| 1 | 1 |
+| 2 | 2 |
+| 3 | 3 |
+| 4 | 4 |
+
+### Lower Half
+
+| Row | Stars |
+|------|--------|
+| 1 | 3 |
+| 2 | 2 |
+| 3 | 1 |
+
+## Pattern Structure
+
+```
+*
+**
+***
+****
+***
+**
+*
+```
+
+## Time Complexity
+
+```
+O(n²)
+```
+
+## Space Complexity
+
+```
+O(1)
+```
+
+## Concepts Used
+
+- Nested Loops
+- Pattern Printing
+- Incremental Star Patterns
+- Decremental Star Patterns
+- Symmetry in Patterns
+
+This pattern is commonly referred to as the **Half Diamond Star Pattern** in DSA pattern-printing problems.
 
