@@ -290,3 +290,99 @@ O(1)
 - Mathematical Formula (`2*i - 1`)
 
 This pattern is commonly referred to as the **Inverted Pyramid Pattern** in DSA pattern-printing problems.
+
+# Pattern 9 - Diamond Star Pattern
+
+## Problem Statement
+Print a diamond pattern using stars (`*`).
+
+### Output for n = 4
+
+```
+   *
+  ***
+ *****
+*******
+*******
+ *****
+  ***
+   *
+```
+
+## Approach
+
+The pattern is created in two parts:
+
+### Upper Half (Pyramid)
+- Spaces decrease with each row.
+- Stars increase with each row.
+- Stars follow the formula:
+
+```
+Stars = 2 × Row Number - 1
+```
+
+### Lower Half (Inverted Pyramid)
+- Spaces increase with each row.
+- Stars decrease with each row.
+- The same formula is used in reverse order.
+
+Combining both halves forms a diamond-like shape.
+
+## Dry Run
+
+### Upper Half
+
+| Row | Spaces | Stars |
+|------|---------|---------|
+| 1 | 3 | 1 |
+| 2 | 2 | 3 |
+| 3 | 1 | 5 |
+| 4 | 0 | 7 |
+
+### Lower Half
+
+| Row | Spaces | Stars |
+|------|---------|---------|
+| 4 | 0 | 7 |
+| 3 | 1 | 5 |
+| 2 | 2 | 3 |
+| 1 | 3 | 1 |
+
+## Pattern Structure
+
+```
+   *        ← Increasing
+  ***
+ *****
+*******
+*******
+ *****
+  ***
+   *        ← Decreasing
+```
+
+## Time Complexity
+
+```
+O(n²)
+```
+
+## Space Complexity
+
+```
+O(1)
+```
+
+## Concepts Used
+
+- Nested Loops
+- Pattern Printing
+- Pyramid Pattern
+- Inverted Pyramid Pattern
+- Symmetry in Patterns
+- Mathematical Formula (`2*i - 1`)
+
+This pattern is commonly referred to as the **Diamond Star Pattern** in DSA pattern-printing problems.
+
+
