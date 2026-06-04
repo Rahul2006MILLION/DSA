@@ -189,6 +189,7 @@ Print a centered pyramid pattern using stars (`*`).
 *******
 ```
 Space:- n-i
+
 Star:- 2*i-1
 
 ## Approach
@@ -231,3 +232,61 @@ O(1)
 - Mathematical Formula (`2*i - 1`)
 
 This pattern is commonly referred to as the **Pyramid Pattern** in DSA pattern-printing problems.
+
+# Pattern 8 - Inverted Pyramid Star Pattern
+
+## Problem Statement
+Print an inverted centered pyramid pattern using stars (`*`).
+
+### Output for n = 4
+```
+*******
+ *****
+  ***
+   *
+```
+Space:- n-i
+
+Star:- 2*i-1
+
+## Approach
+
+- The outer loop starts from `n` and decreases to `1`.
+- The first inner loop prints increasing spaces on each row.
+- The second inner loop prints decreasing odd numbers of stars.
+- The number of stars in each row follows the formula:
+
+```
+Stars = 2 × Row Number - 1
+```
+
+## Dry Run
+
+| Row | Spaces | Stars |
+|------|---------|---------|
+| 4 | 0 | 7 |
+| 3 | 1 | 5 |
+| 2 | 2 | 3 |
+| 1 | 3 | 1 |
+
+## Time Complexity
+
+```
+O(n²)
+```
+
+## Space Complexity
+
+```
+O(1)
+```
+
+## Concepts Used
+
+- Nested Loops
+- Pattern Printing
+- Reverse Iteration
+- Space and Star Manipulation
+- Mathematical Formula (`2*i - 1`)
+
+This pattern is commonly referred to as the **Inverted Pyramid Pattern** in DSA pattern-printing problems.
