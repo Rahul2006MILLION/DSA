@@ -175,3 +175,59 @@ This program prints an inverted number pattern. The first row prints numbers fro
 
 - Time Complexity: O(n²)
 - Space Complexity: O(1)
+
+# Pattern 7 - Pyramid Star Pattern
+
+## Problem Statement
+Print a centered pyramid pattern using stars (`*`).
+
+### Output for n = 4
+```
+   *
+  ***
+ *****
+*******
+```
+Space:- n-i
+Star:- 2*i-1
+
+## Approach
+
+- The outer loop controls the number of rows.
+- The first inner loop prints spaces to center the pyramid.
+- The second inner loop prints stars.
+- The number of stars in each row follows the formula:
+
+```
+Stars = 2 × Row Number - 1
+```
+
+## Dry Run
+
+| Row | Spaces | Stars |
+|------|---------|---------|
+| 1 | 3 | 1 |
+| 2 | 2 | 3 |
+| 3 | 1 | 5 |
+| 4 | 0 | 7 |
+
+## Time Complexity
+
+```
+O(n²)
+```
+
+## Space Complexity
+
+```
+O(1)
+```
+
+## Concepts Used
+
+- Nested Loops
+- Pattern Printing
+- Space and Star Manipulation
+- Mathematical Formula (`2*i - 1`)
+
+This pattern is commonly referred to as the **Pyramid Pattern** in DSA pattern-printing problems.
