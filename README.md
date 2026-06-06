@@ -469,3 +469,39 @@ O(1)
 
 This pattern is commonly referred to as the **Half Diamond Star Pattern** in DSA pattern-printing problems.
 
+
+# Palindrome Number Checker (Java)
+
+## Description
+This Java program checks whether a given integer is a palindrome.
+
+A palindrome number remains the same when its digits are reversed.
+
+### Examples
+- 121 → Palindrome ✅
+- 1331 → Palindrome ✅
+- 123 → Not Palindrome ❌
+
+---
+
+## How It Works
+
+1. Store the original number.
+2. Reverse the digits using a `while` loop.
+3. Compare the reversed number with the original number.
+4. If both are equal, print `true`; otherwise print `false`.
+
+---
+
+## Code Logic
+
+```java
+while(n > 0){
+    int r = n % 10;      // Extract last digit
+    n = n / 10;          // Remove last digit
+    reverse = (reverse * 10) + r; // Build reversed number
+}
+```
+
+
+
