@@ -503,5 +503,42 @@ while(n > 0){
 }
 ```
 
+# Plus One (Java)
 
+## Description
+
+This Java program adds **1** to a number represented as an array of digits.
+
+Each element in the array represents a single digit of the number.
+
+### Examples
+
+- `[1, 2, 3]` → `[1, 2, 4]`
+- `[4, 3, 2, 1]` → `[4, 3, 2, 2]`
+- `[9, 9, 9]` → `[1, 0, 0, 0]`
+
+---
+
+## Approach
+
+The program starts from the last digit and moves backward:
+
+1. If the current digit is less than `9`, increment it by `1` and return the array.
+2. If the digit is `9`, change it to `0` and continue to the previous digit.
+3. If all digits are `9`, create a new array with one extra digit.
+4. Set the first element to `1` and return the new array.
+
+---
+
+## Code Logic
+
+```java
+for(int i = n - 1; i >= 0; i--) {
+    if(d[i] < 9) {
+        d[i] += 1;
+        return d;
+    }
+    d[i] = 0;
+}
+```
 
