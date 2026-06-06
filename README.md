@@ -542,3 +542,68 @@ for(int i = n - 1; i >= 0; i--) {
 }
 ```
 
+# Roman to Integer (Java)
+
+## Description
+
+This Java program converts a Roman numeral into its corresponding integer value.
+
+Roman numerals use the following symbols:
+
+| Symbol | Value |
+|----------|-------|
+| I | 1 |
+| V | 5 |
+| X | 10 |
+| L | 50 |
+| C | 100 |
+| D | 500 |
+| M | 1000 |
+
+### Examples
+
+- `"III"` → `3`
+- `"LVIII"` → `58`
+- `"MCMXCIV"` → `1994`
+
+---
+
+## Approach
+
+The program traverses the Roman numeral from left to right.
+
+### Rules
+
+1. If the current symbol has a value **less than** the next symbol, subtract it.
+2. Otherwise, add it.
+3. After the loop, add the value of the last symbol.
+
+This handles special Roman numeral cases such as:
+
+| Roman | Calculation | Value |
+|---------|------------|---------|
+| IV | 5 - 1 | 4 |
+| IX | 10 - 1 | 9 |
+| XL | 50 - 10 | 40 |
+| XC | 100 - 10 | 90 |
+| CD | 500 - 100 | 400 |
+| CM | 1000 - 100 | 900 |
+
+---
+
+## Code Logic
+
+```java
+for(int i = 0; i < n - 1; i++) {
+
+    int cur = d.get(s.charAt(i));
+    int nxt = d.get(s.charAt(i + 1));
+
+    if(cur < nxt) {
+        ans -= cur;
+    } else {
+        ans += cur;
+    }
+}
+
+```
