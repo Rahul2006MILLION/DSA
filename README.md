@@ -608,6 +608,8 @@ for(int i = 0; i < n - 1; i++) {
 
 ```
 
+
+
 # Square Root Using Binary Search
 
 ## Overview
