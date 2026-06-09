@@ -607,3 +607,79 @@ for(int i = 0; i < n - 1; i++) {
 }
 
 ```
+
+# Square Root Using Binary Search
+
+## Overview
+This program finds the **integer square root** of a given number using the **Binary Search** algorithm.
+
+The integer square root of a number is the largest integer whose square is less than or equal to the given number.
+
+### Example
+- Input: `8`
+- Output: `2`
+
+Because:
+- 2 × 2 = 4
+- 3 × 3 = 9
+
+Since 9 is greater than 8, the integer square root of 8 is 2.
+
+---
+
+## Algorithm Used
+The solution applies **Binary Search** on the range from `1` to the given number.
+
+### Steps
+1. Initialize the search range.
+2. Find the middle value of the current range.
+3. Calculate the square of the middle value.
+4. If the square is less than or equal to the target number:
+   - Store the middle value as a potential answer.
+   - Search in the right half for a larger valid square root.
+5. Otherwise:
+   - Search in the left half.
+6. Continue until the search range becomes invalid.
+7. Return the last valid value found.
+
+---
+
+## Time Complexity
+- **O(log n)**
+
+The search space is reduced by half in every iteration, making the solution very efficient for large inputs.
+
+---
+
+## Space Complexity
+- **O(1)**
+
+Only a few variables are used regardless of the input size.
+
+---
+
+## Concepts Practiced
+- Binary Search
+- Integer Square Root
+- Efficient Searching
+- Time Complexity Optimization
+
+---
+
+## Use Cases
+- Mathematical computations
+- Competitive programming
+- Technical interviews
+- Problems involving square roots without using built-in functions
+
+---
+
+## Output
+
+For the provided input:
+
+`8`
+
+The program prints:
+
+`2`
