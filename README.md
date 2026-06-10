@@ -815,3 +815,186 @@ Binary       → base 2
 Decimal      → base 10
 Excel Column → base 26
 ```
+
+
+# Binary to Decimal Conversion
+
+## Pattern Recognition
+
+This problem follows the same pattern as the **Excel Sheet Column Number** problem.
+
+### Excel Sheet Column Number
+
+```text
+A = 1
+B = 2
+...
+Z = 26
+
+AB = 1 × 26 + 2 = 28
+XY = 24 × 26 + 25 = 649
+```
+
+The number is built using:
+
+```text
+result = result × 26 + currentLetterValue
+```
+
+### Binary to Decimal Conversion
+
+```text
+1011
+
+1 × 2³ + 0 × 2² + 1 × 2¹ + 1 × 2⁰
+= 8 + 0 + 2 + 1
+= 11
+```
+
+The number is built using:
+
+```text
+result = result × 2 + currentDigit
+```
+
+### Key Observation
+
+Whenever a string represents digits in a positional number system, use:
+
+```text
+result = result × base + currentDigit
+```
+
+Examples:
+
+| Number System | Base |
+|--------------|------|
+| Binary | 2 |
+| Decimal | 10 |
+| Excel Columns | 26 |
+
+---
+
+## Problem
+
+Convert a binary number represented as a string into its decimal equivalent.
+
+### Example
+
+Input:
+
+```text
+1011
+```
+
+Output:
+
+```text
+11
+```
+
+---
+
+## Approach
+
+Traverse the binary string from left to right.
+
+For each digit:
+
+1. Convert the character into its numeric value.
+2. Multiply the current result by 2.
+3. Add the current digit.
+
+This continuously shifts the existing value one binary position to the left and inserts the new digit.
+
+---
+
+## Dry Run
+
+Input:
+
+```text
+1011
+```
+
+### Step 1
+
+```text
+result = 0
+
+Digit = 1
+
+result = 0 × 2 + 1
+       = 1
+```
+
+### Step 2
+
+```text
+Digit = 0
+
+result = 1 × 2 + 0
+       = 2
+```
+
+### Step 3
+
+```text
+Digit = 1
+
+result = 2 × 2 + 1
+       = 5
+```
+
+### Step 4
+
+```text
+Digit = 1
+
+result = 5 × 2 + 1
+       = 11
+```
+
+Final Answer:
+
+```text
+11
+```
+
+---
+
+## Complexity Analysis
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+where `n` is the length of the binary string.
+
+### Space Complexity
+
+```text
+O(1)
+```
+
+No extra data structure is used.
+
+---
+
+## Key Takeaway
+
+If a problem involves converting a sequence of symbols into a number and each symbol has a positional value, think:
+
+```text
+result = result × base + currentValue
+```
+
+This pattern appears frequently in:
+
+- Binary to Decimal Conversion
+- Decimal String to Integer Conversion
+- Excel Sheet Column Number
+- Base-N Number System Conversions
+- Custom Encoding Problems
