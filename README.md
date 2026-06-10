@@ -685,3 +685,133 @@ For the provided input:
 The program prints:
 
 `2`
+
+
+
+# Excel Sheet Column Number
+
+## Problem
+
+Given an Excel column title, return its corresponding column number.
+
+### Examples
+
+| Column Title | Column Number |
+|-------------|--------------|
+| A | 1 |
+| Z | 26 |
+| AA | 27 |
+| AB | 28 |
+| XY | 649 |
+| ZY | 701 |
+
+---
+
+## Approach
+
+Excel columns follow a **Base-26 Number System**:
+
+```text
+A = 1
+B = 2
+...
+Z = 26
+```
+
+For example:
+
+```text
+XY
+
+X = 24
+Y = 25
+
+XY = 24 × 26¹ + 25 × 26⁰
+   = 624 + 25
+   = 649
+```
+
+Instead of explicitly calculating powers of 26, we can build the answer incrementally.
+
+### Formula
+
+```java
+result = result * 26 + currentLetterValue;
+```
+
+This is the same pattern used in:
+
+- Binary to Decimal Conversion
+- Decimal String to Integer Conversion
+- Any Positional Number System Conversion
+
+---
+
+## Dry Run
+
+Input:
+
+```java
+String a = "XY";
+```
+
+### Iteration 1
+
+```text
+X → 24
+
+result = 0 * 26 + 24
+       = 24
+```
+
+### Iteration 2
+
+```text
+Y → 25
+
+result = 24 * 26 + 25
+       = 649
+```
+
+Output:
+
+```text
+649
+```
+---
+
+## Complexity Analysis
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+where `n` is the length of the column title.
+
+### Space Complexity
+
+```text
+O(1)
+```
+
+No extra data structure is used.
+
+---
+
+## Key Observation
+
+Whenever characters represent digits in a positional number system, use:
+
+```java
+answer = answer * base + currentDigit;
+```
+
+Examples:
+
+```text
+Binary       → base 2
+Decimal      → base 10
+Excel Column → base 26
+```
