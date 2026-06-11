@@ -998,3 +998,50 @@ This pattern appears frequently in:
 - Excel Sheet Column Number
 - Base-N Number System Conversions
 - Custom Encoding Problems
+
+
+# Excel Sheet Column Title
+
+## Approach
+
+The idea is to repeatedly convert the given column number into characters from `A` to `Z`.
+
+Unlike a normal base-26 system, Excel columns are **1-based**:
+
+- A → 1
+- B → 2
+- ...
+- Z → 26
+- AA → 27
+- AB → 28
+
+Because there is no digit `0`, we subtract `1` before taking the remainder.
+
+### Steps
+
+1. Subtract `1` from the current number.
+2. Find the remainder when divided by `26`.
+3. Convert the remainder to a character (`A` to `Z`).
+4. Store the character in a list.
+5. Divide the number by `26`.
+6. Repeat until the number becomes `0`.
+7. Reverse the collected characters.
+8. Build the final string using `StringBuilder`.
+
+---
+
+## Python Logic
+
+```python
+def convertToTitle(self, columnNumber: int) -> str:
+    l = []
+
+    while columnNumber > 0:
+        columnNumber -= 1
+        r = columnNumber % 26
+        d = chr(65 + r)
+        l.append(d)
+        columnNumber //= 26
+
+    l.reverse()
+    return "".join(l)
