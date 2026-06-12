@@ -1220,4 +1220,235 @@ O(n)
 The output list stores `n` strings.
 
 
+# Power of Two
+
+## Problem Statement
+
+Given an integer `n`, return `True` if `n` is a power of two, otherwise return `False`.
+
+A number is a power of two if it can be written as:
+
+```text
+2^0 = 1
+2^1 = 2
+2^2 = 4
+2^3 = 8
+2^4 = 16
+...
+```
+
+---
+
+## Initial Approach (Binary Search)
+
+One possible approach is to use Binary Search on the exponent.
+
+We try to find a value `mid` such that:
+
+```text
+2^mid = n
+```
+
+### Python Code
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        ans = 0
+        low = 0
+        high = n
+
+        while(low <= high):
+            mid = (low + high) // 2
+
+            if(2 ** mid == n):
+                return True
+
+            elif(2 ** mid < n):
+                low = mid + 1
+
+            else:
+                high = mid - 1
+
+        return 2 ** mid == n
+```
+
+### Why this is not the preferred approach?
+
+Although Binary Search works, it repeatedly calculates:
+
+```python
+2 ** mid
+```
+
+for different values of `mid`.
+
+For very large inputs, this becomes less efficient than simply dividing the number by `2`.
+
+Because of this, the division approach is usually preferred and is accepted more comfortably on coding platforms.
+
+---
+
+## Optimal Approach
+
+A power of two can be repeatedly divided by `2` until it becomes `1`.
+
+Example:
+
+```text
+16 → 8 → 4 → 2 → 1
+```
+
+If at any point we get an odd number greater than `1`, then it cannot be a power of two.
+
+Example:
+
+```text
+6 → 3
+```
+
+Since `3` is odd and greater than `1`, the answer is `False`.
+
+---
+
+## Step-by-Step Algorithm
+
+### Step 1
+
+Check if the number is positive.
+
+```python
+if n <= 0:
+    return False
+```
+
+Power of two numbers are always positive.
+
+---
+
+### Step 2
+
+Keep dividing by `2` while the number is greater than `1`.
+
+```python
+while n > 1:
+```
+
+---
+
+### Step 3
+
+Check whether the number is divisible by `2`.
+
+```python
+if n % 2 != 0:
+    return False
+```
+
+If the remainder is not `0`, the number is odd and cannot be a power of two.
+
+---
+
+### Step 4
+
+Divide the number by `2`.
+
+```python
+n = n // 2
+```
+
+---
+
+### Step 5
+
+If the loop ends and `n` becomes `1`, return `True`.
+
+```python
+return True
+```
+
+---
+
+## Dry Run
+
+### Example 1
+
+```text
+n = 16
+```
+
+```text
+16 → 8 → 4 → 2 → 1
+```
+
+Return:
+
+```text
+True
+```
+
+---
+
+### Example 2
+
+```text
+n = 6
+```
+
+```text
+6 → 3
+```
+
+Since `3` is odd:
+
+```text
+False
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def isPowerOfTwo(self, n: int) -> bool:
+        if(n <= 0):
+            return False
+
+        while(n > 1):
+            if(n % 2 != 0):
+                return False
+
+            n = n // 2
+
+        return True
+```
+
+---
+
+## Time Complexity
+
+### Binary Search Approach
+
+```text
+O(log n)
+```
+
+### Division Approach
+
+```text
+O(log n)
+```
+
+Both are logarithmic, but the division approach is simpler and has less overhead.
+
+---
+
+## Space Complexity
+
+```text
+O(1)
+```
+
+Only a few variables are used.
 
