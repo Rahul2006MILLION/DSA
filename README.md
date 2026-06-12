@@ -1108,7 +1108,7 @@ class Solution:
         seen = set()
 
         while n != 1 and n not in seen:
-            l = []
+            l = [] #list is kept inside the while cause it should reset to empty after the break of inner while!
             seen.add(n)
 
             while n > 0:
