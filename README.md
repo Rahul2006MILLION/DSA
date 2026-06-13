@@ -1452,3 +1452,207 @@ O(1)
 
 Only a few variables are used.
 
+
+# Fibonacci Number
+
+## Problem Statement
+
+The Fibonacci sequence is defined as:
+
+```text
+F(0) = 0
+F(1) = 1
+F(n) = F(n-1) + F(n-2), for n > 1
+```
+
+Given an integer `n`, return the `nᵗʰ` Fibonacci number.
+
+### Example 1
+
+Input:
+
+```text
+n = 2
+```
+
+Output:
+
+```text
+1
+```
+
+Explanation:
+
+```text
+F(2) = F(1) + F(0)
+     = 1 + 0
+     = 1
+```
+
+### Example 2
+
+Input:
+
+```text
+n = 4
+```
+
+Output:
+
+```text
+3
+```
+
+Explanation:
+
+```text
+0, 1, 1, 2, 3
+```
+
+The 4ᵗʰ Fibonacci number is `3`.
+
+---
+
+## Approach
+
+* Handle the base cases:
+
+  * `F(0) = 0`
+  * `F(1) = 1`
+* Store Fibonacci numbers in a list.
+* Start with `[0, 1]`.
+* For each position from `2` to `n`, append the sum of the previous two numbers.
+* Return the last element of the list.
+
+### Time Complexity
+
+```text
+O(n)
+```
+
+### Space Complexity
+
+```text
+O(n)
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def fib(self, n: int) -> int:
+        if n <= 0:
+            return 0
+        elif n == 1:
+            return 1
+
+        l = [0, 1]
+
+        for i in range(2, n + 1):
+            l.append(l[-1] + l[-2])
+
+        return l[-1]
+```
+
+
+# Nim Game
+
+## Problem Statement
+
+You are playing the Nim Game with the following rules:
+
+* There is a heap of `n` stones.
+* Two players take turns removing `1`, `2`, or `3` stones.
+* The player who removes the last stone wins.
+
+Given `n`, return `True` if you can win the game assuming both players play optimally, otherwise return `False`.
+
+---
+
+## Example 1
+
+Input:
+
+```text
+n = 4
+```
+
+Output:
+
+```text
+False
+```
+
+Explanation:
+
+No matter whether you remove 1, 2, or 3 stones, your opponent can take the remaining stones and win.
+
+---
+
+## Example 2
+
+Input:
+
+```text
+n = 5
+```
+
+Output:
+
+```text
+True
+```
+
+Explanation:
+
+Remove 1 stone first, leaving 4 stones for your opponent. Since 4 is a losing position, you can force a win.
+
+---
+
+## Approach
+
+Observe the pattern:
+
+```text
+1 → Win
+2 → Win
+3 → Win
+4 → Lose
+5 → Win
+6 → Win
+7 → Win
+8 → Lose
+```
+
+Every multiple of `4` is a losing position.
+
+* If `n % 4 == 0`, return `False`.
+* Otherwise, return `True`.
+
+### Time Complexity
+
+```text
+O(1)
+```
+
+### Space Complexity
+
+```text
+O(1)
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def canWinNim(self, n: int) -> bool:
+        if n % 4 == 0:
+            return False
+        return True
+```
+
+
