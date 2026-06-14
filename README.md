@@ -1656,3 +1656,125 @@ class Solution:
 ```
 
 
+# Decimal to Binary Conversion
+
+## Problem Statement
+
+Given a decimal (base-10) integer `n`, convert it into its binary (base-2) representation.
+
+Binary numbers use only two digits:
+
+```text
+0 and 1
+```
+
+---
+
+## Example 1
+
+Input:
+
+```text
+n = 17
+```
+
+Output:
+
+```text
+10001
+```
+
+Explanation:
+
+```text
+17 ÷ 2 = 8  remainder 1
+8  ÷ 2 = 4  remainder 0
+4  ÷ 2 = 2  remainder 0
+2  ÷ 2 = 1  remainder 0
+1  ÷ 2 = 0  remainder 1
+```
+
+Reading the remainders from bottom to top:
+
+```text
+10001
+```
+
+---
+
+## Example 2
+
+Input:
+
+```text
+n = 10
+```
+
+Output:
+
+```text
+1010
+```
+
+---
+
+## Approach
+
+* Repeatedly divide the number by `2`.
+* Store each remainder (`0` or `1`) in a list.
+* Continue until the number becomes `0`.
+* Since remainders are generated from least significant bit to most significant bit, reverse the list.
+* Print the digits in order.
+
+### Steps
+
+1. Find `n % 2` and store the remainder.
+2. Update `n = n / 2`.
+3. Repeat until `n` becomes `0`.
+4. Reverse the collected remainders.
+5. Print the binary representation.
+
+---
+
+## Time Complexity
+
+```text
+O(log n)
+```
+
+The number is divided by `2` in each iteration.
+
+---
+
+## Space Complexity
+
+```text
+O(log n)
+```
+
+A list is used to store the binary digits.
+
+---
+
+## Python Solution
+
+```python
+n = 17
+l = []
+
+while n > 0:
+    r = n % 2
+    l.append(r)
+    n = n // 2
+
+l.reverse()
+
+for i in l:
+    print(i, end="")
+```
+
+### Output
+
+```text
+10001
+```
