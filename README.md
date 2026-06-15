@@ -1778,3 +1778,79 @@ for i in l:
 ```text
 10001
 ```
+
+# Missing Number
+
+## Problem
+
+Given an array `nums` containing `n` distinct numbers in the range `[0, n]`, return the only number in the range that is missing from the array.
+
+### Example
+
+Input:
+
+nums = [0, 2, 3]
+
+Output:
+
+1
+
+## Approach
+
+The sum of numbers from `0` to `n` can be calculated using:
+
+n * (n + 1) / 2
+
+1. Find the expected sum from `0` to `n`.
+2. Find the actual sum of all elements in the array.
+3. Subtract the actual sum from the expected sum.
+4. The result is the missing number.
+
+## Python Code
+
+```python
+l = [0, 2, 3]
+
+n = len(l)
+
+expected = n * (n + 1) // 2
+
+actual = 0
+for i in range(n):
+    actual += l[i]
+
+res = expected - actual
+
+print(res)
+```
+
+## Dry Run
+
+```text
+l = [0, 2, 3]
+
+n = 3
+
+expected = 3 * (3 + 1) / 2
+         = 6
+
+actual = 0 + 2 + 3
+       = 5
+
+res = 6 - 5
+    = 1
+```
+
+Output:
+
+```text
+1
+```
+
+## Time Complexity
+
+O(n)
+
+## Space Complexity
+
+O(1)
