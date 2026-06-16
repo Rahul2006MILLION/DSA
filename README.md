@@ -1977,3 +1977,61 @@ Output:
 - `O(d)` for storing the digits.
 
 
+# Ugly Number
+
+## Python Solution
+
+```python
+class Solution:
+    def isUgly(self, n: int) -> bool:
+        if n <= 0:
+            return False
+
+        while n % 2 == 0:
+            n //= 2
+
+        while n % 3 == 0:
+            n //= 3
+
+        while n % 5 == 0:
+            n //= 5
+
+        return n == 1
+```
+
+## Explanation
+
+An **Ugly Number** is a positive number whose prime factors are limited to **2, 3, and 5**.
+
+Steps:
+1. If `n <= 0`, return `False`.
+2. Continuously divide `n` by `2` while it is divisible by `2`.
+3. Continuously divide `n` by `3` while it is divisible by `3`.
+4. Continuously divide `n` by `5` while it is divisible by `5`.
+5. If the remaining value is `1`, the number is ugly; otherwise, it is not.
+
+### Example
+
+Input:
+```python
+n = 14
+```
+
+Process:
+```python
+14 ÷ 2 = 7
+```
+
+Since `7` cannot be divided by `2`, `3`, or `5` and is not `1`:
+
+Output:
+```python
+False
+```
+
+### Time Complexity
+- `O(log n)`
+
+### Space Complexity
+- `O(1)`
+
