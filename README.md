@@ -1916,3 +1916,64 @@ The solution computes the product of all elements in the array and then determin
 ### Space Complexity
 - `O(1)` — Uses only a constant amount of extra space.
 
+
+# Harshad Number
+
+## Python Solution
+
+```python
+class Solution:
+    def sumOfTheDigitsOfHarshadNumber(self, x: int) -> int:
+        a = x
+        digits = []
+
+        while x > 0:
+            digits.append(x % 10)
+            x //= 10
+
+        digit_sum = sum(digits)
+
+        if a % digit_sum == 0:
+            return digit_sum
+        return -1
+```
+
+## Explanation
+
+A **Harshad Number** is a number that is divisible by the sum of its digits.
+
+Steps:
+1. Extract each digit of the number.
+2. Calculate the sum of the digits.
+3. Check if the original number is divisible by this sum.
+4. Return the digit sum if it is a Harshad number; otherwise, return `-1`.
+
+### Example
+
+Input:
+```python
+x = 18
+```
+
+Digits:
+```python
+1 + 8 = 9
+```
+
+Since:
+```python
+18 % 9 == 0
+```
+
+Output:
+```python
+9
+```
+
+### Time Complexity
+- `O(d)` where `d` is the number of digits in `x`.
+
+### Space Complexity
+- `O(d)` for storing the digits.
+
+
