@@ -1884,3 +1884,35 @@ In the Divisor Game, the first player wins if the starting number `n` is even.
 
 
 
+# Sign of the Product of an Array
+
+## Python Solution
+
+```python
+class Solution:
+    def arraySign(self, nums: List[int]) -> int:
+        mul = 1
+        for i in range(len(nums)):
+            mul *= nums[i]
+
+        if mul == 0:
+            return 0
+        elif mul > 0:
+            return 1
+        return -1
+```
+
+## Explanation
+
+The solution computes the product of all elements in the array and then determines its sign:
+
+- Return `0` if the product is `0`.
+- Return `1` if the product is positive.
+- Return `-1` if the product is negative.
+
+### Time Complexity
+- `O(n)` — Traverse the array once.
+
+### Space Complexity
+- `O(1)` — Uses only a constant amount of extra space.
+
