@@ -2035,3 +2035,45 @@ False
 ### Space Complexity
 - `O(1)`
 
+# Add Two Integers
+
+## Python Solution
+
+```python
+class Solution:
+    def sum(self, num1: int, num2: int) -> int:
+        return num1 + num2
+```
+
+## Explanation
+
+The task is to return the sum of two integers.
+
+Steps:
+1. Take two integers `num1` and `num2`.
+2. Add them together using the `+` operator.
+3. Return the result.
+
+### Example
+
+Input:
+```python
+num1 = -10
+num2 = 7
+```
+
+Calculation:
+```python
+-10 + 7 = -3
+```
+
+Output:
+```python
+-3
+```
+
+### Time Complexity
+- `O(1)`
+
+### Space Complexity
+- `O(1)`
