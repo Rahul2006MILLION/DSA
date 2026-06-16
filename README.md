@@ -1854,3 +1854,33 @@ O(n)
 ## Space Complexity
 
 O(1)
+
+
+# Divisor Game
+
+## Python Solution
+
+```python
+class Solution:
+    def divisorGame(self, n: int) -> bool:
+        if n % 2 == 0:
+            return True
+        return False
+```
+
+## Explanation
+
+In the Divisor Game, the first player wins if the starting number `n` is even.
+
+- If `n` is even, return `True`.
+- If `n` is odd, return `False`.
+
+### Time Complexity
+- `O(1)`
+
+### Space Complexity
+- `O(1)`
+
+
+
+
