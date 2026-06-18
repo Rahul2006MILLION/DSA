@@ -2077,3 +2077,105 @@ Output:
 
 ### Space Complexity
 - `O(1)`
+
+# Power of Three
+
+A simple program to check whether a given number is a power of 3.
+
+## Problem Statement
+
+Given an integer `n`, return `true` if it is a power of three. Otherwise, return `false`.
+
+A number is a power of three if there exists an integer `x` such that:
+
+```text
+n = 3^x
+```
+
+## Examples
+
+### Example 1
+
+```text
+Input: 27
+Output: true
+
+Explanation:
+27 = 3 × 3 × 3 = 3³
+```
+
+### Example 2
+
+```text
+Input: 18
+Output: false
+
+Explanation:
+18 cannot be expressed as 3 raised to an integer power.
+```
+
+### Example 3
+
+```text
+Input: 1
+Output: true
+
+Explanation:
+1 = 3⁰
+```
+
+---
+
+## Approach
+
+1. If `n` is less than or equal to `0`, return `false`.
+2. Continuously divide `n` by `3`.
+3. If at any step `n` is not divisible by `3`, return `false`.
+4. After repeated division:
+   - If `n` becomes `1`, it is a power of three.
+   - Otherwise, it is not.
+
+### Time Complexity
+
+```text
+O(log₃ n)
+```
+
+### Space Complexity
+
+```text
+O(1)
+```
+## Python Solution
+
+```python
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+
+        if n <= 0:
+            return False
+
+        while n > 1:
+
+            if n % 3 != 0:
+                return False
+
+            n = n // 3
+
+        return n == 1
+```
+
+---
+
+## Output
+
+```text
+Input: 18
+Output: false
+```
+
+---
+
+## Key Idea
+
+Keep dividing the number by `3`. If every division is exact and the final value becomes `1`, the number is a power of three; otherwise, it is not.
