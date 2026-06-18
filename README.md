@@ -2179,3 +2179,105 @@ Output: false
 ## Key Idea
 
 Keep dividing the number by `3`. If every division is exact and the final value becomes `1`, the number is a power of three; otherwise, it is not.
+
+# Power of Four
+
+A simple program to check whether a given number is a power of 4.
+
+## Problem Statement
+
+Given an integer `n`, return `true` if it is a power of four. Otherwise, return `false`.
+
+A number is a power of four if there exists an integer `x` such that:
+
+```text
+n = 4^x
+```
+
+## Examples
+
+### Example 1
+
+```text
+Input: 16
+Output: true
+
+Explanation:
+16 = 4 × 4 = 4²
+```
+
+### Example 2
+
+```text
+Input: 256
+Output: true
+
+Explanation:
+256 = 4 × 4 × 4 × 4 = 4⁴
+```
+
+### Example 3
+
+```text
+Input: 12
+Output: false
+
+Explanation:
+12 cannot be expressed as 4 raised to an integer power.
+```
+
+### Example 4
+
+```text
+Input: 1
+Output: true
+
+Explanation:
+1 = 4⁰
+```
+
+---
+
+## Approach
+
+1. If `n` is less than or equal to `0`, return `False`.
+2. Repeatedly divide `n` by `4`.
+3. If at any step `n` is not divisible by `4`, return `False`.
+4. If the final value becomes `1`, return `True`.
+
+### Time Complexity
+
+```text
+O(log₄ n)
+```
+
+### Space Complexity
+
+```text
+O(1)
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def isPowerOfFour(self, n: int) -> bool:
+        if(n <= 0):
+            return False
+
+        while(n > 1):
+            if(n % 4 != 0):
+                return False
+
+            n = n // 4
+
+        return n == 1
+```
+
+---
+
+## Key Idea
+
+A power of four can be divided by `4` repeatedly without leaving any remainder. If the number eventually becomes `1`, it is a power of four; otherwise, it is not.
