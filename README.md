@@ -2281,3 +2281,259 @@ class Solution:
 ## Key Idea
 
 A power of four can be divided by `4` repeatedly without leaving any remainder. If the number eventually becomes `1`, it is a power of four; otherwise, it is not.
+
+
+
+# Valid Perfect Square
+
+Given a positive integer `num`, return `true` if `num` is a perfect square; otherwise, return `false`.
+
+A perfect square is a number that can be expressed as:
+
+```text
+n × n
+```
+
+for some integer `n`.
+
+---
+
+## Examples
+
+### Example 1
+
+```text
+Input: 16
+Output: true
+
+Explanation:
+4 × 4 = 16
+```
+
+### Example 2
+
+```text
+Input: 14
+Output: false
+
+Explanation:
+No integer multiplied by itself equals 14.
+```
+
+### Example 3
+
+```text
+Input: 25
+Output: true
+
+Explanation:
+5 × 5 = 25
+```
+
+---
+
+# Step-by-Step Approach (Binary Search)
+
+## Step 1: Define the Search Space
+
+If a number is a perfect square, its square root must lie between:
+
+```text
+1 and num
+```
+
+So initialize:
+
+```text
+low = 1
+high = num
+```
+
+---
+
+## Step 2: Find the Middle Value
+
+For every iteration:
+
+```text
+mid = (low + high) // 2
+```
+
+Now calculate:
+
+```text
+mid × mid
+```
+
+---
+
+## Step 3: Check if We Found the Answer
+
+If:
+
+```text
+mid × mid == num
+```
+
+then `num` is a perfect square.
+
+Return:
+
+```text
+True
+```
+
+---
+
+## Step 4: Search the Right Half
+
+If:
+
+```text
+mid × mid < num
+```
+
+the square is too small.
+
+The answer must be on the right side.
+
+Move:
+
+```text
+low = mid + 1
+```
+
+---
+
+## Step 5: Search the Left Half
+
+If:
+
+```text
+mid × mid > num
+```
+
+the square is too large.
+
+The answer must be on the left side.
+
+Move:
+
+```text
+high = mid - 1
+```
+
+---
+
+## Step 6: Continue Until Search Space Ends
+
+Repeat the process while:
+
+```text
+low <= high
+```
+
+If the loop ends without finding an exact square:
+
+```text
+Return False
+```
+
+---
+
+## Dry Run
+
+### Input
+
+```text
+num = 16
+```
+
+### Iteration 1
+
+```text
+low = 1
+high = 16
+
+mid = 8
+8 × 8 = 64
+```
+
+64 > 16
+
+```text
+high = 7
+```
+
+---
+
+### Iteration 2
+
+```text
+low = 1
+high = 7
+
+mid = 4
+4 × 4 = 16
+```
+
+Found the answer.
+
+```text
+Return True
+```
+
+---
+
+## Time Complexity
+
+```text
+O(log n)
+```
+
+Binary Search cuts the search space in half during every iteration.
+
+---
+
+## Space Complexity
+
+```text
+O(1)
+```
+
+Only a few variables are used.
+
+---
+
+# Python Solution
+
+```python
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+
+        low = 1
+        high = num
+
+        while low <= high:
+
+            mid = (low + high) // 2
+
+            if mid * mid == num:
+                return True
+
+            elif mid * mid < num:
+                low = mid + 1
+
+            else:
+                high = mid - 1
+
+        return False
+```
+
+---
+
+## Key Idea
+
+Instead of checking every number from `1` to `num`, use Binary Search to repeatedly eliminate half of the remaining search space. This reduces the time complexity from `O(n)` to `O(log n)`.
+
+
