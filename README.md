@@ -2537,3 +2537,116 @@ class Solution:
 Instead of checking every number from `1` to `num`, use Binary Search to repeatedly eliminate half of the remaining search space. This reduces the time complexity from `O(n)` to `O(log n)`.
 
 
+# 🪃 Valid Boomerang (LeetCode 1037)
+
+## 📌 Problem Statement
+
+Given an array `points` where `points[i] = [xi, yi]` represents a point on a 2D plane, determine whether the three points form a **boomerang**.
+
+A boomerang is a set of **three distinct points that are not on the same straight line**.
+
+---
+
+## 💡 Approach
+
+Instead of calculating slopes (which may cause division by zero), this solution uses **cross multiplication**.
+
+For three points:
+
+- A = (x1, y1)
+- B = (x2, y2)
+- C = (x3, y3)
+
+The points are collinear if:
+
+```
+(y2 - y1) × (x3 - x1) = (y3 - y1) × (x2 - x1)
+```
+
+If both sides are equal, the points lie on the same line.
+
+If they are not equal, the points form a boomerang.
+
+---
+# 🐍 Python Solution
+
+```python
+def is_boomerang(points):
+    return (points[1][1] - points[0][1]) * (points[2][0] - points[0][0]) != \
+           (points[2][1] - points[0][1]) * (points[1][0] - points[0][0])
+
+
+points = [[1, 1], [2, 2], [3, 3]]
+print(is_boomerang(points))
+```
+
+---
+
+## 📖 Example 1
+
+### Input
+
+```
+points = [[1,1],[2,2],[3,3]]
+```
+
+### Output
+
+```
+false
+```
+
+### Explanation
+
+All three points lie on the same straight line, so they do **not** form a boomerang.
+
+---
+
+## 📖 Example 2
+
+### Input
+
+```
+points = [[1,1],[2,3],[3,2]]
+```
+
+### Output
+
+```
+true
+```
+
+### Explanation
+
+The points are not collinear, so they form a valid boomerang.
+
+---
+
+## ⏱️ Complexity Analysis
+
+| Operation | Complexity |
+|------------|-----------|
+| **Time Complexity** | **O(1)** |
+| **Space Complexity** | **O(1)** |
+
+---
+
+## 🔑 Key Concepts
+
+- 2D Arrays / Lists
+- Coordinate Geometry
+- Cross Multiplication
+- Collinearity Check
+- Constant Time Algorithm
+- No Division (avoids divide-by-zero)
+
+---
+
+## 👨‍💻 Author
+
+**Rahul Jain**
+
+- Java
+- Python
+- Data Structures & Algorithms
+- LeetCode Practice
