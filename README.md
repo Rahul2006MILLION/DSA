@@ -2650,3 +2650,88 @@ The points are not collinear, so they form a valid boomerang.
 - Python
 - Data Structures & Algorithms
 - LeetCode Practice
+
+
+
+
+# 258. Add Digits
+
+## Problem Statement
+Given an integer `num`, repeatedly add all its digits until the result has only one digit, and return it.
+
+### Example
+
+**Input**
+```
+num = 38
+```
+
+**Output**
+```
+2
+```
+
+**Explanation**
+```
+38 → 3 + 8 = 11
+11 → 1 + 1 = 2
+```
+
+---
+
+## Approach
+
+1. Continue the process while the number has more than one digit (`num >= 10`).
+2. Extract each digit using the modulo operator (`% 10`).
+3. Store the digits in a list.
+4. Calculate the sum of the list.
+5. Assign the sum back to `num`.
+6. Repeat until `num` becomes a single-digit number.
+7. Return the final value.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def addDigits(self, num: int) -> int:
+        while num >= 10:
+            l = []
+
+            while num > 0:
+                r = num % 10
+                l.append(r)
+                num = num // 10
+
+            num = sum(l)
+
+        return num
+```
+
+---
+
+## Time Complexity
+
+- **O(d × k)**
+  - `d` = number of digits
+  - `k` = number of iterations until a single digit is obtained
+
+In practice, the number of iterations is very small.
+
+## Space Complexity
+
+- **O(d)**
+
+where `d` is the number of digits stored in the list.
+
+---
+
+## Concepts Used
+
+- While Loop
+- Modulo Operator (`%`)
+- Integer Division (`//`)
+- Lists
+- `sum()` Function
+- Simulation
