@@ -2735,3 +2735,89 @@ where `d` is the number of digits stored in the list.
 - Lists
 - `sum()` Function
 - Simulation
+
+
+# Find Numbers with Even Number of Digits
+
+## 📌 Problem Statement
+
+Given an integer array `nums`, return the number of integers that contain an **even number of digits**.
+
+### Example
+
+**Input:**
+
+```text
+nums = [12, 345, 2, 6, 7896]
+```
+
+**Output:**
+
+```text
+2
+```
+
+**Explanation:**
+
+* `12` → 2 digits ✅
+* `345` → 3 digits ❌
+* `2` → 1 digit ❌
+* `6` → 1 digit ❌
+* `7896` → 4 digits ✅
+
+Therefore, the answer is **2**.
+
+---
+
+## 🚀 Approach
+
+1. Initialize a counter to `0`.
+2. Traverse through each element of the array.
+3. Convert the number into a string.
+4. Find the length of the string.
+5. If the length is even, increment the counter.
+6. Return the final count.
+
+---
+
+## ⏱️ Time Complexity
+
+* **O(n × d)**
+
+  * `n` = number of elements
+  * `d` = number of digits (for string conversion)
+
+## 💾 Space Complexity
+
+* **O(d)** (temporary string representation)
+
+---
+
+## 🐍 Python Solution
+
+```python
+class Solution:
+    def findNumbers(self, nums: List[int]) -> int:
+        count = 0
+        for i in range(0, len(nums)):
+            a = str(nums[i])
+            b = len(a)
+            if b % 2 == 0:
+                count += 1
+        return count
+```
+
+---
+
+## 🎯 Topics Covered
+
+* Arrays
+* String Conversion
+* Counting
+* Iteration
+
+---
+
+## ✅ LeetCode Difficulty
+
+**Easy**
