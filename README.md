@@ -2940,3 +2940,68 @@ If the complement is already present in the dictionary, we immediately return th
 This makes the solution efficient and suitable for large inputs.
 
 
+# Remove Element
+
+## Problem
+Given an integer array `nums` and an integer `val`, remove all occurrences of `val` **in-place** and return the number of remaining elements.
+
+The order of the remaining elements can be changed, and the elements beyond the returned length are not important.
+
+### Example
+
+```python
+nums = [0, 1, 2, 2, 3, 0, 4, 2]
+val = 2
+
+Output: 5
+Modified nums = [0, 1, 3, 0, 4]
+```
+
+---
+
+## Approach
+
+- Create a pointer `k = 0`.
+- Traverse the array.
+- If the current element is **not** equal to `val`:
+  - Copy it to index `k`.
+  - Increment `k`.
+- After the loop, `k` represents the number of valid elements.
+
+### Time Complexity
+- **O(n)**
+
+### Space Complexity
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+def removeElement(nums, val):
+    k = 0
+
+    for i in range(len(nums)):
+        if nums[i] != val:
+            nums[k] = nums[i]
+            k += 1
+
+    return k
+
+
+nums = [0, 1, 2, 2, 3, 0, 4, 2]
+val = 2
+
+k = removeElement(nums, val)
+
+print(k)
+print(nums[:k])
+```
+
+### Output
+
+```python
+5
+[0, 1, 3, 0, 4]
+```
