@@ -2821,3 +2821,122 @@ class Solution:
 ## ✅ LeetCode Difficulty
 
 **Easy**
+
+# Two Sum
+
+## Problem Statement
+
+Given an array of integers `nums` and an integer `target`, return the **indices** of the two numbers such that they add up to the target.
+
+You may assume that:
+
+- Exactly one solution exists.
+- You may not use the same element twice.
+- The answer can be returned in any order.
+
+### Example
+
+**Input**
+
+```python
+nums = [2, 7, 11, 15]
+target = 9
+```
+
+**Output**
+
+```python
+[0, 1]
+```
+
+Because:
+
+```python
+nums[0] + nums[1] = 2 + 7 = 9
+```
+
+---
+
+# Python Solution
+
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = set()
+        d = {}
+
+        for i in range(len(nums)):
+            y = target - nums[i]
+
+            if y in d:
+                return [d[y], i]
+
+            d[nums[i]] = i
+```
+
+---
+
+# Approach
+
+We use a **HashMap (Dictionary)** to store each number along with its index while traversing the array.
+
+For every number:
+
+1. Calculate the complement required to reach the target.
+2. Check if the complement already exists in the dictionary.
+3. If it exists, return the stored index and the current index.
+4. Otherwise, store the current number and its index.
+
+This allows us to find the answer in a single pass.
+
+---
+
+# Dry Run
+
+```python
+nums = [2, 7, 11, 15]
+target = 9
+```
+
+| Current Number | Complement | Dictionary | Result |
+|----------------|-----------|------------|--------|
+| 2 | 7 | {2:0} | Continue |
+| 7 | 2 | {2:0} | Return [0,1] |
+
+---
+
+# Time Complexity
+
+```
+O(n)
+```
+
+The array is traversed only once.
+
+---
+
+# Space Complexity
+
+```
+O(n)
+```
+
+The dictionary may store every element in the worst case.
+
+---
+
+## Key Concept
+
+Instead of checking every pair (`O(n²)`), we remember the numbers we've already seen in a dictionary.
+
+For each element:
+
+```python
+complement = target - current_number
+```
+
+If the complement is already present in the dictionary, we immediately return the two indices.
+
+This makes the solution efficient and suitable for large inputs.
+
+
