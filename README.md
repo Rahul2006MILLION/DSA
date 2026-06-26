@@ -3005,3 +3005,76 @@ print(nums[:k])
 5
 [0, 1, 3, 0, 4]
 ```
+
+
+# Single Number
+
+## Problem
+
+Given a **non-empty** integer array `nums`, every element appears **twice** except for one. Find and return that single element.
+
+### Example
+
+```python
+nums = [2, 2, 1]
+
+Output: 1
+```
+
+Another example:
+
+```python
+nums = [4, 1, 2, 1, 2]
+
+Output: 4
+```
+
+---
+
+## Approach
+
+- Create a dictionary to store the frequency of each number.
+- Traverse the array:
+  - If the number is not in the dictionary, initialize its count to `0`.
+  - Increment its count by `1`.
+- Traverse the dictionary:
+  - Return the key whose frequency is `1`.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+## Space Complexity
+
+- **O(n)**
+
+---
+
+## Python Solution
+
+```python
+def singleNumber(nums):
+    d = {}
+
+    for num in nums:
+        if num not in d:
+            d[num] = 0
+        d[num] += 1
+
+    for key in d:
+        if d[key] == 1:
+            return key
+
+
+nums = [2, 2, 1, 1, 4]
+
+print(singleNumber(nums))
+```
+
+### Output
+
+```python
+4
+```
