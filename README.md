@@ -3078,3 +3078,97 @@ print(singleNumber(nums))
 ```python
 4
 ```
+
+# Search Insert Position
+
+## Problem
+
+Given a sorted array of distinct integers and a target value, return the index if the target is found.
+
+If the target is not found, return the index where it would be inserted in order.
+
+### Example 1
+
+```python
+nums = [1, 3, 5, 6]
+target = 5
+
+Output: 2
+```
+
+### Example 2
+
+```python
+nums = [1, 3, 5, 6]
+target = 2
+
+Output: 1
+```
+
+### Example 3
+
+```python
+nums = [1, 3, 5, 6]
+target = 7
+
+Output: 4
+```
+
+---
+
+## Approach
+
+- Initialize two pointers:
+  - `low = 0`
+  - `high = len(nums) - 1`
+- Perform Binary Search:
+  - Find the middle index.
+  - If the target is found, return its index.
+  - If the target is greater than the middle element, search the right half.
+  - Otherwise, search the left half.
+- If the loop ends without finding the target, `low` will be the correct insertion position.
+- Return `low`.
+
+---
+
+## Time Complexity
+
+- **O(log n)**
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+def searchInsert(nums, target):
+    low = 0
+    high = len(nums) - 1
+
+    while low <= high:
+        mid = (low + high) // 2
+
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            low = mid + 1
+        else:
+            high = mid - 1
+
+    return low
+
+
+nums = [1, 3, 5, 7]
+target = 2
+
+print(searchInsert(nums, target))
+```
+
+### Output
+
+```python
+1
+```
