@@ -3172,3 +3172,96 @@ print(searchInsert(nums, target))
 ```python
 1
 ```
+
+
+# Majority Element
+
+## Problem Statement
+
+Given an integer array `nums` of size `n`, return the **majority element**.
+
+The majority element is the element that appears **more than** `⌊n / 2⌋` times.
+
+You may assume that the majority element always exists in the array.
+
+---
+
+## Approach
+
+This solution uses a **HashMap (Dictionary)** to count the frequency of each element.
+
+### Algorithm
+
+1. Create an empty dictionary.
+2. Traverse the array.
+3. If the element is not present in the dictionary, initialize its count as `0`.
+4. Increment its frequency.
+5. Traverse the dictionary.
+6. Return the key whose frequency is greater than `n // 2`.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+One traversal to count frequencies and another traversal over the dictionary.
+
+---
+
+## Space Complexity
+
+- **O(n)**
+
+In the worst case, all elements are unique.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        n = len(nums)
+        d = {}
+
+        for i in range(n):
+            if nums[i] not in d:
+                d[nums[i]] = 0
+            d[nums[i]] += 1
+
+        for i in d:
+            if d[i] > n // 2:
+                return i
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+nums = [2,2,1,1,1,2,2]
+```
+
+**Output**
+
+```text
+2
+```
+
+---
+
+## Explanation
+
+Frequency table:
+
+| Element | Frequency |
+|---------:|----------:|
+| 1 | 3 |
+| 2 | 4 |
+
+Since the array length is **7**, the majority element must appear more than **7 // 2 = 3** times.
+
+`2` appears **4** times, so it is the majority element.
