@@ -3265,3 +3265,105 @@ Frequency table:
 Since the array length is **7**, the majority element must appear more than **7 // 2 = 3** times.
 
 `2` appears **4** times, so it is the majority element.
+
+
+# Remove Duplicates from Sorted Array
+
+## Problem
+Given a **sorted array**, remove the duplicate elements **in-place** such that each unique element appears only once.
+
+The function should return the number of unique elements (`k`).
+
+---
+
+## Example
+
+### Input
+```python
+nums = [1, 1, 2]
+```
+
+### Output
+```python
+2
+```
+
+### Modified Array
+```python
+nums = [1, 2, _]
+```
+
+Only the first `k` elements are considered.
+
+---
+
+# Approach (Two Pointers)
+
+We use two pointers:
+
+- `write` → Points to the position where the next unique element should be placed.
+- `read` → Traverses the array from left to right.
+
+### Steps
+
+1. Initialize `write = 0`.
+2. Traverse the array using `read`.
+3. If the current element is different from `nums[write]`:
+   - Move `write` one step ahead.
+   - Copy the new unique element to `nums[write]`.
+4. After traversal, the answer is `write + 1`.
+
+---
+
+# Python Implementation
+
+```python
+def remove_duplicates(nums):
+    if not nums:
+        return 0
+
+    write = 0
+
+    for read in range(len(nums)):
+        if nums[write] != nums[read]:
+            write += 1
+            nums[write] = nums[read]
+
+    return write + 1
+
+
+nums = [1, 1, 2]
+k = remove_duplicates(nums)
+
+print("Unique Elements:", k)
+print("Modified Array:", nums[:k])
+```
+
+---
+
+# Time Complexity
+
+```text
+O(n)
+```
+
+Each element is visited exactly once.
+
+---
+
+# Space Complexity
+
+```text
+O(1)
+```
+
+No extra space is used since the array is modified in-place.
+
+---
+
+# Key Learning
+
+- Two Pointer Technique
+- In-place Array Modification
+- Optimizing space complexity
+- Working with sorted arrays
