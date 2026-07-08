@@ -3543,3 +3543,59 @@ s = {2}
 where **k** is the number of unique common elements.
 
 
+# Intersection of Two Arrays II
+
+## Python Solution
+
+```python
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        d = {}
+        l = []
+
+        # Count frequency of elements in nums1
+        for i in range(len(nums1)):
+            if nums1[i] not in d:
+                d[nums1[i]] = 1
+            else:
+                d[nums1[i]] += 1
+
+        # Find common elements
+        for i in range(len(nums2)):
+            if nums2[i] in d and d[nums2[i]] > 0:
+                l.append(nums2[i])
+                d[nums2[i]] -= 1
+
+        return l
+```
+
+## How It Works
+
+1. Create a dictionary `d` to store the frequency of every element in `nums1`.
+2. Traverse `nums2`.
+3. If an element exists in `d` and its count is greater than `0`:
+
+   * Add it to the answer list `l`.
+   * Decrease its count by `1` to avoid using it again.
+4. Return the answer list.
+
+### Example
+
+```text
+nums1 = [1,2,2,1]
+nums2 = [2,2]
+
+Frequency Map:
+{1:2, 2:2}
+
+2 → Found → l = [2], count becomes 1
+2 → Found → l = [2,2], count becomes 0
+
+Output:
+[2,2]
+```
+
+## Complexity
+
+* **Time:** O(n + m)
+* **Space:** O(n)
