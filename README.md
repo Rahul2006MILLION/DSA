@@ -3367,3 +3367,179 @@ No extra space is used since the array is modified in-place.
 - In-place Array Modification
 - Optimizing space complexity
 - Working with sorted arrays
+
+
+# Intersection of Two Arrays
+
+## Python Solution
+
+```python
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        seen = set()
+        s = set()
+
+        # Store all elements of nums1 in a set
+        for i in range(len(nums1)):
+            seen.add(nums1[i])
+
+        # Check which elements of nums2 are present in nums1
+        for i in range(len(nums2)):
+            if nums2[i] in seen:
+                s.add(nums2[i])
+
+        # Convert the set into a list and return it
+        return list(s)
+```
+
+---
+
+# How It Works
+
+The goal is to return the **unique elements** that are present in both arrays.
+
+We use two sets:
+
+* **`seen`** → Stores all unique elements from `nums1`.
+* **`s`** → Stores the common (intersection) elements.
+
+Using a set allows us to check whether an element exists in **O(1)** average time.
+
+---
+
+## Step 1: Store the first array in a set
+
+```python
+seen = set()
+
+for i in range(len(nums1)):
+    seen.add(nums1[i])
+```
+
+Example:
+
+```python
+nums1 = [1, 2, 2, 1]
+```
+
+Iteration:
+
+| Element | seen  |
+| ------- | ----- |
+| 1       | {1}   |
+| 2       | {1,2} |
+| 2       | {1,2} |
+| 1       | {1,2} |
+
+Notice that duplicate values are automatically removed because a **set only stores unique elements**.
+
+Final:
+
+```python
+seen = {1, 2}
+```
+
+---
+
+## Step 2: Find common elements
+
+```python
+s = set()
+
+for i in range(len(nums2)):
+    if nums2[i] in seen:
+        s.add(nums2[i])
+```
+
+Example:
+
+```python
+nums2 = [2, 2]
+```
+
+Iteration:
+
+| Current Element | Present in `seen`? | `s` |
+| --------------- | ------------------ | --- |
+| 2               | Yes                | {2} |
+| 2               | Yes                | {2} |
+
+Even though `2` appears twice, it is stored only once because `s` is also a set.
+
+Final:
+
+```python
+s = {2}
+```
+
+---
+
+## Step 3: Return the answer
+
+```python
+return list(s)
+```
+
+LeetCode expects a **list**, so we convert the set into a list.
+
+Example:
+
+```python
+{2} → [2]
+```
+
+---
+
+# Dry Run
+
+### Input
+
+```python
+nums1 = [1,2,2,1]
+nums2 = [2,2]
+```
+
+### After Step 1
+
+```python
+seen = {1,2}
+```
+
+### Step 2
+
+* First `2` is found in `seen` → `s = {2}`
+* Second `2` is also found, but `s` already contains `2`
+
+Final:
+
+```python
+s = {2}
+```
+
+### Output
+
+```python
+[2]
+```
+
+---
+
+# Time Complexity
+
+* Building the `seen` set: **O(n)**
+* Traversing `nums2`: **O(m)**
+
+**Overall Time Complexity:** **O(n + m)**
+
+---
+
+# Space Complexity
+
+* `seen` stores up to **n** unique elements.
+* `s` stores the common unique elements.
+
+**Overall Space Complexity:** **O(n + k)**
+
+where **k** is the number of unique common elements.
+
+
