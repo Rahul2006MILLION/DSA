@@ -4019,3 +4019,152 @@ O(n + m)
 ```
 
 where `n` and `m` are the number of unique words in both arrays.
+
+
+# Intersection of Multiple Arrays
+
+## Problem
+Given multiple arrays, return all integers that are present in **every array**. The final answer should be in **sorted order**.
+
+### Example
+
+```text
+Input:
+[[7,34,45,10,12,27,13],
+ [27,21,45,10,12,13]]
+
+Output:
+[10,12,13,27,45]
+```
+
+---
+
+# Python Solution
+
+```python
+class Solution:
+    def intersection(self, nums: List[List[int]]) -> List[int]:
+        seen=set()
+        for i in range(0,len(nums[0])):
+            seen.add(nums[0][i])
+        for i in range(1,len(nums)):
+            temp_set=set()
+            for j in range(len(nums[i])):
+                if(nums[i][j] in seen):
+                    temp_set.add(nums[i][j])
+            seen=temp_set
+
+        return sorted(list(seen)) # to maintain sorted order
+```
+
+---
+
+# Intuition
+
+We use a **set** because:
+
+- Sets store **unique** elements.
+- Searching in a set is very fast (`O(1)` on average).
+- We only care about numbers that are common in every array.
+
+The idea is to keep updating the common elements after checking each array.
+
+---
+
+# Step-by-Step
+
+### Step 1: Store the first array in a set
+
+```python
+seen = set()
+
+for i in range(len(nums[0])):
+    seen.add(nums[0][i])
+```
+
+Example:
+
+```text
+nums[0] = [7,34,45,10,12,27,13]
+
+seen =
+{7,34,45,10,12,27,13}
+```
+
+---
+
+### Step 2: Compare with the next array
+
+Create a temporary set.
+
+```python
+temp_set = set()
+```
+
+If an element exists in both the current array and `seen`, add it to `temp_set`.
+
+```python
+if nums[i][j] in seen:
+    temp_set.add(nums[i][j])
+```
+
+After finishing the current array,
+
+```python
+seen = temp_set
+```
+
+Now `seen` contains only the common elements so far.
+
+Example:
+
+```text
+Second array:
+[27,21,45,10,12,13]
+
+seen becomes
+
+{27,45,10,12,13}
+```
+
+Repeat this process for every remaining array.
+
+---
+
+### Step 3: Return the answer
+
+The set is converted into a list and sorted.
+
+```python
+return sorted(list(seen))
+```
+
+This ensures the output is in ascending order.
+
+---
+
+# Time Complexity
+
+- Visiting every element once:
+
+```text
+O(total number of elements)
+```
+
+- Sorting the final answer:
+
+```text
+O(k log k)
+```
+
+where `k` is the number of common elements.
+
+---
+
+# Space Complexity
+
+```text
+O(k)
+```
+
+where `k` is the number of elements stored in the set.
