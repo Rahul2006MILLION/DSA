@@ -3599,3 +3599,423 @@ Output:
 
 * **Time:** O(n + m)
 * **Space:** O(n)
+
+
+# Count Common Words With One Occurrence
+
+## Problem
+Given two string arrays `words1` and `words2`, return the number of words that appear **exactly once** in **both** arrays.
+
+### Example
+```text
+words1 = ["leetcode","is","amazing","as","is"]
+words2 = ["amazing","leetcode","is"]
+
+Output: 2
+
+Explanation:
+leetcode -> appears once in both arrays ✅
+amazing  -> appears once in both arrays ✅
+is        -> appears twice in words1 ❌
+as        -> not present in words2 ❌
+```
+
+---
+
+# Python Solution
+
+```python
+class Solution:
+    def countWords(self, words1: List[str], words2: List[str]) -> int:
+        d={}
+        dd={}
+        ans=0
+        for i in range(0,len(words1)):
+            if(words1[i] not in d):
+                d[words1[i]]=1
+            else:
+                d[words1[i]]+=1
+        for i in range(0,len(words2)):
+            if(words2[i] not in dd):
+                dd[words2[i]]=1
+            else:
+                dd[words2[i]]+=1
+        for i in d:
+            if(i in dd and d[i]==1 and dd[i]==1):
+                ans+=1
+        return ans
+```
+
+---
+
+# Intuition
+
+We need to count only those words that:
+
+- Appear **exactly once** in `words1`
+- Appear **exactly once** in `words2`
+
+To know whether a word appears once, twice, or more, we must keep track of its frequency.
+
+A **dictionary (hash map)** is perfect for this because it stores:
+
+- **Key** → the word
+- **Value** → number of times the word has appeared
+
+Example:
+
+```text
+words1 = ["apple","cat","apple","dog"]
+```
+
+Dictionary after counting:
+
+```text
+{
+    "apple": 2,
+    "cat": 1,
+    "dog": 1
+}
+```
+
+Now we instantly know how many times every word appeared.
+
+---
+
+# Why Do We Use Two Dictionaries?
+
+We have **two different arrays**.
+
+Each array needs its own frequency count.
+
+So we create:
+
+```python
+d = {}      # Frequency of words1
+dd = {}     # Frequency of words2
+```
+
+Suppose
+
+```text
+words1 = ["a","b","b"]
+words2 = ["a","c"]
+```
+
+After counting,
+
+```text
+d =
+{
+    "a":1,
+    "b":2
+}
+
+dd =
+{
+    "a":1,
+    "c":1
+}
+```
+
+Now we can compare both dictionaries.
+
+---
+
+# Step-by-Step Working
+
+## Step 1: Count frequencies in words1
+
+```python
+for i in range(0, len(words1)):
+```
+
+Visit every word.
+
+If the word is not present,
+
+```python
+d[word] = 1
+```
+
+Otherwise,
+
+```python
+d[word] += 1
+```
+
+Example
+
+```text
+words1 = ["cat","dog","cat"]
+```
+
+Iteration 1
+
+```text
+cat
+
+d = {
+    "cat":1
+}
+```
+
+Iteration 2
+
+```text
+dog
+
+d = {
+    "cat":1,
+    "dog":1
+}
+```
+
+Iteration 3
+
+```text
+cat
+
+d = {
+    "cat":2,
+    "dog":1
+}
+```
+
+---
+
+## Step 2: Count frequencies in words2
+
+Exactly the same process.
+
+```python
+for i in range(0, len(words2)):
+```
+
+Example
+
+```text
+words2 = ["dog","cat"]
+```
+
+Dictionary becomes
+
+```text
+dd = {
+    "dog":1,
+    "cat":1
+}
+```
+
+---
+
+## Step 3: Compare both dictionaries
+
+Now we iterate through every word in `d`.
+
+```python
+for i in d:
+```
+
+For every word we check
+
+```python
+if (i in dd and d[i] == 1 and dd[i] == 1):
+```
+
+Let's understand each condition.
+
+### Condition 1
+
+```python
+i in dd
+```
+
+The word must exist in the second array.
+
+Example
+
+```text
+d =
+{
+    "apple":1,
+    "cat":1
+}
+
+dd =
+{
+    "apple":1
+}
+```
+
+Only `"apple"` exists in both.
+
+---
+
+### Condition 2
+
+```python
+d[i] == 1
+```
+
+The word should appear exactly once in the first array.
+
+Example
+
+```text
+d =
+{
+    "apple":2,
+    "cat":1
+}
+```
+
+Only `"cat"` satisfies this condition.
+
+---
+
+### Condition 3
+
+```python
+dd[i] == 1
+```
+
+The word should also appear exactly once in the second array.
+
+Example
+
+```text
+dd =
+{
+    "cat":1,
+    "dog":3
+}
+```
+
+Only `"cat"` satisfies this condition.
+
+---
+
+If all three conditions are true,
+
+```python
+ans += 1
+```
+
+because we found one valid common word.
+
+---
+
+# Dry Run
+
+```text
+words1 = ["leetcode","is","amazing","as","is"]
+
+words2 = ["amazing","leetcode","is"]
+```
+
+After counting,
+
+```text
+d =
+{
+leetcode : 1
+is       : 2
+amazing  : 1
+as       : 1
+}
+
+dd =
+{
+amazing  : 1
+leetcode : 1
+is       : 1
+}
+```
+
+Checking each word:
+
+### leetcode
+
+```text
+Present in dd ✔
+Count in d = 1 ✔
+Count in dd = 1 ✔
+
+Answer = 1
+```
+
+### is
+
+```text
+Present in dd ✔
+Count in d = 2 ✘
+
+Ignore
+```
+
+### amazing
+
+```text
+Present in dd ✔
+Count in d = 1 ✔
+Count in dd = 1 ✔
+
+Answer = 2
+```
+
+### as
+
+```text
+Not present in dd ✘
+
+Ignore
+```
+
+Final Answer
+
+```text
+2
+```
+
+---
+
+# Time Complexity
+
+Building first dictionary:
+
+```text
+O(n)
+```
+
+Building second dictionary:
+
+```text
+O(m)
+```
+
+Checking common words:
+
+```text
+O(k)
+```
+
+where `k` is the number of unique words in `words1`.
+
+Overall:
+
+```text
+O(n + m)
+```
+
+---
+
+# Space Complexity
+
+Two dictionaries store word frequencies.
+
+```text
+O(n + m)
+```
+
+where `n` and `m` are the number of unique words in both arrays.
