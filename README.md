@@ -4168,3 +4168,178 @@ O(k)
 ```
 
 where `k` is the number of elements stored in the set.
+
+
+# Contains Duplicate II
+
+## Problem
+Given an integer array `nums` and an integer `k`, return `True` if there are two equal numbers whose indices differ by at most `k`. Otherwise, return `False`.
+
+---
+
+## Intuition
+
+We need to know:
+
+- Have we seen this number before?
+- If yes, where did we last see it?
+
+A dictionary is perfect because it stores:
+
+```text
+number -> latest index
+```
+
+Whenever we find the same number again, we calculate the distance between the current index and the previous index.
+
+If the distance is less than or equal to `k`, we return `True`.
+
+Otherwise, we update the index in the dictionary since the latest occurrence is more useful.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        d = {}
+
+        for i in range(len(nums)):
+
+            # Number seen for the first time
+            if nums[i] not in d:
+                d[nums[i]] = i
+
+            # Duplicate found
+            else:
+                a = i - d[nums[i]]
+
+                # Indices are within k distance
+                if a <= k:
+                    return True
+
+                # Update with latest index
+                else:
+                    d[nums[i]] = i
+
+        return False
+```
+
+---
+
+## Explanation
+
+### Step 1
+Create an empty dictionary.
+
+```python
+d = {}
+```
+
+It stores:
+
+```text
+number -> latest index
+```
+
+---
+
+### Step 2
+Traverse the array.
+
+```python
+for i in range(len(nums)):
+```
+
+---
+
+### Step 3
+If the number is not in the dictionary, store its index.
+
+```python
+if nums[i] not in d:
+    d[nums[i]] = i
+```
+
+Example:
+
+```text
+nums = [1,2,3]
+
+Dictionary
+
+1 -> 0
+2 -> 1
+3 -> 2
+```
+
+---
+
+### Step 4
+If the number already exists, calculate the distance.
+
+```python
+a = i - d[nums[i]]
+```
+
+Example:
+
+```text
+nums = [1,2,3,1]
+
+Current index = 3
+Previous index = 0
+
+Distance = 3 - 0 = 3
+```
+
+---
+
+### Step 5
+If the distance is within `k`, return `True`.
+
+```python
+if a <= k:
+    return True
+```
+
+---
+
+### Step 6
+Otherwise, update the dictionary with the latest index.
+
+```python
+d[nums[i]] = i
+```
+
+Example:
+
+```text
+nums = [1,0,1,1]
+
+After checking index 2
+
+Dictionary
+
+1 -> 2
+0 -> 1
+```
+
+Updating the latest index helps compare with the closest future duplicate.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+Each element is processed once.
+
+---
+
+## Space Complexity
+
+- **O(n)**
+
+The dictionary stores at most one index for each distinct number.
