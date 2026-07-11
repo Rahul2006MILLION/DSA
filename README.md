@@ -4404,3 +4404,96 @@ class Solution:
 ## Space Complexity
 
 - Set stores distinct elements: **O(k)**
+
+
+# Neither Minimum nor Maximum
+
+## Problem
+
+Given an integer array `nums` containing **distinct positive integers**, return **any** number that is **neither the minimum nor the maximum** element in the array.
+
+If no such element exists, return `-1`.
+
+### Example
+
+```text
+Input: nums = [3,2,1,4]
+Output: 2 (3 is also a valid answer)
+
+Input: nums = [1,2]
+Output: -1
+
+Input: nums = [2,1,3]
+Output: 2
+```
+
+---
+
+## Approach
+
+1. Find the minimum and maximum values in the array.
+2. Traverse the array and collect all elements that are neither the minimum nor the maximum.
+3. If no such element exists, return `-1`.
+4. Otherwise, return any one of the collected elements.
+
+> **Note:** Since the problem accepts **any valid number**, returning `min(l)`, `max(l)`, or even `l[0]` will all be accepted as long as the returned value is neither the minimum nor the maximum of the original array.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findNonMinOrMax(self, nums: List[int]) -> int:
+        l = []
+        a = min(nums)
+        b = max(nums)
+
+        for i in range(len(nums)):
+            if nums[i] != a and nums[i] != b:
+                l.append(nums[i])
+
+        if len(l) == 0:
+            return -1
+
+        return min(l)
+```
+
+---
+
+## Time Complexity
+
+- Finding minimum: **O(n)**
+- Finding maximum: **O(n)**
+- Traversing the array: **O(n)**
+- Finding `min(l)`: **O(n)** (in the worst case)
+
+**Overall Time Complexity:** **O(n)**
+
+---
+
+## Space Complexity
+
+- Auxiliary list `l`: **O(n)**
+
+**Overall Space Complexity:** **O(n)**
+
+---
+
+## Note
+
+The final return statement can be any of the following and the solution will still be accepted:
+
+```python
+return min(l)
+```
+
+```python
+return max(l)
+```
+
+```python
+return l[0]
+```
+
+This is because the problem asks for **any** element that is neither the minimum nor the maximum of the original array.
