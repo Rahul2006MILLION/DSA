@@ -4343,3 +4343,64 @@ Each element is processed once.
 - **O(n)**
 
 The dictionary stores at most one index for each distinct number.
+
+
+# Third Maximum Number
+
+## Problem
+Given an integer array `nums`, return the **third distinct maximum** number in the array. If the third distinct maximum does not exist, return the **maximum** number.
+
+### Example
+```text
+Input: nums = [3,2,1]
+Output: 1
+
+Input: nums = [1,2]
+Output: 2
+
+Input: nums = [2,2,3,1]
+Output: 1
+```
+
+---
+
+## Approach
+
+1. Store all elements in a `set` to remove duplicates.
+2. If there are at least three distinct numbers:
+   - Convert the set to a list.
+   - Sort the list.
+   - Return the third largest element (`s[-3]`).
+3. Otherwise, return the maximum element of the original array.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def thirdMax(self, nums: List[int]) -> int:
+        rem_dup = set()
+
+        for i in range(len(nums)):
+            rem_dup.add(nums[i])
+
+        if len(rem_dup) > 2:
+            a = list(rem_dup)
+            s = sorted(a)
+            return s[-3]
+        else:
+            return max(nums)
+```
+
+---
+
+## Time Complexity
+
+- Building the set: **O(n)**
+- Sorting distinct elements: **O(k log k)**, where `k` is the number of distinct elements (`k ≤ n`)
+- Overall: **O(n + k log k)**
+
+## Space Complexity
+
+- Set stores distinct elements: **O(k)**
