@@ -4727,3 +4727,123 @@ class Solution:
 
         return [duplicate, missing]
 ```
+
+
+# 1446. Consecutive Characters
+
+## Problem Statement
+
+The **power** of a string is the length of the longest substring that contains only one unique character.
+
+Given a string `s`, return its power.
+
+### Example
+
+**Input**
+
+```text
+s = "abbcccddddeeeeedcba"
+```
+
+**Output**
+
+```text
+5
+```
+
+**Explanation**
+
+The longest consecutive group of the same character is `"eeeee"`, whose length is `5`.
+
+---
+
+# Intuition
+
+Since we need the **longest consecutive sequence**, counting the total frequency of each character is not useful.
+
+For example:
+
+```text
+s = "ababab"
+```
+
+The character `'a'` appears three times, but never consecutively. Therefore, a dictionary or hash map cannot solve this problem because it stores frequencies, not consecutive streaks.
+
+Instead, we compare each character with its previous character.
+
+- If both characters are the same, the current streak continues.
+- If they are different, the current streak ends and a new streak begins.
+
+While traversing the string, we keep track of:
+- `cur_count` → Length of the current consecutive sequence.
+- `max_count` → Maximum consecutive sequence found so far.
+
+---
+
+# Approach
+
+1. Initialize both `cur_count` and `max_count` to `1` since the first character already forms a streak of length `1`.
+2. Traverse the string from index `1`.
+3. Compare the current character with the previous character.
+   - If they are equal, increment `cur_count`.
+   - Update `max_count` if the current streak becomes longer.
+4. If the characters are different, reset `cur_count` to `1` because a new streak starts.
+5. Return `max_count`.
+
+---
+
+# Dry Run
+
+For:
+
+```text
+s = "abbccc"
+```
+
+| Index | Character | Current Streak | Maximum Streak |
+|------:|:---------:|:--------------:|:--------------:|
+| 0 | a | 1 | 1 |
+| 1 | b | 1 | 1 |
+| 2 | b | 2 | 2 |
+| 3 | c | 1 | 2 |
+| 4 | c | 2 | 2 |
+| 5 | c | 3 | 3 |
+
+Answer = **3**
+
+---
+
+# Time Complexity
+
+- **O(n)**
+
+The string is traversed only once.
+
+---
+
+# Space Complexity
+
+- **O(1)**
+
+Only two integer variables are used.
+
+---
+
+# Python Solution
+
+```python
+class Solution:
+    def maxPower(self, s: str) -> int:
+        max_count = 1
+        cur_count = 1
+
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                cur_count += 1
+                if cur_count > max_count:
+                    max_count = cur_count
+            else:
+                cur_count = 1
+
+        return max_count
+```
