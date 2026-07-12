@@ -4587,3 +4587,143 @@ class Solution:
 
         return max_count
 ```
+
+
+# Set Mismatch
+
+## Problem
+
+You have a set containing all integers from `1` to `n`. Due to an error, one number appears **twice** while another number is **missing**.
+
+Return the duplicated number and the missing number in the form:
+
+```text
+[duplicate, missing]
+```
+
+---
+
+## Example 1
+
+**Input**
+
+```text
+nums = [1,2,2,4]
+```
+
+**Output**
+
+```text
+[2,3]
+```
+
+**Explanation**
+
+- `2` appears twice.
+- `3` is missing.
+
+---
+
+## Example 2
+
+**Input**
+
+```text
+nums = [1,1]
+```
+
+**Output**
+
+```text
+[1,2]
+```
+
+---
+
+## Intuition
+
+There are two tasks to solve:
+
+1. Find the number that appears more than once.
+2. Find the missing number.
+
+A dictionary (hash map) is used to store the frequency of every number.
+
+- If a number's frequency becomes greater than `1`, it is the duplicate.
+- A set stores only unique numbers.
+- The sum of unique numbers is compared with the expected sum of numbers from `1` to `n`.
+- The difference gives the missing number.
+
+---
+
+## Algorithm
+
+1. Create a dictionary to store frequencies.
+2. Create a set to store unique numbers.
+3. Traverse the array.
+   - If the number is not in the dictionary, add it with frequency `1` and insert it into the set.
+   - Otherwise, increment its frequency.
+4. Traverse the dictionary to find the duplicate number.
+5. Compute the sum of unique numbers.
+6. Compute the expected sum using:
+
+```text
+n × (n + 1) / 2
+```
+
+7. Missing number:
+
+```text
+expected_sum - unique_sum
+```
+
+8. Return:
+
+```text
+[duplicate, missing]
+```
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+The array is traversed a constant number of times.
+
+---
+
+## Space Complexity
+
+- **O(n)**
+
+A dictionary and a set are used.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        d = {}
+        seen = set()
+        n = len(nums)
+
+        for i in range(len(nums)):
+            if nums[i] not in d:
+                seen.add(nums[i])
+                d[nums[i]] = 1
+            else:
+                d[nums[i]] += 1
+
+        for i in d:
+            if d[i] > 1:
+                duplicate = i
+
+        unique_sum = sum(seen)
+        expected_sum = n * (n + 1) // 2
+        missing = expected_sum - unique_sum
+
+        return [duplicate, missing]
+```
