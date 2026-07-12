@@ -4497,3 +4497,93 @@ return l[0]
 ```
 
 This is because the problem asks for **any** element that is neither the minimum nor the maximum of the original array.
+
+
+# Max Consecutive Ones
+
+## Problem
+Given a binary array `nums`, return the maximum number of consecutive `1`s in the array.
+
+### Example
+
+**Input**
+```text
+nums = [1,1,0,1,1,1]
+```
+
+**Output**
+```text
+3
+```
+
+**Explanation**
+
+The longest consecutive sequence of `1`s is:
+
+```text
+1 1 0 1 1 1
+      └─────┘
+         3
+```
+
+---
+
+## Intuition
+
+Instead of comparing adjacent elements, maintain a running count of consecutive `1`s.
+
+- If the current element is `1`, increase the current streak.
+- If the current element is `0`, the streak is broken, so reset it to `0`.
+- Keep updating the maximum streak found so far.
+
+---
+
+## Algorithm
+
+1. Initialize two variables:
+   - `cur_count = 0`
+   - `max_count = 0`
+2. Traverse the array.
+3. If the current element is `1`:
+   - Increment `cur_count`.
+   - Update `max_count` if needed.
+4. Otherwise:
+   - Reset `cur_count` to `0`.
+5. Return `max_count`.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+The array is traversed only once.
+
+---
+
+## Space Complexity
+
+- **O(1)**
+
+Only two integer variables are used.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+        max_count = 0
+        cur_count = 0
+
+        for i in range(len(nums)):
+            if nums[i] == 1:
+                cur_count += 1
+                if cur_count > max_count:
+                    max_count = cur_count
+            else:
+                cur_count = 0
+
+        return max_count
+```
