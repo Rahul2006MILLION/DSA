@@ -4847,3 +4847,141 @@ class Solution:
 
         return max_count
 ```
+
+
+# Unique Number of Occurrences
+
+## Problem Statement
+
+Given an integer array `arr`, return `True` if the number of occurrences of each value in the array is unique. Otherwise, return `False`.
+
+### Example 1
+
+**Input:**
+```text
+arr = [1,2,2,1,1,3]
+```
+
+**Frequency:**
+```text
+1 → 3
+2 → 2
+3 → 1
+```
+
+**Output:**
+```text
+True
+```
+
+---
+
+### Example 2
+
+**Input:**
+```text
+arr = [1,2]
+```
+
+**Frequency:**
+```text
+1 → 1
+2 → 1
+```
+
+**Output:**
+```text
+False
+```
+
+---
+
+## Intuition
+
+The question is **not asking whether the numbers are unique**.
+
+Instead, it asks whether the **frequencies of those numbers are unique**.
+
+For example,
+
+```text
+4 → 2
+5 → 1
+```
+
+The frequencies are:
+
+```text
+2, 1
+```
+
+Since both frequencies are different, the answer is **True**.
+
+Another example,
+
+```text
+1 → 2
+2 → 2
+3 → 1
+```
+
+The frequencies are:
+
+```text
+2, 2, 1
+```
+
+Here, the frequency **2** appears twice, so the answer is **False**.
+
+---
+
+## Approach
+
+1. Use a dictionary to count the frequency of every number.
+2. Create an empty set.
+3. Traverse through all the frequencies.
+4. If a frequency is already present in the set, return `False`.
+5. Otherwise, add the frequency to the set.
+6. If all frequencies are unique, return `True`.
+
+---
+
+## Python Code
+
+```python
+class Solution:
+    def uniqueOccurrences(self, arr: List[int]) -> bool:
+        d = {}
+        seen = set()
+
+        for num in arr:
+            if num not in d:
+                d[num] = 1
+            else:
+                d[num] += 1
+
+        for freq in d.values():
+            if freq in seen:
+                return False
+            seen.add(freq)
+
+        return True
+```
+
+---
+
+## Time Complexity
+
+- Counting frequencies: **O(n)**
+- Checking unique frequencies: **O(n)**
+
+**Overall:** `O(n)`
+
+---
+
+## Space Complexity
+
+- Dictionary stores the frequency of each number.
+- Set stores the unique frequencies.
+
+**Overall:** `O(n)`
