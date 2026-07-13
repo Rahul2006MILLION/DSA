@@ -4985,3 +4985,132 @@ class Solution:
 - Set stores the unique frequencies.
 
 **Overall:** `O(n)`
+
+
+# Maximum Product of Three Numbers
+
+## Problem Statement
+
+Given an integer array `nums`, return the **maximum product** that can be obtained by multiplying any **three numbers** from the array.
+
+---
+
+## Intuition
+
+At first glance, it seems that multiplying the **three largest numbers** should always give the maximum product.
+
+For example:
+
+```python
+nums = [1, 2, 3, 4]
+```
+
+The maximum product is:
+
+```python
+4 * 3 * 2 = 24
+```
+
+However, this approach fails when the array contains **negative numbers**.
+
+Example:
+
+```python
+nums = [-100, -98, -1, 2, 3, 4]
+```
+
+If we multiply the three largest numbers:
+
+```python
+4 * 3 * 2 = 24
+```
+
+But if we multiply the two smallest (most negative) numbers with the largest number:
+
+```python
+(-100) * (-98) * 4 = 39200
+```
+
+Since the product of two negative numbers is positive, this becomes much larger.
+
+Therefore, there are only **two possible candidates** for the maximum product:
+
+1. Product of the three largest numbers.
+2. Product of the two smallest numbers and the largest number.
+
+The answer is the maximum of these two products.
+
+---
+
+## Approach
+
+1. Sort the array.
+2. Compute the product of the last three elements.
+3. Compute the product of the first two elements and the last element.
+4. Return the larger product.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def maximumProduct(self, nums: List[int]) -> int:
+        nums.sort()
+
+        product1 = nums[-1] * nums[-2] * nums[-3]
+        product2 = nums[0] * nums[1] * nums[-1]
+
+        return max(product1, product2)
+```
+
+---
+
+## Example
+
+### Input
+
+```python
+nums = [-100, -98, -1, 2, 3, 4]
+```
+
+### Sorted Array
+
+```python
+[-100, -98, -1, 2, 3, 4]
+```
+
+### Candidate 1
+
+```python
+4 * 3 * 2 = 24
+```
+
+### Candidate 2
+
+```python
+(-100) * (-98) * 4 = 39200
+```
+
+### Output
+
+```python
+39200
+```
+
+---
+
+## Time Complexity
+
+- Sorting: **O(n log n)**
+- Computing the two products: **O(1)**
+
+**Overall:** `O(n log n)`
+
+---
+
+## Space Complexity
+
+- Sorting in Python uses `O(1)` extra space (ignoring implementation details).
+
+**Overall:** `O(1)`
