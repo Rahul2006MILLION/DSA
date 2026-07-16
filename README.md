@@ -5265,3 +5265,117 @@ for element in data:
 ```
 
 This pattern is commonly used in many consecutive/continuous sequence problems on LeetCode.
+
+
+
+# Valid Anagram
+
+## Problem
+Given two strings `s` and `t`, return `True` if `t` is an anagram of `s`, otherwise return `False`.
+
+An **anagram** is a word or phrase formed by rearranging the letters of another word, using all the original letters exactly once.
+
+### Examples
+
+**Example 1**
+```text
+Input: s = "anagram", t = "nagaram"
+Output: True
+```
+
+**Example 2**
+```text
+Input: s = "rat", t = "car"
+Output: False
+```
+
+---
+
+## Intuition
+
+If two strings are anagrams:
+
+- They must have the **same length**.
+- Every character should appear the **same number of times** in both strings.
+
+We use two dictionaries:
+
+- `ds` stores the frequency of each character in `s`.
+- `dt` stores the frequency of each character in `t`.
+
+Finally, we verify that every character in `ds` exists in `dt` and that their frequencies are identical.
+
+---
+
+## Algorithm
+
+1. If the lengths of the strings are different, return `False`.
+2. Create two empty dictionaries.
+3. Count the frequency of each character in `s`.
+4. Count the frequency of each character in `t`.
+5. Traverse the first dictionary:
+   - If a character is missing in the second dictionary, return `False`.
+   - If the frequencies differ, return `False`.
+6. If all checks pass, return `True`.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        ds = {}
+        dt = {}
+
+        if len(s) != len(t):
+            return False
+
+        for i in range(0, len(s)):
+            if s[i] not in ds:
+                ds[s[i]] = 1
+            else:
+                ds[s[i]] += 1
+
+        for i in range(0, len(t)):
+            if t[i] not in dt:
+                dt[t[i]] = 1
+            else:
+                dt[t[i]] += 1
+
+        for i in ds:
+            if i not in dt:
+                return False
+            if ds[i] != dt[i]:
+                return False
+
+        return True
+```
+
+---
+
+## Time Complexity
+
+- Building `ds`: **O(n)**
+- Building `dt`: **O(n)**
+- Comparing frequencies: **O(n)**
+
+**Overall Time Complexity:** **O(n)**
+
+---
+
+## Space Complexity
+
+Two dictionaries are used to store character frequencies.
+
+**Space Complexity:** **O(n)**
+
+---
+
+## Key Concepts
+
+- Hash Map / Dictionary
+- Frequency Counting
+- String Traversal
+- Character Matching
+- Anagram Checking
