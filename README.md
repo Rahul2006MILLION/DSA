@@ -5114,3 +5114,154 @@ nums = [-100, -98, -1, 2, 3, 4]
 - Sorting in Python uses `O(1)` extra space (ignoring implementation details).
 
 **Overall:** `O(1)`
+
+
+# 1869. Longer Contiguous Segments of Ones than Zeros
+
+## Problem
+Given a binary string `s`, return `True` if the **longest contiguous segment of `1`s** is **strictly longer** than the **longest contiguous segment of `0`s**. Otherwise, return `False`.
+
+---
+
+## Intuition
+The problem asks for the **longest consecutive streak** of `1`s and `0`s, **not** their total count.
+
+We maintain:
+
+- `cur1` → Current streak of consecutive `1`s.
+- `cur0` → Current streak of consecutive `0`s.
+- `max1` → Longest streak of `1`s seen so far.
+- `max0` → Longest streak of `0`s seen so far.
+
+Traverse the string once:
+
+- If the current character is `'1'`:
+  - Increase `cur1`.
+  - Update `max1`.
+  - Reset `cur0`.
+- If the current character is `'0'`:
+  - Increase `cur0`.
+  - Update `max0`.
+  - Reset `cur1`.
+
+Finally, compare `max1` and `max0`.
+
+---
+
+## Approach
+1. Initialize four variables:
+   - `cur1`, `cur0`
+   - `max1`, `max0`
+2. Traverse the string.
+3. Update the corresponding streak.
+4. Reset the opposite streak.
+5. Return `max1 > max0`.
+
+---
+
+## Python Code
+
+```python
+class Solution:
+    def checkZeroOnes(self, s: str) -> bool:
+        cur0 = 0
+        cur1 = 0
+        max0 = 0
+        max1 = 0
+
+        for i in range(len(s)):
+            if s[i] == '1':
+                cur1 += 1
+                if cur1 > max1:
+                    max1 = cur1
+            else:
+                cur1 = 0
+
+            if s[i] == '0':
+                cur0 += 1
+                if cur0 > max0:
+                    max0 = cur0
+            else:
+                cur0 = 0
+
+        return max1 > max0
+```
+
+---
+
+## Dry Run
+
+### Input
+
+```text
+s = "1101000111110"
+```
+
+### Traversal
+
+| Character | cur1 | max1 | cur0 | max0 |
+|-----------|-----:|-----:|-----:|-----:|
+|1|1|1|0|0|
+|1|2|2|0|0|
+|0|0|2|1|1|
+|1|1|2|0|1|
+|0|0|2|1|1|
+|0|0|2|2|2|
+|0|0|2|3|3|
+|1|1|2|0|3|
+|1|2|2|0|3|
+|1|3|3|0|3|
+|1|4|4|0|3|
+|1|5|5|0|3|
+|0|0|5|1|3|
+
+Final:
+
+```text
+max1 = 5
+max0 = 3
+```
+
+Return:
+
+```text
+True
+```
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)`
+- **Space Complexity:** `O(1)`
+
+---
+
+## Pattern Learned
+
+This is a **Streak Counter** problem.
+
+Use this pattern whenever the question contains words like:
+
+- Longest
+- Consecutive
+- Continuous
+- Segment
+- Streak
+
+General Pattern:
+
+```python
+current = 0
+maximum = 0
+
+for element in data:
+    if streak continues:
+        current += 1
+    else:
+        current = 0
+
+    maximum = max(maximum, current)
+```
+
+This pattern is commonly used in many consecutive/continuous sequence problems on LeetCode.
