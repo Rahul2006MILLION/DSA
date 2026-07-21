@@ -5761,3 +5761,94 @@ A copy of the array is created.
 ```text
 O(n)
 ```
+
+
+# Running Sum of 1D Array
+
+## Problem Description
+
+Given an integer array `nums`, return the **running sum** of the array.
+
+The running sum at index `i` is the sum of all the elements from index `0` to `i`.
+
+Formally,
+
+```text
+runningSum[i] = nums[0] + nums[1] + ... + nums[i]
+```
+
+---
+
+## Approach
+
+1. Create a variable `sum` and initialize it to `0`.
+2. Create a new array `result` of the same size as the input array.
+3. Traverse the input array from left to right.
+4. Add the current element to `sum`.
+5. Store `sum` in the corresponding index of the `result` array.
+6. Return the `result` array.
+
+---
+
+## Python Solution
+
+```python
+def running_sum(nums):
+    total = 0
+    result = []
+
+    for num in nums:
+        total += num
+        result.append(total)
+
+    return result
+
+
+nums = [1, 2, 3, 4]
+print(running_sum(nums))
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+nums = [1,2,3,4]
+```
+
+**Running Sum**
+
+| Index | Calculation | Result |
+|------:|-------------|-------:|
+| 0 | 1 | 1 |
+| 1 | 1 + 2 | 3 |
+| 2 | 1 + 2 + 3 | 6 |
+| 3 | 1 + 2 + 3 + 4 | 10 |
+
+**Output**
+
+```text
+[1,3,6,10]
+```
+
+---
+
+## Time Complexity
+
+The array is traversed once.
+
+```text
+O(n)
+```
+
+---
+
+## Space Complexity
+
+A new array is created to store the running sums.
+
+```text
+O(n)
+```
