@@ -5379,3 +5379,78 @@ Two dictionaries are used to store character frequencies.
 - String Traversal
 - Character Matching
 - Anagram Checking
+
+# Minimum Index Sum of Two Lists
+
+## Problem Statement
+
+Given two arrays of strings `list1` and `list2`, return all the common strings with the minimum index sum.
+
+A common string is a string that appears in both lists.
+
+If multiple strings have the same minimum index sum, return all of them.
+
+---
+
+## Approach
+
+1. Create a dictionary to store every restaurant from `list1` along with its index.
+2. Traverse `list2`.
+3. If the current restaurant exists in the dictionary, add its index from `list2` to the stored index.
+4. Traverse the dictionary to find the minimum index sum.
+5. If a smaller minimum is found:
+   - Update the minimum.
+   - Replace the answer list.
+6. If another restaurant has the same minimum:
+   - Append it to the answer list.
+7. Return the answer.
+
+---
+
+## Time Complexity
+
+- Building Dictionary: **O(n)**
+- Traversing Second List: **O(m)**
+- Finding Minimum: **O(n)**
+
+**Overall:** `O(n + m)`
+
+---
+
+## Space Complexity
+
+- Dictionary: **O(n)**
+- Answer List: **O(k)**
+
+Overall: **O(n)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+        d = {}
+        l = []
+
+        for i in range(len(list1)):
+            if list1[i] not in d:
+                d[list1[i]] = i
+
+        for i in range(len(list2)):
+            if list2[i] in d:
+                d[list2[i]] += i
+
+        minn = float('inf')
+
+        for i in d:
+            if i in list2:
+                if d[i] < minn:
+                    minn = d[i]
+                    l = [i]
+                elif d[i] == minn:
+                    l.append(i)
+
+        return l
+```
