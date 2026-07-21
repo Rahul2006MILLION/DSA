@@ -17,25 +17,34 @@ public class Minimum_Index_Sum_of_Two_List {
             }
         }
         int min=100000;
-        for(String keys: d.keySet()){
-            int value=d.get(keys);
-            if(value<min){
-                min=value;
+        for (String keys : d.keySet()) {
+        boolean found = false;
+        for (String s : list2) {
+            if (s.equals(keys)) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            int value = d.get(keys);
+            if (value < min) {
+                min = value;
                 l.clear();
                 l.add(keys);
-            }
-            else if(value==min){
+            } 
+            else if (value == min) {
                 l.add(keys);
             }
         }
-        return l;
+    }
+
+    return l;
     }
     public static void main(String[] args) {
-        String[] l1={"Shogun","Piatti","Tapioca Express","Burger King","KFC"};
+        String[] l1={"Shogun","Tapioca Express","Burger King","KFC"};
         String[] l2={"Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"};
         List<String> a=check(l1, l2);
         System.out.println(a);
     }
-
     
 }
