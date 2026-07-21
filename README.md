@@ -5454,3 +5454,44 @@ class Solution:
 
         return l
 ```
+
+
+# 704. Binary Search
+
+## Approach
+
+- Initialize two pointers:
+  - `low` at the beginning of the array.
+  - `high` at the end of the array.
+- Find the middle element using `(low + high) // 2`.
+- If the middle element is the target, return its index.
+- If the target is greater, search the right half.
+- Otherwise, search the left half.
+- If the target is not found, return `-1`.
+
+## Time Complexity
+- **O(log n)**
+
+## Space Complexity
+- **O(1)**
+
+## Python Solution
+
+```python
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        low = 0
+        high = len(nums) - 1
+
+        while low <= high:
+            mid = (low + high) // 2
+
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                low = mid + 1
+            else:
+                high = mid - 1
+
+        return -1
+```
