@@ -5529,3 +5529,33 @@ class Solution:
 
         return max(neg, pos)
 ```
+
+# 1351. Count Negative Numbers in a Sorted Matrix
+
+## Approach
+
+- Traverse each row of the matrix.
+- Traverse each element in the row.
+- If an element is negative, increment the count.
+- Return the total count of negative numbers.
+
+## Time Complexity
+- **O(m × n)**
+
+## Space Complexity
+- **O(1)**
+
+## Python Solution
+
+```python
+class Solution:
+    def countNegatives(self, grid: List[List[int]]) -> int:
+        count = 0
+
+        for row in grid:
+            for num in row:
+                if num < 0:
+                    count += 1
+
+        return count
+```
