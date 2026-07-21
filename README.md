@@ -5559,3 +5559,107 @@ class Solution:
 
         return count
 ```
+
+
+# 🍬 Distribute Candies
+
+## Problem Statement
+
+Alice has `n` candies, where each candy has a type represented by an integer.
+
+She is allowed to eat only **n / 2** candies.
+
+Your task is to determine the **maximum number of different candy types** she can eat.
+
+---
+
+## Approach
+
+The solution uses a **Python Set**.
+
+A set stores only **unique** values, so duplicate candy types are automatically removed.
+
+### Steps
+
+1. Find the total number of candies.
+2. Calculate how many candies Alice can eat (`n // 2`).
+3. Store all candy types in a set to get the unique candy types.
+4. Compare:
+   - Number of unique candy types.
+   - Number of candies Alice can eat.
+5. Return the smaller value.
+
+---
+
+## Python Implementation
+
+```python
+def distributeCandies(candyType):
+    unique = set(candyType)
+
+    can_eat = len(candyType) // 2
+
+    if len(unique) < can_eat:
+        return len(unique)
+
+    return can_eat
+```
+
+A shorter version:
+
+```python
+def distributeCandies(candyType):
+    return min(len(set(candyType)), len(candyType) // 2)
+```
+
+---
+
+## Example
+
+### Input
+
+```python
+candyType = [1, 1, 2, 2, 3, 3]
+```
+
+### Process
+
+```
+Total candies = 6
+Can eat = 3
+
+Unique candy types = {1, 2, 3}
+Unique count = 3
+```
+
+### Output
+
+```
+3
+```
+
+---
+
+## Time Complexity
+
+- Creating the set: **O(n)**
+- Overall: **O(n)**
+
+---
+
+## Space Complexity
+
+- Set stores unique candy types.
+- Worst case: **O(n)**
+
+---
+
+## Key Concept
+
+The answer is simply:
+
+```
+min(number of unique candy types, total candies // 2)
+```
+
+because Alice cannot eat more than `n / 2` candies, and she also cannot eat more different candy types than actually exist.
