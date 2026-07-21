@@ -5663,3 +5663,101 @@ min(number of unique candy types, total candies // 2)
 ```
 
 because Alice cannot eat more than `n / 2` candies, and she also cannot eat more different candy types than actually exist.
+
+
+
+# Height Checker
+
+## Problem Description
+
+A school wants to arrange students in **non-decreasing order of their heights**.
+
+You are given an array `heights` representing the current order of students.
+
+Your task is to determine **how many students are not standing in the position they would occupy if the array were sorted**.
+
+---
+
+## Approach
+
+1. Create a copy of the original array.
+2. Sort the copied array.
+3. Compare the original array with the sorted array element by element.
+4. Count every index where the values differ.
+5. Return the count.
+
+---
+
+## Python Solution
+
+```python
+def height_checker(heights):
+    expected = sorted(heights)
+
+    count = 0
+    for i in range(len(heights)):
+        if heights[i] != expected[i]:
+            count += 1
+
+    return count
+
+
+heights = [1, 1, 4, 2, 1, 3]
+print(height_checker(heights))
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+heights = [1,1,4,2,1,3]
+```
+
+**Sorted Order**
+
+```text
+[1,1,1,2,3,4]
+```
+
+**Comparison**
+
+| Index | Original | Sorted | Match |
+|------:|---------:|-------:|:-----:|
+| 0 | 1 | 1 | ✅ |
+| 1 | 1 | 1 | ✅ |
+| 2 | 4 | 1 | ❌ |
+| 3 | 2 | 2 | ✅ |
+| 4 | 1 | 3 | ❌ |
+| 5 | 3 | 4 | ❌ |
+
+Output:
+
+```text
+3
+```
+
+---
+
+## Time Complexity
+
+- Sorting: **O(n log n)**
+- Comparing arrays: **O(n)**
+
+Overall:
+
+```text
+O(n log n)
+```
+
+---
+
+## Space Complexity
+
+A copy of the array is created.
+
+```text
+O(n)
+```
