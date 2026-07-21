@@ -5495,3 +5495,37 @@ class Solution:
 
         return -1
 ```
+
+
+# 2529. Maximum Count of Positive Integer and Negative Integer
+
+## Approach
+
+- Traverse the array once.
+- Count the number of negative integers.
+- Count the number of positive integers.
+- Ignore zeros.
+- Return the maximum of the two counts.
+
+## Time Complexity
+- **O(n)**
+
+## Space Complexity
+- **O(1)**
+
+## Python Solution
+
+```python
+class Solution:
+    def maximumCount(self, nums: List[int]) -> int:
+        neg = 0
+        pos = 0
+
+        for num in nums:
+            if num < 0:
+                neg += 1
+            elif num > 0:
+                pos += 1
+
+        return max(neg, pos)
+```
