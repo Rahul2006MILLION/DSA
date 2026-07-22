@@ -5852,3 +5852,143 @@ A new array is created to store the running sums.
 ```text
 O(n)
 ```
+
+
+# 🍋 Lemonade Change
+
+A Greedy Algorithm solution to the **LeetCode 860 - Lemonade Change** problem.
+
+## 📖 Problem Description
+
+At a lemonade stand, each lemonade costs **$5**.
+
+Customers pay using either:
+
+- $5
+- $10
+- $20
+
+Initially, the seller has **no money**.
+
+For every customer, determine whether it is possible to provide the correct change. Return **True** if every customer can be served successfully; otherwise return **False**.
+
+---
+
+## 💡 Approach
+
+This problem is solved using the **Greedy Algorithm**.
+
+Instead of storing every bill received, we only keep track of:
+
+- Number of **$5 bills**
+- Number of **$10 bills**
+
+### Why Greedy?
+
+Whenever a customer pays with **$20**, we need to return **$15**.
+
+There are two possible ways:
+
+1. **$10 + $5** ✅ (Preferred)
+2. **$5 + $5 + $5**
+
+The greedy choice is to always give **$10 + $5** first because **$5 bills are more valuable** for future transactions. Every customer paying with a $10 bill requires a $5 bill as change.
+
+---
+
+## 🔄 Algorithm
+
+1. Initialize two counters:
+   - `five = 0`
+   - `ten = 0`
+
+2. Traverse through each customer's bill.
+
+### If the customer pays with **$5**
+- No change is needed.
+- Increase the number of $5 bills.
+
+### If the customer pays with **$10**
+- Give one $5 bill as change.
+- Increase the number of $10 bills.
+- If no $5 bill is available, return `False`.
+
+### If the customer pays with **$20**
+Try the following in order:
+
+1. Give one $10 and one $5.
+2. Otherwise, give three $5 bills.
+3. If neither is possible, return `False`.
+
+If all customers are processed successfully, return `True`.
+
+---
+
+## ⏱️ Time Complexity
+
+- **O(n)**
+
+Each customer is processed exactly once.
+
+---
+
+## 💾 Space Complexity
+
+- **O(1)**
+
+Only two integer variables are used regardless of input size.
+
+---
+
+## 📂 Repository Structure
+
+```
+Lemonade-Change/
+│
+├── solution.py
+└── README.md
+```
+
+---
+
+## 🐍 Python Solution
+
+```python
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        five = 0
+        ten = 0
+
+        for bill in bills:
+
+            if bill == 5:
+                five += 1
+
+            if bill == 10:
+                if five >= 1:
+                    five -= 1
+                    ten += 1
+                else:
+                    return False
+
+            if bill == 20:
+                if five >= 1 and ten >= 1:
+                    five -= 1
+                    ten -= 1
+                elif five >= 3:
+                    five -= 3
+                else:
+                    return False
+
+        return True
+```
+
+---
+
+## 🎯 Key Learning
+
+This problem demonstrates an important Greedy principle:
+
+> **Whenever multiple valid choices exist, make the choice that preserves the most valuable resource for future decisions.**
+
+In this problem, **$5 bills are the most valuable resource**, so we preserve them whenever possible by giving **$10 + $5** instead of **three $5 bills**.
