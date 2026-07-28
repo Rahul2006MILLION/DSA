@@ -6097,3 +6097,109 @@ class Solution:
 - Array Traversal
 - Conditional Checking
 - Maximum Element
+
+
+
+# Kids With the Greatest Number of Candies
+
+## Problem Statement
+
+There are `n` kids, where `candies[i]` represents the number of candies the `i`th kid has. You are also given an integer `extraCandies`, representing the number of extra candies you can give to a single kid.
+
+Return a boolean array where each element is:
+
+- `True` if giving all the extra candies to that kid makes them have the **greatest number of candies** among all kids.
+- `False` otherwise.
+
+---
+
+## Example
+
+**Input**
+
+```text
+candies = [2,3,5,1,3]
+extraCandies = 3
+```
+
+**Output**
+
+```text
+[True, True, True, False, True]
+```
+
+**Explanation**
+
+- Kid 1: 2 + 3 = 5 ✓
+- Kid 2: 3 + 3 = 6 ✓
+- Kid 3: 5 + 3 = 8 ✓
+- Kid 4: 1 + 3 = 4 ✗
+- Kid 5: 3 + 3 = 6 ✓
+
+Hence, the result is:
+
+```text
+[True, True, True, False, True]
+```
+
+---
+
+## Approach
+
+1. Find the maximum number of candies any kid currently has.
+2. Traverse the `candies` array.
+3. For each kid, add `extraCandies` to their current candies.
+4. Compare the result with the maximum value.
+5. If it is greater than or equal to the maximum, append `True`; otherwise, append `False`.
+6. Return the resulting boolean list.
+
+---
+
+## Time Complexity
+
+- Finding the maximum element: `O(n)`
+- Traversing the array: `O(n)`
+
+Overall:
+
+```text
+O(n)
+```
+
+---
+
+## Space Complexity
+
+```text
+O(n)
+```
+
+The output list stores one boolean value for each kid.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def kidsWithCandies(self, candies: List[int], extraCandies: int) -> List[bool]:
+        l = []
+
+        for i in candies:
+            if i + extraCandies >= max(candies):
+                l.append(True)
+            else:
+                l.append(False)
+
+        return l
+```
+
+---
+
+## Key Concepts Used
+
+- Arrays (Lists)
+- Traversal
+- Maximum Element
+- Conditional Statements
+- Boolean Lists
