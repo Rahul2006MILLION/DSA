@@ -5992,3 +5992,108 @@ This problem demonstrates an important Greedy principle:
 > **Whenever multiple valid choices exist, make the choice that preserves the most valuable resource for future decisions.**
 
 In this problem, **$5 bills are the most valuable resource**, so we preserve them whenever possible by giving **$10 + $5** instead of **three $5 bills**.
+
+
+
+# Find Lucky Integer in an Array
+
+## Problem Statement
+
+Given an integer array `arr`, a **lucky integer** is an integer whose **frequency in the array is equal to its value**.
+
+Return the **largest lucky integer** in the array. If no lucky integer exists, return `-1`.
+
+### Example
+
+**Input**
+```text
+arr = [2,2,3,4]
+```
+
+**Output**
+```text
+2
+```
+
+**Explanation**
+
+- Frequency of `2` = 2 ✅
+- Frequency of `3` = 1 ❌
+- Frequency of `4` = 1 ❌
+
+Hence, the answer is `2`.
+
+---
+
+## Approach
+
+1. Create a dictionary to store the frequency of every number.
+2. Traverse the array and count the occurrences of each element.
+3. Iterate through the dictionary.
+4. If a number is equal to its frequency, it is a lucky integer.
+5. Store all lucky integers.
+6. Return the largest lucky integer.
+7. If no lucky integer exists, return `-1`.
+
+---
+
+## Time Complexity
+
+- **Counting frequencies:** `O(n)`
+- **Checking lucky integers:** `O(k)`
+
+Overall:
+
+```text
+O(n)
+```
+
+where `n` is the length of the array.
+
+---
+
+## Space Complexity
+
+```text
+O(k)
+```
+
+where `k` is the number of distinct elements in the array.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findLucky(self, arr: List[int]) -> int:
+        l = []
+        f = 0
+        d = {}
+
+        for i in range(0, len(arr)):
+            if arr[i] not in d:
+                d[arr[i]] = 1
+            else:
+                d[arr[i]] += 1
+
+        for i in d:
+            if i == d[i]:
+                f = 1
+                l.append(i)
+
+        if f == 1:
+            return max(l)
+
+        return -1
+```
+
+---
+
+## Key Concepts Used
+
+- Dictionary (Hash Map)
+- Frequency Counting
+- Array Traversal
+- Conditional Checking
+- Maximum Element
