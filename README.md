@@ -6203,3 +6203,265 @@ class Solution:
 - Maximum Element
 - Conditional Statements
 - Boolean Lists
+
+
+# Unique Email Addresses
+
+## Problem
+Given a list of email addresses, return the number of unique email addresses after applying the following rules:
+
+- Ignore all `.` (dots) in the local name (before `@`).
+- Ignore everything after the first `+` in the local name.
+- The domain name (after `@`) remains unchanged.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def numUniqueEmails(self, emails: List[str]) -> int:
+        lookup = set()
+
+        for email in emails:
+            local, domain = email.split('@')
+
+            temp = []
+
+            for ch in local:
+                if ch == '.':
+                    continue
+                if ch == '+':
+                    break
+                temp.append(ch)
+
+            lookup.add(''.join(temp) + '@' + domain)
+
+        return len(lookup)
+```
+
+---
+
+## Explanation
+
+### Step 1: Create a set
+
+```python
+lookup = set()
+```
+
+A set stores only unique values. Duplicate emails are automatically ignored.
+
+---
+
+### Step 2: Traverse every email
+
+```python
+for email in emails:
+```
+
+Process each email one by one.
+
+---
+
+### Step 3: Split the email
+
+```python
+local, domain = email.split('@')
+```
+
+Example:
+
+```
+test.email+alex@leetcode.com
+```
+
+becomes
+
+```
+local  = "test.email+alex"
+domain = "leetcode.com"
+```
+
+---
+
+### Step 4: Create an empty list
+
+```python
+temp = []
+```
+
+This list stores the valid characters of the local name.
+
+---
+
+### Step 5: Traverse the local name
+
+```python
+for ch in local:
+```
+
+Read each character one by one.
+
+---
+
+### Step 6: Ignore dots
+
+```python
+if ch == '.':
+    continue
+```
+
+`.` does not affect the email.
+
+Example:
+
+```
+te.st.email
+```
+
+becomes
+
+```
+testemail
+```
+
+---
+
+### Step 7: Stop at '+'
+
+```python
+if ch == '+':
+    break
+```
+
+Everything after `+` is ignored.
+
+Example:
+
+```
+test+alex
+```
+
+becomes
+
+```
+test
+```
+
+---
+
+### Step 8: Store valid characters
+
+```python
+temp.append(ch)
+```
+
+Characters that are neither `.` nor after `+` are added to the list.
+
+Example:
+
+```
+temp = ['t', 'e', 's', 't']
+```
+
+---
+
+### Step 9: Build the normalized email
+
+```python
+lookup.add(''.join(temp) + '@' + domain)
+```
+
+`''.join(temp)` converts the list into a string.
+
+Example:
+
+```
+['t', 'e', 's', 't']
+```
+
+becomes
+
+```
+"test"
+```
+
+Final email:
+
+```
+test@leetcode.com
+```
+
+This email is added to the set.
+
+---
+
+### Step 10: Return the answer
+
+```python
+return len(lookup)
+```
+
+The size of the set is the number of unique email addresses.
+
+---
+
+## Example
+
+### Input
+
+```python
+emails = [
+    "test.email+alex@leetcode.com",
+    "test.e.mail+bob.cathy@leetcode.com",
+    "testemail+david@lee.tcode.com"
+]
+```
+
+### Processing
+
+```
+test.email+alex@leetcode.com
+→ testemail@leetcode.com
+
+test.e.mail+bob.cathy@leetcode.com
+→ testemail@leetcode.com
+
+testemail+david@lee.tcode.com
+→ testemail@lee.tcode.com
+```
+
+### Unique Emails
+
+```
+testemail@leetcode.com
+testemail@lee.tcode.com
+```
+
+### Output
+
+```
+2
+```
+
+---
+
+## Time Complexity
+
+```
+O(n × m)
+```
+
+- `n` = Number of emails
+- `m` = Average length of each email
+
+---
+
+## Space Complexity
+
+```
+O(n)
+```
+
+The set stores all unique normalized email addresses.
