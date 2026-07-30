@@ -6465,3 +6465,99 @@ O(n)
 ```
 
 The set stores all unique normalized email addresses.
+
+
+# Merge Sorted Array (LeetCode 88)
+
+## Problem Statement
+Uses 3 pointers!
+You are given two sorted integer arrays `nums1` and `nums2`, and two integers `m` and `n` representing the number of valid elements in each array.
+
+- `nums1` has a size of `m + n`.
+- The first `m` elements are valid.
+- The last `n` elements are `0` and are placeholders.
+- Merge `nums2` into `nums1` so that the final array remains sorted in non-decreasing order.
+
+The merge must be performed **in-place**.
+
+---
+
+## Approach
+
+Instead of merging from the beginning, start from the **end** of both arrays.
+
+### Steps
+
+1. Point `x` to the last valid element of `nums1`.
+2. Point `y` to the last element of `nums2`.
+3. Point `z` to the last position of `nums1`.
+4. Compare `nums1[x]` and `nums2[y]`.
+5. Place the larger element at `nums1[z]`.
+6. Move the corresponding pointer.
+7. Continue until all elements of `nums2` have been merged.
+
+This avoids shifting elements and achieves an optimal solution.
+
+---
+
+## Time Complexity
+
+- **O(m + n)**
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        """
+        Do not return anything, modify nums1 in-place instead.
+        """
+
+        x = m - 1
+        y = n - 1
+        z = m + n - 1
+
+        while y >= 0:
+            if x >= 0 and nums1[x] >= nums2[y]:
+                nums1[z] = nums1[x]
+                x -= 1
+            else:
+                nums1[z] = nums2[y]
+                y -= 1
+
+            z -= 1
+```
+
+---
+
+## Example
+
+### Input
+
+```text
+nums1 = [1,2,3,0,0,0]
+m = 3
+
+nums2 = [2,5,6]
+n = 3
+```
+
+### Output
+
+```text
+[1,2,2,3,5,6]
+```
+
+---
+
+## Key Idea
+
+The empty spaces are already available at the end of `nums1`.
+
+By filling these positions from right to left using the largest remaining element from either array, we avoid shifting elements and perform the merge in linear time.
