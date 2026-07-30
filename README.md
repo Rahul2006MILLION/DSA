@@ -6561,3 +6561,91 @@ n = 3
 The empty spaces are already available at the end of `nums1`.
 
 By filling these positions from right to left using the largest remaining element from either array, we avoid shifting elements and perform the merge in linear time.
+
+
+# Squares of a Sorted Array (LeetCode 977)
+
+## Problem Statement
+
+Given an integer array `nums` sorted in non-decreasing order, return an array of the squares of each number, also sorted in non-decreasing order.
+
+---
+
+## Approach
+
+1. Create a new array to store the squared values.
+2. Traverse the input array.
+3. Square each element and store it in the new array.
+4. Sort the new array.
+5. Return the sorted squared array.
+
+This is a straightforward approach that first computes all squares and then sorts the result.
+
+---
+
+## Time Complexity
+
+- Squaring each element: **O(n)**
+- Sorting the squared array: **O(n log n)**
+
+**Overall:** **O(n log n)**
+
+---
+
+## Space Complexity
+
+- Extra array for storing squares: **O(n)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def sortedSquares(self, nums: List[int]) -> List[int]:
+        result = []
+
+        for num in nums:
+            result.append(num * num)
+
+        result.sort()
+        return result
+```
+
+---
+
+## Example
+
+### Input
+
+```text
+nums = [-4,-1,0,3,10]
+```
+
+### Output
+
+```text
+[0,1,9,16,100]
+```
+
+---
+
+## Explanation
+
+The squares of the elements are:
+
+```text
+16, 1, 0, 9, 100
+```
+
+After sorting them:
+
+```text
+0, 1, 9, 16, 100
+```
+
+---
+
+## Note
+
+This solution is simple and easy to understand but is **not the most optimal**. Since the input array is already sorted, a two-pointer approach can solve the problem in **O(n)** time without using a sorting algorithm.
