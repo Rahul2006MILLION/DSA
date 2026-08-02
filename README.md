@@ -6789,7 +6789,7 @@ Final Answer
 
 ---
 
-# Java Code
+# Python Code
 
 ```Python Code
 
