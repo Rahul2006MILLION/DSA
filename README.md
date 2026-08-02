@@ -6846,3 +6846,109 @@ This pattern is commonly used in problems like:
 - Sort Colors
 - Partition Array
 - Merge Sorted Arrays
+
+
+# Baseball Game (LeetCode 682)
+
+## Problem
+
+You are given a list of operations representing scores in a baseball game.
+
+Operations:
+
+- Integer → Add a new score.
+- `"+"` → Add the previous two scores.
+- `"D"` → Add double the previous score.
+- `"C"` → Remove the previous score.
+
+Return the total score after performing all operations.
+
+---
+
+## Example
+
+**Input**
+
+```text
+["5","-2","4","C","D","9","+","+"]
+```
+
+**Output**
+
+```text
+27
+```
+
+---
+
+## Intuition
+
+Use a **stack (list)** to store valid scores.
+
+- Number → Push into the stack.
+- `"C"` → Remove the last score.
+- `"D"` → Push double of the last score.
+- `"+"` → Push the sum of the last two scores.
+
+Finally, return the sum of all values in the stack.
+
+---
+
+## Python Code
+
+```python
+class Solution:
+    def calPoints(self, operations: List[str]) -> int:
+        l = []
+
+        for i in operations:
+
+            if i not in ['C', 'D', '+']:
+                l.append(int(i))
+
+            elif i == 'C':
+                l.pop()
+
+            elif i == 'D':
+                l.append(2 * l[-1])
+
+            elif i == '+':
+                l.append(l[-1] + l[-2])
+
+        return sum(l)
+```
+
+---
+
+## Time Complexity
+
+```text
+O(n)
+```
+
+Each operation is processed once.
+
+---
+
+## Space Complexity
+
+```text
+O(n)
+```
+
+The stack stores all valid scores.
+
+---
+
+## Key Learning
+
+This problem uses the **Stack** data structure.
+
+Useful stack operations:
+
+- `append()` → Push
+- `pop()` → Remove top element
+- `l[-1]` → Top element
+- `l[-2]` → Second top element
+
+Whenever a problem repeatedly uses the **most recent element**, consider using a **stack**.
