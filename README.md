@@ -6649,3 +6649,200 @@ After sorting them:
 ## Note
 
 This solution is simple and easy to understand but is **not the most optimal**. Since the input array is already sorted, a two-pointer approach can solve the problem in **O(n)** time without using a sorting algorithm.
+
+
+
+# Move Zeroes (LeetCode 283)
+
+## Problem
+Given an integer array `nums`, move all `0`s to the end while maintaining the relative order of the non-zero elements.
+
+The operation must be performed **in-place**, without creating another array.
+
+### Example
+
+**Input**
+```text
+nums = [0,1,0,3,12]
+```
+
+**Output**
+```text
+[1,3,12,0,0]
+```
+
+---
+
+# Intuition
+
+Instead of creating a new array, we use **Two Pointers**.
+
+- `i` → Scans every element of the array.
+- `j` → Points to the position where the next non-zero element should be placed.
+
+Whenever a non-zero element is found:
+
+- Swap `nums[i]` with `nums[j]`.
+- Increment `j`.
+
+Zeroes are skipped automatically and end up at the back of the array.
+
+---
+
+# Dry Run
+
+Initial Array
+
+```text
+[0,1,0,3,12]
+
+i = 0
+j = 0
+```
+
+### Iteration 1
+
+```text
+nums[i] = 0
+
+Skip
+
+Array:
+[0,1,0,3,12]
+
+i = 1
+j = 0
+```
+
+---
+
+### Iteration 2
+
+```text
+nums[i] = 1
+
+Swap nums[1] and nums[0]
+
+[1,0,0,3,12]
+
+j = 1
+```
+
+---
+
+### Iteration 3
+
+```text
+nums[i] = 0
+
+Skip
+
+[1,0,0,3,12]
+
+j = 1
+```
+
+---
+
+### Iteration 4
+
+```text
+nums[i] = 3
+
+Swap nums[3] and nums[1]
+
+[1,3,0,0,12]
+
+j = 2
+```
+
+---
+
+### Iteration 5
+
+```text
+nums[i] = 12
+
+Swap nums[4] and nums[2]
+
+[1,3,12,0,0]
+
+j = 3
+```
+
+Final Answer
+
+```text
+[1,3,12,0,0]
+```
+
+---
+
+# Algorithm
+
+1. Initialize `j = 0`.
+2. Traverse the array using pointer `i`.
+3. If `nums[i]` is non-zero:
+   - Swap `nums[i]` and `nums[j]`.
+   - Increment `j`.
+4. Continue until the end of the array.
+
+---
+
+# Java Code
+
+```Python Code
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        j=0
+        for i in range(0,len(nums)):
+            if(nums[i]!=0):
+                temp=nums[i]
+                nums[i]=nums[j]
+                nums[j]=temp
+                j+=1
+        return nums
+```
+
+---
+
+# Time Complexity
+
+```text
+O(n)
+```
+
+The array is traversed only once.
+
+---
+
+# Space Complexity
+
+```text
+O(1)
+```
+
+No extra array is used.
+
+---
+
+# Key Learning
+
+This problem introduces the **Two Pointer** technique.
+
+- `i` is the **scanner** that visits every element.
+- `j` is the **destination pointer** where the next valid element should be placed.
+- `i` always moves forward.
+- `j` moves only after placing a non-zero element.
+
+This pattern is commonly used in problems like:
+
+- Remove Element
+- Remove Duplicates from Sorted Array
+- Sort Colors
+- Partition Array
+- Merge Sorted Arrays
