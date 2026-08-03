@@ -7188,3 +7188,53 @@ class Solution:
   - `k` = number of times `original` is doubled
 
 - **Space Complexity:** `O(1)`
+
+
+# 3168. Minimum Number of Chairs in a Waiting Room
+
+## Problem
+
+You are given a string `s` where:
+
+- `'E'` represents a person entering the waiting room.
+- `'L'` represents a person leaving the waiting room.
+
+Return the minimum number of chairs required so that every person who enters always has a chair.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def minimumChairs(self, s: str) -> int:
+        best = 0
+        curr = 0
+
+        for i in range(len(s)):
+            if s[i] == 'E':
+                curr += 1
+                if curr > best:
+                    best = curr
+
+            if s[i] == 'L':
+                curr -= 1
+
+        return best
+```
+
+---
+
+## Intuition
+
+- Keep track of the number of people currently in the waiting room.
+- Increase the count when someone enters (`'E'`).
+- Decrease the count when someone leaves (`'L'`).
+- The maximum number of people present at any point is the minimum number of chairs required.
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)`
+- **Space Complexity:** `O(1)`
