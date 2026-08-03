@@ -7036,3 +7036,110 @@ class Solution:
 
         return best
 ```
+
+
+
+# 747. Largest Number At Least Twice of Others
+
+## Problem Statement
+
+Given an integer array `nums` where the largest element is unique, determine whether it is at least **twice as large** as every other number in the array.
+
+- If the condition is satisfied, return the **index** of the largest element.
+- Otherwise, return **-1**.
+
+---
+
+## Example 1
+
+### Input
+
+```python
+nums = [3, 6, 1, 0]
+```
+
+### Output
+
+```python
+1
+```
+
+### Explanation
+
+- Largest element = `6`
+- Index of `6` = `1`
+- `6 >= 2 × 3`
+- `6 >= 2 × 1`
+- `6 >= 2 × 0`
+
+Hence, return `1`.
+
+---
+
+## Example 2
+
+### Input
+
+```python
+nums = [1, 2, 3, 4]
+```
+
+### Output
+
+```python
+-1
+```
+
+### Explanation
+
+- Largest element = `4`
+- `4 < 2 × 3`
+
+Hence, return `-1`.
+
+---
+
+## Intuition
+
+- Find the largest element in the array.
+- Store its index.
+- Double every other element.
+- If every doubled value is less than or equal to the largest element, return the index of the largest element.
+- Otherwise, return `-1`.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+## Space Complexity
+
+- **O(n)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def dominantIndex(self, nums: List[int]) -> int:
+        l = []
+        f = 0
+
+        a = max(nums)
+        ind = nums.index(a)
+
+        for i in nums:
+            if i != a:
+                l.append(2 * i)
+
+        for i in range(len(l)):
+            if l[i] <= a:
+                f = 1
+            else:
+                return -1
+
+        if f == 1:
+            return ind
+```
