@@ -7143,3 +7143,48 @@ class Solution:
         if f == 1:
             return ind
 ```
+
+
+# 2154. Keep Multiplying Found Values by Two
+
+## Problem
+
+You are given an integer array `nums` and an integer `original`.
+
+- If `original` is found in `nums`, multiply it by `2`.
+- Repeat this process until `original` is no longer present in `nums`.
+
+Return the final value of `original`.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findFinalValue(self, nums: List[int], original: int) -> int:
+        while original in nums:
+            for i in nums:
+                if i == original:
+                    original *= 2
+        return original
+```
+
+---
+
+## Intuition
+
+- Keep checking whether `original` exists in the array.
+- If it does, double its value.
+- Repeat until the current value is no longer found.
+- Return the final value.
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n × k)`
+  - `n` = length of `nums`
+  - `k` = number of times `original` is doubled
+
+- **Space Complexity:** `O(1)`
