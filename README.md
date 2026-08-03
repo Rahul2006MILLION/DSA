@@ -6952,3 +6952,87 @@ Useful stack operations:
 - `l[-2]` → Second top element
 
 Whenever a problem repeatedly uses the **most recent element**, consider using a **stack**.
+
+
+
+# 674. Longest Continuous Increasing Subsequence
+
+## Problem Statement
+
+Given an unsorted array of integers `nums`, return the length of the longest **continuous increasing subsequence**.
+
+A continuous increasing subsequence satisfies:
+
+```
+nums[i] < nums[i + 1]
+```
+
+for every adjacent pair in the subsequence.
+
+---
+
+## Example
+
+### Input
+
+```python
+nums = [1, 3, 5, 4, 7]
+```
+
+### Output
+
+```python
+3
+```
+
+### Explanation
+
+The longest continuous increasing subsequence is:
+
+```python
+[1, 3, 5]
+```
+
+---
+
+## Intuition
+
+- Every element alone is an increasing subsequence of length **1**.
+- Traverse the array from left to right.
+- Compare the current element with the previous element.
+- If the sequence is increasing:
+  - Extend the current streak.
+- Otherwise:
+  - Start a new streak from the current element.
+- Keep track of the maximum streak encountered.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findLengthOfLCIS(self, nums: List[int]) -> int:
+        best = 1
+        curr = 1
+
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i - 1]:
+                curr += 1
+                if curr > best:
+                    best = curr
+            else:
+                curr = 1
+
+        return best
+```
