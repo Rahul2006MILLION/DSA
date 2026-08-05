@@ -7324,3 +7324,75 @@ class Solution:
 - Careful handling of array boundaries.
 - Translating mathematical rules directly into code.
 - Simple Dynamic Programming (Bottom-Up Construction).
+
+
+# 1748. Sum of Unique Elements
+
+## Problem
+
+Given an integer array `nums`, return the **sum of all elements that appear exactly once** in the array.
+
+---
+
+## Intuition
+
+We first count the frequency of every element using a dictionary.
+
+- If an element appears for the first time, store it with a count of `1`.
+- If it appears again, increase its frequency.
+
+After counting all frequencies, traverse the dictionary and collect only the elements whose frequency is `1`.
+
+Finally, return the sum of those unique elements.
+
+---
+
+## Algorithm
+
+1. Create an empty dictionary to store frequencies.
+2. Traverse the array:
+   - If the element is not present in the dictionary, store it with frequency `1`.
+   - Otherwise, increment its frequency.
+3. Create an empty list.
+4. Traverse the dictionary:
+   - If an element has frequency `1`, add it to the list.
+5. Return the sum of the list.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def sumOfUnique(self, nums: List[int]) -> int:
+        d = {}
+        l = []
+
+        for i in range(len(nums)):
+            if nums[i] not in d:
+                d[nums[i]] = 1
+            else:
+                d[nums[i]] += 1
+
+        for i in d:
+            if d[i] == 1:
+                l.append(i)
+
+        return sum(l)
+```
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)`
+- **Space Complexity:** `O(n)`
+
+---
+
+## Key Learning
+
+- Counting element frequencies using a dictionary (hash map).
+- Identifying unique elements based on their frequency.
+- Using `sum()` to efficiently compute the total of all unique values.
+- A hash map is an efficient choice for frequency counting problems.
