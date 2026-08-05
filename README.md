@@ -7238,3 +7238,89 @@ class Solution:
 
 - **Time Complexity:** `O(n)`
 - **Space Complexity:** `O(1)`
+
+
+
+# 1646. Get Maximum in Generated Array
+
+## Problem
+Given an integer `n`, generate an array `nums` of length `n + 1` using the following rules:
+
+- `nums[0] = 0`
+- `nums[1] = 1`
+- `nums[2 * i] = nums[i]` when `2 * i <= n`
+- `nums[2 * i + 1] = nums[i] + nums[i + 1]` when `2 * i + 1 <= n`
+
+Return the maximum value present in the generated array.
+
+---
+
+## Intuition
+
+The array is **not given**. We have to generate it from scratch.
+
+Start with:
+
+```
+nums[0] = 0
+nums[1] = 1
+```
+
+For every valid index `i`:
+
+- Copy the value to the even index (`2*i`).
+- Add two previously generated values for the odd index (`2*i+1`).
+
+Since every new value depends only on already generated values, we can build the array from left to right.
+
+Finally, return the maximum element in the generated array.
+
+---
+
+## Algorithm
+
+1. Handle the edge case when `n == 0`.
+2. Create an array of size `n + 1`.
+3. Initialize:
+   - `nums[0] = 0`
+   - `nums[1] = 1`
+4. Traverse through the indices.
+5. If `2*i <= n`, generate the even index.
+6. If `2*i + 1 <= n`, generate the odd index.
+7. Return the maximum element of the array.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def getMaximumGenerated(self, n: int) -> int:
+        if(n==0):
+            return 0
+        nums=[0]*(n+1)
+        nums[0]=0
+        nums[1]=1
+        for i in range(0,n+2):
+            if(2*i<=n):
+                nums[2*i]=nums[i]
+            if(2*i+1<=n):
+                nums[2*i+1]=nums[i]+nums[i+1]
+        return max(nums)
+```
+
+---
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)`
+- **Space Complexity:** `O(n)`
+
+---
+
+## Key Learning
+
+- Building an array using previously computed values.
+- Careful handling of array boundaries.
+- Translating mathematical rules directly into code.
+- Simple Dynamic Programming (Bottom-Up Construction).
