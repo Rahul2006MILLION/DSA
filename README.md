@@ -7396,3 +7396,110 @@ class Solution:
 - Identifying unique elements based on their frequency.
 - Using `sum()` to efficiently compute the total of all unique values.
 - A hash map is an efficient choice for frequency counting problems.
+
+
+# Min Cost Climbing Stairs
+
+## Problem
+
+You are given an integer array `cost` where `cost[i]` is the cost of stepping on the `i-th` stair.
+
+You can either climb **1** or **2** stairs at a time, and you may start from stair `0` or stair `1`.
+
+Return the minimum cost required to reach the top.
+
+---
+
+## Intuition
+
+Instead of finding the minimum cost from the beginning, we solve the problem **from the end towards the beginning**.
+
+The last position (the top) requires **0 cost**, so we append `0` to the array.
+
+For every stair, there are only two choices:
+
+- Move to the next stair.
+- Skip one stair.
+
+The minimum cost from the current stair is therefore:
+
+```
+cost[i] = cost[i] + min(cost[i+1], cost[i+2])
+```
+
+We update the array itself, so no extra DP array is needed.
+
+Finally, since we can start from either stair `0` or stair `1`, the answer is
+
+```
+min(cost[0], cost[1])
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        cost.append(0)
+
+        for i in range(len(cost) - 3, -1, -1):
+            cost[i] = min(cost[i] + cost[i + 1],
+                          cost[i] + cost[i + 2])
+
+        return min(cost[0], cost[1])
+```
+
+---
+
+## Dry Run
+
+Input
+
+```
+cost = [10, 15, 20]
+```
+
+After appending `0`
+
+```
+[10, 15, 20, 0]
+```
+
+Process from right to left:
+
+```
+i = 1
+
+15 + min(20, 0)
+= 15
+
+Array:
+[10, 15, 20, 0]
+```
+
+```
+i = 0
+
+10 + min(15, 20)
+= 25
+
+Array:
+[25, 15, 20, 0]
+```
+
+Answer
+
+```
+min(25, 15) = 15
+```
+
+---
+
+## Complexity
+
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(1)
+
+The input array is modified in-place, so no additional dynamic programming array is required.
