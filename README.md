@@ -7503,3 +7503,112 @@ min(25, 15) = 15
 - **Space Complexity:** O(1)
 
 The input array is modified in-place, so no additional dynamic programming array is required.
+
+
+# N-th Tribonacci Number
+
+## Problem
+
+The Tribonacci sequence is defined as:
+
+- T₀ = 0
+- T₁ = 1
+- T₂ = 1
+
+For every `n >= 0`,
+
+```
+Tₙ₊₃ = Tₙ + Tₙ₊₁ + Tₙ₊₂
+```
+
+Given an integer `n`, return the value of `Tₙ`.
+
+---
+
+## Intuition
+
+The current Tribonacci number depends only on the previous three Tribonacci numbers.
+
+We create a DP array where each index stores a Tribonacci number.
+
+```
+arr[0] = T0
+arr[1] = T1
+arr[2] = T2
+```
+
+Then, starting from index `3`, we compute every new Tribonacci number using the previous three values.
+
+Since the loop computes values only up to `T(n-1)`, the answer `T(n)` is obtained by summing the last three computed Tribonacci numbers.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def tribonacci(self, n: int) -> int:
+        if n == 0:
+            return 0
+        if n == 1:
+            return 1
+        if n == 2:
+            return 1
+
+        arr = [0] * n
+        arr[0] = 0
+        arr[1] = 1
+        arr[2] = 1
+
+        for i in range(3, n):
+            arr[i] = arr[i-1] + arr[i-2] + arr[i-3]
+
+        return arr[n-1] + arr[n-2] + arr[n-3]
+```
+
+---
+
+## Dry Run
+
+### Input
+
+```
+n = 4
+```
+
+Initial array
+
+```
+[0, 1, 1, 0]
+```
+
+### Iteration
+
+```
+i = 3
+
+arr[3] = arr[2] + arr[1] + arr[0]
+       = 1 + 1 + 0
+       = 2
+```
+
+Array becomes
+
+```
+[0, 1, 1, 2]
+```
+
+### Answer
+
+```
+arr[3] + arr[2] + arr[1]
+= 2 + 1 + 1
+= 4
+```
+
+---
+
+## Complexity
+
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(n)
