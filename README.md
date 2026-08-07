@@ -7742,3 +7742,79 @@ In the worst case (all elements are equal), `k = n(n-1)/2`, making the space com
 ## Note
 
 This solution stores every good pair before counting them. An optimized solution using a **HashMap** can solve the problem in **O(n)** time with **O(n)** extra space.
+
+
+
+# Find Greatest Common Divisor of an Array
+
+## Problem
+Given an integer array `nums`, return the **greatest common divisor (GCD)** of the smallest and largest numbers in the array.
+
+---
+
+## Approach
+
+1. Find the **minimum** and **maximum** elements in the array.
+2. Use the **Euclidean Algorithm** to compute their GCD.
+3. Return the GCD.
+
+The Euclidean Algorithm repeatedly replaces the larger number with the remainder obtained after dividing it by the smaller number until one number becomes `0`. The other number is the GCD.
+
+---
+
+## Time Complexity
+
+- Finding minimum and maximum: **O(n)**
+- Euclidean Algorithm: **O(log(min(nums)))**
+
+**Overall:** `O(n)`
+
+---
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def findGCD(self, nums: List[int]) -> int:
+        mi = min(nums)
+        ma = max(nums)
+
+        while ma > 0 and mi > 0:
+            if ma > mi:
+                ma = ma % mi
+            else:
+                mi = mi % ma
+
+        if ma == 0:
+            return mi
+        return ma
+```
+
+## Example
+
+**Input**
+
+```text
+nums = [2,5,6,9,10]
+```
+
+**Output**
+
+```text
+2
+```
+
+**Explanation**
+
+- Smallest element = `2`
+- Largest element = `10`
+- `GCD(2, 10) = 2`
+
+---
+**Algorithm Used:** Euclidean Algorithm
