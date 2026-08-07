@@ -8101,3 +8101,111 @@ The converted temperatures are returned as:
 ---
 
 **Algorithm Used:** Mathematical Formula
+
+
+***
+
+
+# Minimum Cuts to Divide a Circle
+
+## Problem
+
+Given an integer `n`, return the **minimum number of cuts** needed to divide a circle into exactly `n` equal slices.
+
+---
+
+## Approach
+
+1. If `n` is `1`, no cuts are needed, so return `0`.
+2. If `n` is even, each cut can divide the circle into two equal parts passing through the center, so the minimum cuts required are `n / 2`.
+3. If `n` is odd (greater than `1`), each slice requires a separate cut, so return `n`.
+
+---
+
+## Time Complexity
+
+- **O(1)**
+
+---
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def numberOfCuts(self, n: int) -> int:
+        if n == 1:
+            return 0
+        if n % 2 == 0:
+            return n // 2
+        return n
+```
+
+---
+
+## Example 1
+
+**Input**
+
+```text
+n = 4
+```
+
+**Output**
+
+```text
+2
+```
+
+**Explanation**
+
+Two cuts passing through the center divide the circle into four equal slices.
+
+---
+
+## Example 2
+
+**Input**
+
+```text
+n = 3
+```
+
+**Output**
+
+```text
+3
+```
+
+**Explanation**
+
+Since `3` is odd, three cuts are needed to create three equal slices.
+
+---
+
+## Example 3
+
+**Input**
+
+```text
+n = 1
+```
+
+**Output**
+
+```text
+0
+```
+
+**Explanation**
+
+No cuts are needed because the circle already consists of one whole piece.
+
+---
+
+**Algorithm Used:** Mathematical Observation
