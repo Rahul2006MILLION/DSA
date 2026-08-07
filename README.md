@@ -7919,3 +7919,92 @@ There are **4** divisors, so the answer is `False`.
 ---
 
 **Algorithm Used:** Brute Force (Divisor Counting)
+
+
+
+# Smallest Even Multiple
+
+## Problem
+
+Given a positive integer `n`, return the **smallest positive integer** that is a multiple of both `2` and `n`.
+
+---
+
+## Approach
+
+1. Check whether `n` is even.
+2. If `n` is even, it is already a multiple of `2`, so return `n`.
+3. If `n` is odd, multiply it by `2` to get the smallest even multiple.
+
+---
+
+## Time Complexity
+
+- **O(1)**
+
+---
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def smallestEvenMultiple(self, n: int) -> int:
+        if n % 2 == 0:
+            return n
+        else:
+            return n * 2
+```
+
+---
+
+## Example 1
+
+**Input**
+
+```text
+n = 5
+```
+
+**Output**
+
+```text
+10
+```
+
+**Explanation**
+
+- Multiples of `2`: `2, 4, 6, 8, 10, ...`
+- Multiples of `5`: `5, 10, 15, ...`
+
+The smallest common multiple is **10**.
+
+---
+
+## Example 2
+
+**Input**
+
+```text
+n = 6
+```
+
+**Output**
+
+```text
+6
+```
+
+**Explanation**
+
+Since `6` is already even, it is a multiple of both `2` and `6`.
+
+---
+
+**Algorithm Used:** Mathematical Observation
+```
