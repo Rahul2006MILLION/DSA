@@ -7818,3 +7818,104 @@ nums = [2,5,6,9,10]
 
 ---
 **Algorithm Used:** Euclidean Algorithm
+
+
+# Three Divisors
+
+## Problem
+
+Given an integer `n`, return `true` if `n` has **exactly three positive divisors**. Otherwise, return `false`.
+
+---
+
+## Approach
+
+1. Traverse all numbers from `1` to `n`.
+2. Check if the current number divides `n` evenly.
+3. If it does, add it to a list of divisors.
+4. After the traversal, check the size of the list.
+5. If the list contains exactly **3** divisors, return `True`; otherwise, return `False`.
+
+---
+
+## Time Complexity
+
+- **O(n)**
+
+---
+
+## Space Complexity
+
+- **O(n)** (stores all divisors in a list)
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def isThree(self, n: int) -> bool:
+        l = []
+
+        for i in range(1, n + 1):
+            if n % i == 0:
+                l.append(i)
+
+        return len(l) == 3
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+n = 4
+```
+
+**Output**
+
+```text
+True
+```
+
+**Explanation**
+
+The divisors of `4` are:
+
+```text
+1, 2, 4
+```
+
+Since there are exactly **3** divisors, the answer is `True`.
+
+---
+
+## Another Example
+
+**Input**
+
+```text
+n = 6
+```
+
+**Output**
+
+```text
+False
+```
+
+**Explanation**
+
+The divisors of `6` are:
+
+```text
+1, 2, 3, 6
+```
+
+There are **4** divisors, so the answer is `False`.
+
+---
+
+**Algorithm Used:** Brute Force (Divisor Counting)
