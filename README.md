@@ -7612,3 +7612,133 @@ arr[3] + arr[2] + arr[1]
 
 - **Time Complexity:** O(n)
 - **Space Complexity:** O(n)
+
+
+
+# Number of Good Pairs
+
+## Problem
+Given an integer array `nums`, return the number of **good pairs**.
+
+A pair `(i, j)` is considered **good** if:
+
+- `nums[i] == nums[j]`
+- `i < j`
+
+---
+
+## Approach
+
+This solution uses the **Brute Force (Nested Loop)** approach.
+
+1. Compare every element with all the elements after it.
+2. If two elements are equal, store their indices as a pair.
+3. Return the total number of stored pairs.
+
+Since every possible pair is checked, the algorithm correctly counts all good pairs.
+
+---
+
+## Java Solution
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Number_of_Good_Pairs {
+    public static int check(int[] nums){
+        List<int[]> l = new ArrayList<>();
+
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] == nums[j]){
+                    l.add(new int[]{i, j});
+                }
+            }
+        }
+
+        int count = 0;
+        for(int[] p : l){
+            count++;
+        }
+
+        return count;
+    }
+
+    public static void main(String[] args) {
+        int[] a = {1,2,3,1,1,3};
+        int g = check(a);
+        System.out.println(g);
+    }
+}
+```
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def numIdenticalPairs(self, nums: List[int]) -> int:
+        l = []
+
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                if nums[i] == nums[j]:
+                    l.append([i, j])
+
+        return len(l)
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+nums = [1,2,3,1,1,3]
+```
+
+**Stored Pairs**
+
+```text
+(0,3)
+(0,4)
+(2,5)
+(3,4)
+```
+
+**Output**
+
+```text
+4
+```
+
+---
+
+## Complexity Analysis
+
+### Time Complexity
+
+```
+O(n²)
+```
+
+Two nested loops compare every possible pair.
+
+### Space Complexity
+
+```
+O(k)
+```
+
+where `k` is the number of good pairs stored in the list.
+
+In the worst case (all elements are equal), `k = n(n-1)/2`, making the space complexity **O(n²)**.
+
+---
+
+## Note
+
+This solution stores every good pair before counting them. An optimized solution using a **HashMap** can solve the problem in **O(n)** time with **O(n)** extra space.
