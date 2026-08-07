@@ -8008,3 +8008,96 @@ Since `6` is already even, it is a multiple of both `2` and `6`.
 
 **Algorithm Used:** Mathematical Observation
 ```
+
+
+# Convert the Temperature
+
+## Problem
+
+Given a non-negative floating-point number `celsius`, convert it into **Kelvin** and **Fahrenheit**, and return the results as an array in the order:
+
+```text
+[kelvin, fahrenheit]
+```
+
+---
+
+## Approach
+
+1. Convert Celsius to Kelvin using the formula:
+   ```text
+   Kelvin = Celsius + 273.15
+   ```
+2. Convert Celsius to Fahrenheit using the formula:
+   ```text
+   Fahrenheit = Celsius × 1.80 + 32.00
+   ```
+3. Store both converted values in a list and return it.
+
+---
+
+## Time Complexity
+
+- **O(1)**
+
+---
+
+## Space Complexity
+
+- **O(1)**
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+    def convertTemperature(self, celsius: float) -> List[float]:
+        l = []
+
+        kelvin = celsius + 273.15
+        fahrenheit = celsius * 1.80 + 32.00
+
+        l.append(kelvin)
+        l.append(fahrenheit)
+
+        return l
+```
+
+---
+
+## Example
+
+**Input**
+
+```text
+celsius = 36.50
+```
+
+**Output**
+
+```text
+[309.65000, 97.70000]
+```
+
+**Explanation**
+
+- Kelvin = `36.50 + 273.15 = 309.65`
+- Fahrenheit = `36.50 × 1.80 + 32.00 = 97.70`
+
+The converted temperatures are returned as:
+
+```text
+[309.65, 97.70]
+```
+
+---
+
+## Formula Used
+
+- **Kelvin** = `Celsius + 273.15`
+- **Fahrenheit** = `Celsius × 1.80 + 32.00`
+
+---
+
+**Algorithm Used:** Mathematical Formula
