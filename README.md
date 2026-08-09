@@ -8259,3 +8259,49 @@ class Solution:
 
         return total + duration
 ```
+
+
+# Can Place Flowers
+
+## Problem
+
+You are given a flowerbed represented by an array:
+
+- `0` → empty plot
+- `1` → plot already containing a flower
+
+You need to determine whether `n` new flowers can be planted without violating the rule that no two flowers can be adjacent.
+
+## Approach
+
+We iterate through the flowerbed and check whether the current position is safe for planting.
+
+A position `i` is valid when:
+
+1. `flowerbed[i] == 0`
+2. There is no flower on the left:
+   `i == 0 or flowerbed[i-1] == 0`
+3. There is no flower on the right:
+   `i == len(flowerbed)-1 or flowerbed[i+1] == 0`
+
+If all conditions are satisfied, we place a flower and decrease `n` by 1.
+
+If `n` becomes `0`, we return `True`.
+
+## Python Solution
+
+```python
+class Solution:
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        if(n==0):
+            return True
+
+        for i in range(0,len(flowerbed)):
+            if(flowerbed[i]==0 and (i==0 or flowerbed[i-1]==0) and (i==len(flowerbed)-1 or flowerbed[i+1]==0)):
+                flowerbed[i]=1
+                n-=1
+
+                if(n==0):
+                    return True
+
+        return False
