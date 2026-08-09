@@ -8209,3 +8209,53 @@ No cuts are needed because the circle already consists of one whole piece.
 ---
 
 **Algorithm Used:** Mathematical Observation
+
+
+
+# Teemo Attacking
+
+## Problem
+
+Given an array `timeSeries` where each value represents the time Teemo attacks, and an integer `duration` representing how long the poison lasts after each attack, calculate the total time the target remains poisoned.
+
+## Approach
+
+For every attack except the last one:
+
+* Calculate the time gap between the current attack and the next attack.
+* The poison contributed by that attack is the smaller of:
+
+  * the time gap
+  * `duration`
+* Add this value to `total`.
+
+For the final attack, add the full `duration` because there is no later attack to overlap with it.
+
+### Formula
+
+```text
+min(timeSeries[i + 1] - timeSeries[i], duration)
+```
+
+## Complexity
+
+* **Time Complexity:** `O(n)`
+* **Space Complexity:** `O(1)`
+
+## Python Code
+
+```python
+class Solution:
+
+    def findPoisonedDuration(self, timeSeries: List[int], duration: int) -> int:
+
+        total = 0
+
+        for i in range(0, len(timeSeries) - 1):
+
+            a = min((timeSeries[i + 1] - timeSeries[i]), duration)
+
+            total += a
+
+        return total + duration
+```
