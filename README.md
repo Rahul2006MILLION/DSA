@@ -8305,3 +8305,42 @@ class Solution:
                     return True
 
         return False
+
+
+
+# Maximum Product of Two Elements in an Array
+
+## Problem
+
+Given an integer array `nums`, choose two different elements from the array and return the maximum value of:
+
+`(nums[i] - 1) * (nums[j] - 1)`
+
+## Approach
+
+The maximum product will always come from the **two largest elements** in the array.
+
+So:
+
+1. Sort the array using `Arrays.sort()`.
+2. The largest element is at `nums[nums.length - 1]`.
+3. The second largest element is at `nums[nums.length - 2]`.
+4. Calculate:
+   
+   `(largest - 1) * (secondLargest - 1)`
+
+## Example
+
+```text
+Input:
+[3, 4, 5, 2]
+
+After sorting:
+[2, 3, 4, 5]
+
+Largest = 5
+Second largest = 4
+
+(5 - 1) * (4 - 1)
+= 4 * 3
+= 12
