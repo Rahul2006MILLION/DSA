@@ -8515,3 +8515,64 @@ lef != 0
 ```
 
 This allows us to find a range sum in **O(1)** time after the prefix sum array has been created.
+
+
+
+
+# Find Pivot Index
+
+## Problem
+
+Find an index where the **sum of all elements on the left** is equal to the **sum of all elements on the right**.
+
+The pivot element itself is **not included** in either sum.
+
+Example:
+
+`[1, 7, 3, 6, 5, 6]`
+
+Pivot index = `3`
+
+Left sum = `1 + 7 + 3 = 11`
+Right sum = `5 + 6 = 11`
+
+So the answer is `3`.
+
+## Approach
+
+* First calculate the `total` sum of the entire array.
+* Start `left_sum` as `0`.
+* Initially, `right_sum` is the total sum.
+* For every index:
+
+  * Subtract the current element from `right_sum`.
+  * Now `right_sum` represents the sum **after the current index**.
+  * Compare `left_sum` and `right_sum`.
+  * If they are equal, the current index is the pivot.
+  * Otherwise, add the current element to `left_sum` and continue.
+* If no pivot is found, return `-1`.
+
+## Python Code
+
+class Solution:
+def pivotIndex(self, nums: List[int]) -> int:
+total = sum(nums)
+left_sum = 0
+right_sum = total
+
+```
+    for i in range(len(nums)):
+        right_sum -= nums[i]
+
+        if right_sum == left_sum:
+            return i
+
+        left_sum += nums[i]
+
+    return -1
+```
+
+## Complexity
+
+Time: `O(n)`
+Space: `O(1)`
