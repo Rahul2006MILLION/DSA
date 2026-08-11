@@ -8344,3 +8344,109 @@ Second largest = 4
 (5 - 1) * (4 - 1)
 = 4 * 3
 = 12
+
+
+# Range Sum Query - Immutable
+
+## Problem
+Find the sum of elements from index `lef` to index `rig`.
+
+Example:
+nums = [-2, 0, 3, -5, 2, -1]
+lef = 0
+rig = 2
+
+Answer = -2 + 0 + 3 = 1
+
+
+## Approach: Prefix Sum
+
+Instead of calculating the sum of the range every time,
+we create a prefix sum array.
+
+For:
+nums = [-2, 0, 3, -5, 2, -1]
+
+Prefix sum becomes:
+[-2, -2, 1, -4, -2, -3]
+
+Meaning:
+
+prefix[0] = -2
+prefix[1] = -2 + 0 = -2
+prefix[2] = -2 + 0 + 3 = 1
+prefix[3] = -2 + 0 + 3 - 5 = -4
+...
+
+
+## Finding the Answer
+
+If `lef == 0`:
+
+The answer is simply:
+
+prefix[rig]
+
+Because we want everything from index 0.
+
+If `lef != 0`:
+
+answer = prefix[rig] - prefix[lef - 1]
+
+Why?
+
+`prefix[rig]` contains everything from index 0 to rig.
+
+`prefix[lef - 1]` contains everything before lef.
+
+Subtracting them removes the unwanted part.
+
+
+## Python Code
+
+def g():
+    nums = [-2, 0, 3, -5, 2, -1]
+    lef = 0
+    rig = 2
+
+    l = []
+    c = 0
+
+    for i in range(0, len(nums)):
+        c += nums[i]
+        l.append(c)
+
+    if lef == 0:
+        ans = l[rig]
+    else:
+        ans = l[rig] - l[lef - 1]
+
+    return ans
+
+print(g())
+
+
+## Output
+
+1
+
+
+## Complexity
+
+Time: O(n)
+Space: O(n)
+
+
+## Main Intuition
+
+Build the prefix sum ONCE.
+
+Then use:
+
+lef == 0
+→ prefix[rig]
+
+lef != 0
+→ prefix[rig] - prefix[lef - 1]
+
+This lets us get any range sum in O(1) time after the prefix array is created.
