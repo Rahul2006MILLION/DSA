@@ -8260,6 +8260,9 @@ class Solution:
         return total + duration
 ```
 
+# LeetCode Solutions
+
+---
 
 # Can Place Flowers
 
@@ -8284,7 +8287,7 @@ A position `i` is valid when:
 3. There is no flower on the right:
    `i == len(flowerbed)-1 or flowerbed[i+1] == 0`
 
-If all conditions are satisfied, we place a flower and decrease `n` by 1.
+If all conditions are satisfied, we place a flower and decrease `n` by `1`.
 
 If `n` becomes `0`, we return `True`.
 
@@ -8293,20 +8296,31 @@ If `n` becomes `0`, we return `True`.
 ```python
 class Solution:
     def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
-        if(n==0):
+        if n == 0:
             return True
 
-        for i in range(0,len(flowerbed)):
-            if(flowerbed[i]==0 and (i==0 or flowerbed[i-1]==0) and (i==len(flowerbed)-1 or flowerbed[i+1]==0)):
-                flowerbed[i]=1
-                n-=1
+        for i in range(0, len(flowerbed)):
+            if (flowerbed[i] == 0 and
+                (i == 0 or flowerbed[i-1] == 0) and
+                (i == len(flowerbed)-1 or flowerbed[i+1] == 0)):
 
-                if(n==0):
+                flowerbed[i] = 1
+                n -= 1
+
+                if n == 0:
                     return True
 
         return False
+```
 
+## Complexity
 
+```text
+Time:  O(n)
+Space: O(1)
+```
+
+---
 
 # Maximum Product of Two Elements in an Array
 
@@ -8314,7 +8328,9 @@ class Solution:
 
 Given an integer array `nums`, choose two different elements from the array and return the maximum value of:
 
-`(nums[i] - 1) * (nums[j] - 1)`
+```text
+(nums[i] - 1) * (nums[j] - 1)
+```
 
 ## Approach
 
@@ -8322,12 +8338,14 @@ The maximum product will always come from the **two largest elements** in the ar
 
 So:
 
-1. Sort the array using `Arrays.sort()`.
-2. The largest element is at `nums[nums.length - 1]`.
-3. The second largest element is at `nums[nums.length - 2]`.
+1. Sort the array.
+2. The largest element is at `nums[len(nums) - 1]`.
+3. The second largest element is at `nums[len(nums) - 2]`.
 4. Calculate:
-   
-   `(largest - 1) * (secondLargest - 1)`
+
+```text
+(largest - 1) * (secondLargest - 1)
+```
 
 ## Example
 
@@ -8344,66 +8362,108 @@ Second largest = 4
 (5 - 1) * (4 - 1)
 = 4 * 3
 = 12
+```
 
+## Python Solution
+
+```python
+class Solution:
+    def maxProduct(self, nums: List[int]) -> int:
+        nums.sort()
+
+        largest = nums[-1]
+        secondLargest = nums[-2]
+
+        return (largest - 1) * (secondLargest - 1)
+```
+
+## Complexity
+
+```text
+Time:  O(n log n)
+Space: O(1)
+```
+
+---
 
 # Range Sum Query - Immutable
 
 ## Problem
+
 Find the sum of elements from index `lef` to index `rig`.
 
-Example:
+## Example
+
+```text
 nums = [-2, 0, 3, -5, 2, -1]
+
 lef = 0
 rig = 2
 
-Answer = -2 + 0 + 3 = 1
-
+Answer = -2 + 0 + 3
+       = 1
+```
 
 ## Approach: Prefix Sum
 
-Instead of calculating the sum of the range every time,
-we create a prefix sum array.
+Instead of calculating the range sum again, we create a **prefix sum array**.
 
 For:
+
+```text
 nums = [-2, 0, 3, -5, 2, -1]
+```
 
-Prefix sum becomes:
+The prefix sum becomes:
+
+```text
 [-2, -2, 1, -4, -2, -3]
+```
 
-Meaning:
+Each position stores the sum of all elements from index `0` up to that position.
 
+For example:
+
+```text
 prefix[0] = -2
-prefix[1] = -2 + 0 = -2
-prefix[2] = -2 + 0 + 3 = 1
-prefix[3] = -2 + 0 + 3 - 5 = -4
-...
 
+prefix[1] = -2 + 0
+          = -2
+
+prefix[2] = -2 + 0 + 3
+          = 1
+
+prefix[3] = -2 + 0 + 3 - 5
+          = -4
+```
 
 ## Finding the Answer
 
 If `lef == 0`:
 
-The answer is simply:
+```text
+answer = prefix[rig]
+```
 
-prefix[rig]
-
-Because we want everything from index 0.
+Because we want everything from index `0` to `rig`.
 
 If `lef != 0`:
 
+```text
 answer = prefix[rig] - prefix[lef - 1]
+```
 
-Why?
+### Why?
 
-`prefix[rig]` contains everything from index 0 to rig.
+`prefix[rig]` contains everything from index `0` to `rig`.
 
-`prefix[lef - 1]` contains everything before lef.
+`prefix[lef - 1]` contains everything before `lef`.
 
-Subtracting them removes the unwanted part.
+So subtracting them removes the unwanted part.
 
+## Python Solution
 
-## Python Code
-
+```python
 def g():
     nums = [-2, 0, 3, -5, 2, -1]
     lef = 0
@@ -8423,30 +8483,35 @@ def g():
 
     return ans
 
-print(g())
 
+print(g())
+```
 
 ## Output
 
+```text
 1
-
+```
 
 ## Complexity
 
-Time: O(n)
+```text
+Time:  O(n)
 Space: O(n)
-
+```
 
 ## Main Intuition
 
-Build the prefix sum ONCE.
+Build the prefix sum **once**.
 
-Then use:
+Then:
 
+```text
 lef == 0
 → prefix[rig]
 
 lef != 0
 → prefix[rig] - prefix[lef - 1]
+```
 
-This lets us get any range sum in O(1) time after the prefix array is created.
+This allows us to find a range sum in **O(1)** time after the prefix sum array has been created.
