@@ -8576,3 +8576,44 @@ right_sum = total
 
 Time: `O(n)`
 Space: `O(1)`
+
+
+
+# Maximum Difference Between Increasing Elements
+
+## Approach
+
+- Keep track of the smallest value seen so far.
+- Calculate the difference between the current value and the smallest value.
+- Keep updating the maximum difference.
+- Return `-1` if no increasing pair exists.
+
+## Pattern
+
+This uses a pattern similar to **Best Time to Buy and Sell Stock**:
+- Track the minimum value so far.
+- Calculate the maximum possible difference/profit.
+
+## Python Code
+
+class Solution:
+    def maximumDifference(self, nums: List[int]) -> int:
+        maxx = 0
+        start = nums[0]
+
+        for i in range(len(nums)):
+            cur = 0
+
+            if nums[i] < start:
+                start = nums[i]
+            else:
+                cur = nums[i] - start
+
+                if cur > maxx:
+                    maxx = cur
+
+        if maxx == 0:
+            return -1
+
+        return maxx
+  ```
