@@ -8616,4 +8616,61 @@ class Solution:
             return -1
 
         return maxx
-  ```
+
+# Two Furthest Houses With Different Colors
+
+## Problem
+
+Find the maximum distance between two houses that have different colors.
+
+The distance between two houses is the difference between their indices.
+
+## Approach
+
+- Start with two pointers: `left` at the beginning and `right` at the end.
+- First, keep `right` fixed and move `left` forward while both houses have the same color.
+- Once the colors are different, calculate `right - left`.
+- Reset both pointers.
+- This time, keep `left` fixed and move `right` backward until the colors are different.
+- Calculate the second possible distance.
+- Return the maximum of the two distances.
+
+## Key Idea
+
+The farthest valid pair must involve one of the two ends of the array.
+
+So we only need to check:
+
+1. First house → a different-colored house from the right.
+2. Last house → a different-colored house from the left.
+
+This avoids checking every possible pair.
+
+## Python Code
+
+class Solution:
+    def maxDistance(self, colors: List[int]) -> int:
+        left = 0
+        right = len(colors) - 1
+        a1 = 0
+        a2 = 0
+
+        while colors[left] == colors[right]:
+            left += 1
+
+        a1 = right - left
+
+        right = len(colors) - 1
+        left = 0
+
+        while colors[left] == colors[right]:
+            right -= 1
+
+        a2 = right - left
+
+        return max(a1, a2)
+
+## Complexity
+
+- Time: `O(n)`
+- Space: `O(1)`
