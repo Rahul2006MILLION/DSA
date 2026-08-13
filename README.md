@@ -8674,3 +8674,52 @@ class Solution:
 
 - Time: `O(n)`
 - Space: `O(1)`
+
+
+
+First Unique Character in a String
+
+Problem
+
+Find the first character in a string that appears exactly once and
+return its index. If no such character exists, return -1.
+
+Method 1: Hash Table / Dictionary
+
+Count the frequency of every character using a dictionary.
+
+Traverse the string again.
+
+Return the index of the first character whose frequency is 1.
+
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        d = {}
+
+        for i in s:
+            if i not in d:
+                d[i] = 1
+            else:
+                d[i] += 1
+
+        for i in d:
+            if d[i] == 1:
+                return s.index(i)
+
+        return -1
+
+Method 2: Using count()
+
+Traverse the string from left to right.
+
+Use count() to check how many times each character appears.
+
+Return the index of the first character whose count is 1.
+
+class Solution:
+    def firstUniqChar(self, s: str) -> int:
+        for i in range(len(s)):
+            if s.count(s[i]) == 1:
+                return i
+
+        return -1
