@@ -8723,3 +8723,103 @@ class Solution:
                 return i
 
         return -1
+
+
+
+# Pascal's Triangle
+
+## Problem
+
+Given an integer `num_rows`, generate the first `num_rows` of Pascal's Triangle.
+
+Each number in a row is calculated by adding the two numbers directly above it.
+
+Example for `num_rows = 5`:
+
+    [
+        [1],
+        [1, 1],
+        [1, 2, 1],
+        [1, 3, 3, 1],
+        [1, 4, 6, 4, 1]
+    ]
+
+## Approach
+
+1. Start with the first row `[1]`.
+2. Store the triangle in `res`.
+3. Generate the remaining rows using the previous row.
+4. Add `0` to the beginning and end of the previous row.
+5. Add adjacent elements to generate each value of the new row.
+6. Add the new row to `res`.
+7. Return the complete triangle.
+
+### Example
+
+Suppose the previous row is:
+
+    [1, 3, 3, 1]
+
+Add `0` to both sides:
+
+    [0, 1, 3, 3, 1, 0]
+
+Now add adjacent values:
+
+    0 + 1 = 1
+    1 + 3 = 4
+    3 + 3 = 6
+    3 + 1 = 4
+    1 + 0 = 1
+
+So the new row becomes:
+
+    [1, 4, 6, 4, 1]
+
+## Python Code
+
+    def g():
+        num_rows = 5
+        res = [[1]]
+
+        for i in range(num_rows - 1):
+            temp = [0] + res[-1] + [0]
+            row = []
+
+            for j in range(len(res) + 1):
+                row.append(temp[j] + temp[j + 1])
+
+            res.append(row)
+
+        return res
+
+
+    print(g())
+
+## Output
+
+    [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]
+
+## Time Complexity
+
+**O(n²)**
+
+We generate `n` rows, and each row contains up to `n` elements.
+
+The total number of operations is approximately:
+
+    1 + 2 + 3 + ... + n
+
+Therefore:
+
+**Time Complexity: O(n²)**
+
+## Space Complexity
+
+**O(n²)**
+
+The complete Pascal's Triangle is stored in `res`.
+
+Since all `n` rows are stored, the total space used is approximately `O(n²)`.
+
+**Space Complexity: O(n²)**
