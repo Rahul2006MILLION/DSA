@@ -8915,3 +8915,224 @@ we get:
 nums + nums
 # [1, 2, 3, 1, 2, 3]
 ```
+
+
+
+# Longest Palindrome
+
+## Problem Description
+
+Given a string `s`, find the **length of the longest palindrome** that can be built using the characters of `s`.
+
+A palindrome reads the same forward and backward.
+
+For example:
+
+```text
+"abccccdd"
+```
+
+The longest palindrome that can be formed has length:
+
+```text
+7
+```
+
+One possible palindrome is:
+
+```text
+"dccaccd"
+```
+
+## Python Solution
+
+```python
+class Solution:
+    def longestPalindrome(self, s: str) -> int:
+        c = 0
+        d = {}
+        flag = 0
+
+        for i in range(0, len(s)):
+            if s[i] not in d:
+                d[s[i]] = 1
+            else:
+                d[s[i]] += 1
+
+        for i in d:
+            if d[i] % 2 == 0:
+                c += d[i]
+            else:
+                flag = 1
+                c += d[i] - 1
+
+        if flag == 1:
+            c += 1
+
+        return c
+```
+
+## Explanation
+
+### 1. Count the frequency of every character
+
+The dictionary stores how many times each character appears.
+
+For:
+
+```python
+s = "abccccdd"
+```
+
+we get:
+
+```text
+a → 1
+b → 1
+c → 4
+d → 2
+```
+
+### 2. Handle even frequencies
+
+If a character appears an even number of times, **all of its occurrences can be used**.
+
+For example:
+
+```text
+c → 4
+d → 2
+```
+
+Both can be completely used in the palindrome.
+
+So:
+
+```text
+4 + 2 = 6
+```
+
+### 3. Handle odd frequencies
+
+If a character appears an odd number of times, we cannot use the entire count on the two sides of the palindrome.
+
+For example:
+
+```text
+a → 1
+b → 1
+```
+
+There is no matching pair, so we use:
+
+```text
+1 - 1 = 0
+```
+
+For a frequency such as:
+
+```text
+x → 5
+```
+
+we can use:
+
+```text
+5 - 1 = 4
+```
+
+because `4` can form two matching pairs, while the remaining `1` can potentially become the center.
+
+The `flag` records whether **at least one odd frequency** was found.
+
+### 4. Add one character to the center
+
+If at least one odd frequency exists:
+
+```python
+if flag == 1:
+    c += 1
+```
+
+Only **one** odd character can occupy the center of a palindrome.
+
+Therefore, for:
+
+```text
+a → 1
+b → 1
+c → 4
+d → 2
+```
+
+we get:
+
+```text
+a → 0
+b → 0
+c → 4
+d → 2
+
+total = 6
+```
+
+Since an odd frequency exists:
+
+```text
+6 + 1 = 7
+```
+
+Therefore, the answer is:
+
+```text
+7
+```
+
+## Key Concept
+
+A palindrome is built using **pairs of identical characters**:
+
+```text
+left side  ← pair →  right side
+```
+
+and optionally **one unpaired character in the center**.
+
+So the general idea is:
+
+```text
+Even frequency → use everything
+Odd frequency  → use frequency - 1
+At least one odd frequency → add 1 for the center
+```
+
+## Time Complexity
+
+**O(n)**
+
+Where `n` is the length of the string.
+
+* First loop counts all characters: `O(n)`
+* Second loop goes through the distinct characters: `O(k)`, where `k ≤ n`
+
+Therefore:
+
+```text
+O(n + k) = O(n)
+```
+
+## Space Complexity
+
+**O(k)**
+
+The dictionary stores each distinct character and its frequency.
+
+Since the number of distinct characters is at most `n`:
+
+```text
+O(k) ≤ O(n)
+```
+
+So the worst-case space complexity is:
+
+**O(n)**
