@@ -8823,3 +8823,95 @@ The complete Pascal's Triangle is stored in `res`.
 Since all `n` rows are stored, the total space used is approximately `O(n²)`.
 
 **Space Complexity: O(n²)**
+
+
+
+
+# Concatenation of Array
+
+## Problem Description
+
+Given an integer array `nums`, create a new array that contains the original array followed by the same array again.
+
+For example:
+
+```text
+Input:  nums = [1, 2, 1]
+
+Output: [1, 2, 1, 1, 2, 1]
+```
+
+The result is simply:
+
+```text
+nums + nums
+```
+
+## Python Solution
+
+```python
+class Solution:
+    def getConcatenation(self, nums: List[int]) -> List[int]:
+        return nums + nums
+```
+
+## Explanation
+
+* `nums` is the original list.
+* `nums + nums` concatenates the list with itself.
+* The first `nums` provides the first half of the result.
+* The second `nums` provides the second half.
+* The resulting list contains `2 × len(nums)` elements.
+
+### Example
+
+```python
+nums = [1, 2, 1]
+
+nums + nums
+```
+
+Results in:
+
+```text
+[1, 2, 1, 1, 2, 1]
+```
+
+## Time Complexity
+
+**O(n)**
+
+Where `n` is the length of `nums`.
+
+The elements of `nums` have to be copied into the new list twice. Since the resulting list contains `2n` elements, the operation is still **O(n)**.
+
+## Space Complexity
+
+**O(n)**
+
+A new list containing `2n` elements is created.
+
+Therefore, the extra space required is **O(n)**.
+
+## Key Concept
+
+**List concatenation**
+
+```python
+nums + nums
+```
+
+creates a new list containing both lists one after another.
+
+So for:
+
+```python
+nums = [1, 2, 3]
+```
+
+we get:
+
+```python
+nums + nums
+# [1, 2, 3, 1, 2, 3]
+```
