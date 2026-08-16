@@ -9136,3 +9136,158 @@ O(k) ≤ O(n)
 So the worst-case space complexity is:
 
 **O(n)**
+
+
+
+# Matrix Diagonal Sum
+
+## Problem
+
+Given a square matrix, return the sum of the elements on both the primary diagonal and the secondary diagonal.
+
+Example:
+
+```text
+1 2 3
+4 5 6
+7 8 9
+```
+
+Primary diagonal:
+
+```text
+1, 5, 9
+```
+
+Secondary diagonal:
+
+```text
+3, 5, 7
+```
+
+The center element `5` belongs to both diagonals, so it should only be counted once.
+
+Final answer:
+
+```text
+1 + 5 + 9 + 3 + 7 = 25
+```
+
+## Approach
+
+Instead of using two nested loops to visit every element of the matrix, we use only **one loop**.
+
+For every row `i`, we already know the exact position of both diagonal elements:
+
+- Primary diagonal → `mat[i][i]`
+- Secondary diagonal → `mat[i][n - 1 - i]`
+
+Therefore, one loop is enough to directly access both diagonal elements.
+
+### Why Only One Loop?
+
+For this matrix:
+
+```text
+1 2 3
+4 5 6
+7 8 9
+```
+
+For `i = 0`:
+
+```text
+Primary   → mat[0][0] = 1
+Secondary → mat[0][2] = 3
+```
+
+For `i = 1`:
+
+```text
+Primary   → mat[1][1] = 5
+Secondary → mat[1][1] = 5
+```
+
+For `i = 2`:
+
+```text
+Primary   → mat[2][2] = 9
+Secondary → mat[2][0] = 7
+```
+
+So there is no need to check every `i, j` position in the matrix.
+
+We can directly access the two required positions using one loop.
+
+## Handling the Middle Element
+
+When the matrix size is odd, the two diagonals meet at exactly one center element.
+
+For example:
+
+```text
+1 2 3
+4 5 6
+7 8 9
+```
+
+The center is:
+
+```text
+mat[1][1] = 5
+```
+
+Since `5` is added once from each diagonal, it gets counted twice.
+
+Therefore, when `n` is odd, subtract the center once:
+
+```python
+if n % 2 != 0:
+    return summ - mat[n // 2][n // 2]
+```
+
+For an even-sized matrix, the diagonals do not share a single center element, so nothing needs to be subtracted.
+
+## Python Code
+
+```python
+class Solution:
+    def diagonalSum(self, mat: List[List[int]]) -> int:
+        summ = 0
+        n = len(mat)
+
+        for i in range(n):
+            summ += mat[i][i]
+            summ += mat[i][n - 1 - i]
+
+        if n % 2 != 0:
+            return summ - mat[n // 2][n // 2]
+
+        return summ
+```
+
+## Complexity
+
+### Time Complexity
+
+**O(n)**
+
+The loop runs `n` times.
+
+Each iteration performs constant-time operations.
+
+Therefore:
+
+**Time Complexity: O(n)**
+
+### Space Complexity
+
+**O(1)**
+
+Only a few variables such as `summ`, `n`, and `i` are used.
+
+No additional data structure is created.
+
+Therefore:
+
+**Space Complexity: O(1)**
