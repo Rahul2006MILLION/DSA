@@ -9291,3 +9291,61 @@ No additional data structure is created.
 Therefore:
 
 **Space Complexity: O(1)**
+
+
+
+# Valid Parentheses
+
+## Description
+
+This solution checks whether a string containing `()`, `{}`, and `[]` has valid and properly matched parentheses.
+
+A **stack** is used to store opening brackets.
+
+- If the character is an opening bracket, it is added to the stack.
+- If the character is a closing bracket, the stack must not be empty.
+- The last opening bracket is removed from the stack and checked against the closing bracket.
+- If the brackets do not match, the string is invalid.
+- After processing the entire string, the stack must be empty for the string to be valid.
+
+## Python Code
+
+def g():
+    d = {')': '(', '}': '{', ']': '['}
+    s = "()[]{[]}"
+    l = []
+
+    for i in s:
+        if i not in d:
+            l.append(i)
+        else:
+            if not l:
+                return False
+
+            pop = l.pop()
+
+            if pop != d[i]:
+                return False
+
+    return not l
+
+
+print(g())
+
+## Time Complexity
+
+O(n)
+
+Each character in the string is processed exactly once.
+
+## Space Complexity
+
+O(n)
+
+In the worst case, all characters can be opening brackets and stored in the stack.
+
+## Key Concept
+
+Stack (LIFO - Last In, First Out)
+
+The most recently encountered opening bracket must be the first one matched by a closing bracket.
