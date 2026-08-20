@@ -9310,11 +9310,14 @@ A **stack** is used to store opening brackets.
 
 ## Python Code
 
+
 def g():
+
     d = {')': '(', '}': '{', ']': '['}
     s = "()[]{[]}"
+    
     l = []
-
+    
     for i in s:
         if i not in d:
             l.append(i)
@@ -9349,3 +9352,89 @@ In the worst case, all characters can be opening brackets and stored in the stac
 Stack (LIFO - Last In, First Out)
 
 The most recently encountered opening bracket must be the first one matched by a closing bracket.
+
+
+
+# Find the Difference
+
+## Description
+
+Given two strings `s` and `t`, where `t` is formed by shuffling the characters of `s` and adding one extra character, find and return the extra character.
+
+For example:
+
+- `s = "a"`
+- `t = "aa"`
+
+Output:
+
+`"a"`
+
+The solution uses a dictionary (HashMap) to store the frequency of each character in `s`.
+
+We then traverse `t` and decrease the frequency of each character.
+
+- If a character does not exist in the dictionary, it is the extra character.
+- If a character's frequency becomes negative, that character is the extra character.
+
+## Approach
+
+1. Create an empty dictionary `d`.
+2. Traverse `s` and store the frequency of every character.
+3. Traverse `t`:
+   - If the character exists in `d`, decrease its frequency by `1`.
+   - If the character does not exist in `d`, return that character.
+4. After processing `t`, traverse the dictionary.
+5. If any character has a frequency less than `0`, return that character.
+
+## Time Complexity
+
+**O(n)**
+
+We traverse `s` and `t`, and then traverse the dictionary.
+
+Therefore, the overall time complexity is **O(n)**.
+
+## Space Complexity
+
+**O(k)**
+
+Where `k` is the number of distinct characters stored in the dictionary.
+
+If the character set is fixed, the space complexity can be considered **O(1)**.
+
+## Python Code
+
+```python
+class Solution:
+
+    def findTheDifference(self, s: str, t: str) -> str:
+
+        d={}
+
+        for i in range(0,len(s)):
+
+            if(s[i] not in d):
+
+                d[s[i]]=1
+
+            else:
+
+                d[s[i]]+=1
+
+        for i in range(0,len(t)):
+
+            if(t[i] in d):
+
+                d[t[i]]-=1
+
+            if(t[i] not in d):
+
+                return t[i]
+
+        for i in d:
+
+            if(d[i]<0):
+
+                return i
+```
