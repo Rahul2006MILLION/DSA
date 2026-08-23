@@ -9546,3 +9546,46 @@ class Solution:
         return l
 ```
 
+
+
+# 7. Reverse Integer
+
+## Description
+
+Given a signed 32-bit integer `x`, reverse its digits and return the reversed integer.
+
+If the reversed integer falls outside the signed 32-bit integer range:
+
+`[-2^31, 2^31 - 1]`
+
+return `0`.
+
+The solution extracts the last digit using `% 10`, removes the last digit using integer division by `10`, and builds the reversed number digit by digit.
+
+## Python Code
+
+```python
+class Solution:
+    def reverse(self, x: int) -> int:
+        a = x
+        x = abs(x)
+
+        if a < 0:
+            sign = -1
+        else:
+            sign = 1
+
+        reverse = 0
+
+        while x > 0:
+            r = x % 10
+            x = x // 10
+
+            reverse = reverse * 10 + r
+
+        if reverse < -2**31 or reverse > 2**31 - 1:
+            return 0
+
+        return reverse * sign
+```
+
