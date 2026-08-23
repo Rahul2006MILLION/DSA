@@ -9505,3 +9505,44 @@ def find_disappeared_numbers(nums):
 nums = [4, 3, 2, 7, 8, 2, 3, 1]
 print(find_disappeared_numbers(nums))
 ```
+
+
+# 3289. The Two Sneaky Numbers of Digitville
+
+## Description
+
+Given an integer array `nums` containing numbers from `0` to `n - 1`, every number should appear exactly once. However, two numbers appear twice.
+
+Return the two numbers that appear twice.
+
+### Approach
+
+Use a `set` called `seen` to keep track of numbers that have already appeared.
+
+- If the current number is not in `seen`, add it.
+- If it is already in `seen`, it is one of the sneaky numbers, so add it to the result list.
+
+### Python Code
+
+```python
+class Solution:
+
+    def getSneakyNumbers(self, nums: List[int]) -> List[int]:
+
+        seen = set()
+
+        l = []
+
+        for i in range(0, len(nums)):
+
+            if nums[i] not in seen:
+
+                seen.add(nums[i])
+
+            else:
+
+                l.append(nums[i])
+
+        return l
+```
+
