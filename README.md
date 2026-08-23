@@ -9438,3 +9438,70 @@ class Solution:
 
                 return i
 ```
+
+# Find All Numbers Disappeared in an Array
+
+## Description
+
+Given an integer array `nums` of length `n` where each integer is in the range `[1, n]`, find all the integers in the range `[1, n]` that do not appear in `nums`.
+
+The solution uses the values of the array to mark the corresponding indexes as negative.
+
+For every number `x`, we access index `x - 1` and make that value negative. If the value at that index is already negative, the number has already been encountered, so we skip it.
+
+After marking all numbers, the indexes whose values remain positive represent the missing numbers.
+
+### Example
+
+Input:
+`[4,3,2,7,8,2,3,1]`
+
+Output:
+`[5,6]`
+
+### Approach
+
+1. Iterate through the array.
+2. Use `abs(nums[i]) - 1` to convert the current value into a valid index.
+3. If the value at that index is already negative, skip it.
+4. Otherwise, make the value at that index negative.
+5. Iterate through the array again.
+6. If `nums[i]` is positive, `i + 1` is a missing number.
+7. Store all missing numbers in the result list.
+
+### Time Complexity
+
+`O(n)`
+
+The array is traversed twice, so the overall time complexity is `O(n)`.
+
+### Space Complexity
+
+`O(1)` extra space.
+
+The input array itself is modified to store the marking information. The result list is not considered extra space for the algorithm's auxiliary-space analysis.
+
+## Python Code
+
+```python
+def find_disappeared_numbers(nums):
+    result = []
+
+    for i in range(len(nums)):
+        index = abs(nums[i]) - 1
+
+        if nums[index] < 0:
+            continue
+
+        nums[index] *= -1
+
+    for i in range(len(nums)):
+        if nums[i] > 0:
+            result.append(i + 1)
+
+    return result
+
+
+nums = [4, 3, 2, 7, 8, 2, 3, 1]
+print(find_disappeared_numbers(nums))
+```
