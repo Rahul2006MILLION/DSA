@@ -9620,3 +9620,85 @@ d = 12008
 c = check(d)
 print(c)
 ```
+
+
+
+# Valid Palindrome
+
+## Description
+
+Given a string `s`, determine whether it is a palindrome.
+
+A palindrome is a string that reads the same forward and backward.
+
+The approach:
+
+1. Convert the string to lowercase.
+2. Remove all characters that are not letters or digits.
+3. Reverse the cleaned string.
+4. Compare the cleaned string with its reverse.
+5. If both are equal, return `True`; otherwise, return `False`.
+
+### Example
+
+```text
+Input:
+"A man, a plan, a canal: Panama"
+
+After cleaning:
+"amanaplanacanalpanama"
+
+Reverse:
+"amanaplanacanalpanama"
+
+Output:
+True
+```
+
+## Python Code
+
+```python
+class Solution:
+    def g():
+    s = "A man, a plan, a canal: Panama"
+    new=''
+    for i in s:
+        if(i.isalnum()):
+            new+=i
+    d=new.lower()
+    if d[::-1]==d:
+        return True
+    return False
+print(g())
+```
+
+## Time Complexity
+
+**O(n)**
+
+* We traverse the string once to clean it.
+* We reverse the cleaned string, which takes O(n).
+* Comparing the two strings takes O(n).
+
+Overall:
+
+```text
+O(n) + O(n) + O(n) = O(n)
+```
+
+## Space Complexity
+
+**O(n)**
+
+We create:
+
+* `x` → cleaned string
+* `rev` → reversed string
+
+Both can contain up to `n` characters.
+
+Therefore:
+
+```text
+O(n)
+```
