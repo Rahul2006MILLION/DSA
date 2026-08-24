@@ -9589,3 +9589,34 @@ class Solution:
         return reverse * sign
 ```
 
+# A Number After a Double Reversal
+#
+# Description:
+# Reverse the digits of an integer twice and check whether
+# the result is equal to the original number.
+#
+# Key idea:
+# If a number ends with 0, that 0 disappears during reversal.
+# Therefore, double reversal changes the number.
+#
+# Exception:
+# 0 itself remains 0 after reversal, so it returns True.
+#
+# Time Complexity: O(1)
+# Space Complexity: O(1)
+
+```python
+def check(num):
+    if num == 0:
+        return True
+
+    elif num % 10 == 0:
+        return False
+
+    return True
+
+
+d = 12008
+c = check(d)
+print(c)
+```
