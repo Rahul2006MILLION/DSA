@@ -9702,3 +9702,105 @@ Therefore:
 ```text
 O(n)
 ```
+
+
+# 2108. Find First Palindromic String in the Array
+
+## Problem Description
+
+Given an array of strings `words`, return the **first palindromic string** in the array.
+
+If there is no palindromic string, return an empty string `""`.
+
+A string is **palindromic** if it reads the same forward and backward.
+
+---
+
+## Example 1
+
+Input:
+words = ["abc", "car", "ada", "racecar", "cool"]
+
+Output:
+"ada"
+
+Explanation:
+
+The first string that is palindromic is `"ada"`.
+
+Note that `"racecar"` is also a palindrome, but it is not the first one.
+
+---
+
+## Example 2
+
+Input:
+words = ["notapalindrome", "racecar"]
+
+Output:
+"racecar"
+
+---
+
+## Example 3
+
+Input:
+words = ["def", "ghi"]
+
+Output:
+""
+
+Explanation:
+
+There are no palindromic strings, so the empty string is returned.
+
+---
+
+## Approach
+
+- Traverse through every string in the array.
+- Reverse the current string using `i[::-1]`.
+- Compare the original string with its reversed version.
+- If they are equal, the string is a palindrome.
+- Immediately return the first palindrome found.
+- If no palindrome is found, return an empty string.
+
+---
+
+## Python Code
+
+    class Solution:
+
+        def firstPalindrome(self, words: List[str]) -> str:
+
+            new=''
+
+            for i in words:
+
+                if(i==i[::-1]):
+
+                    new+=i
+
+                    return i
+
+            return new
+
+---
+
+## Time Complexity
+
+O(n × m)
+
+Where:
+- `n` = number of strings in the array
+- `m` = average length of each string
+
+We may reverse and compare every string.
+
+---
+
+## Space Complexity
+
+O(m)
+
+The reversed string requires extra space proportional to the length of the current string.
