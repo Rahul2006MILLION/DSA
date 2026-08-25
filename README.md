@@ -9804,3 +9804,98 @@ We may reverse and compare every string.
 O(m)
 
 The reversed string requires extra space proportional to the length of the current string.
+
+
+
+
+# 58. Length of Last Word
+
+## Problem Description
+
+Given a string `s` consisting of words and spaces, return the length of the last word in the string.
+
+A word is a maximal substring consisting of non-space characters only.
+
+---
+
+## Example 1
+
+Input:
+s = "Hello World"
+
+Output:
+5
+
+Explanation:
+
+The last word is "World", which has a length of 5.
+
+---
+
+## Example 2
+
+Input:
+s = "   fly me   to   the moon  "
+
+Output:
+4
+
+Explanation:
+
+The last word is "moon", which has a length of 4.
+
+---
+
+## Example 3
+
+Input:
+s = "luffy is still joyboy"
+
+Output:
+6
+
+Explanation:
+
+The last word is "joyboy", which has a length of 6.
+
+---
+
+## Approach
+
+1. Split the string into individual words using `split()`.
+2. Access the last word using `d[-1]`.
+3. Use `len()` to find the length of the last word.
+4. Return the result.
+
+Python's `split()` automatically handles leading, trailing, and multiple spaces.
+
+
+
+## Python Code
+```
+class Solution:
+
+    def lengthOfLastWord(self, s: str) -> int:
+
+        d = s.split()
+
+        return len(d[-1])
+```
+---
+
+
+## Time Complexity
+
+O(n)
+
+Where `n` is the length of the input string.
+
+The string needs to be processed to split it into words.
+
+---
+
+## Space Complexity
+
+O(n)
+
+The `split()` operation creates a list containing the words from the string.
