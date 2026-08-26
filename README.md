@@ -9899,3 +9899,88 @@ The string needs to be processed to split it into words.
 O(n)
 
 The `split()` operation creates a list containing the words from the string.
+
+
+
+# Array Partition - README
+
+Problem:
+Given an integer array nums of 2n elements, divide the elements into n pairs
+such that the sum of min(pair) for every pair is maximized.
+
+Approach:
+Instead of manually finding pairs and calculating:
+
+min(num1, num2) + min(num3, num4) + ...
+
+we can use a much simpler approach:
+
+1. Sort the array.
+2. After sorting, take every element at an even index.
+3. Add those elements together.
+
+Why does this work?
+
+Once the array is sorted, the best way to maximize the sum of the minimum
+values is to pair adjacent elements.
+
+Example:
+
+nums = [6, 2, 6, 5, 1, 2]
+
+After sorting:
+
+[1, 2, 2, 5, 6, 6]
+
+Pair them:
+
+(1, 2) -> min = 1
+(2, 5) -> min = 2
+(6, 6) -> min = 6
+
+Answer:
+
+1 + 2 + 6 = 9
+
+Since the smaller element of every adjacent pair is always at the
+even index, we only need to add:
+
+nums[0] + nums[2] + nums[4] + ...
+
+Python solution:
+```
+class Solution:
+
+    def arrayPairSum(self, nums: List[int]) -> int:
+
+        nums.sort()
+
+        s = 0
+
+        for i in range(0, len(nums), 2):
+
+            s += nums[i]
+
+        return s
+```
+
+Time Complexity:
+
+Sorting takes O(n log n).
+The loop takes O(n).
+
+Therefore, the overall time complexity is:
+
+O(n log n)
+
+Space Complexity:
+
+O(1) auxiliary space if we consider Python's in-place sorting
+(ignoring the internal implementation details of Timsort).
+
+Key idea:
+
+Sort -> Pair adjacent elements -> Add elements at even indices.
+
+This is much simpler than explicitly creating pairs and repeatedly
+calculating min(num1, num2).
