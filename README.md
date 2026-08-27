@@ -9984,3 +9984,306 @@ Sort -> Pair adjacent elements -> Add elements at even indices.
 
 This is much simpler than explicitly creating pairs and repeatedly
 calculating min(num1, num2).
+
+
+# Reverse String - README
+
+Problem:
+Given an array of characters s, reverse the array in-place.
+
+You must modify the original array directly and should not create another
+array to store the reversed result.
+
+Example:
+
+s = ['R', 'a', 'h', 'u', 'l']
+
+After reversing:
+
+['l', 'u', 'h', 'a', 'R']
+
+
+Approach 1:
+Using an Extra Array
+
+We can create a new array and traverse the original array from right to left.
+
+Example:
+
+s = ['R', 'a', 'h', 'u', 'l']
+
+Read from right to left:
+
+'l'
+'u'
+'h'
+'a'
+'R'
+
+New array:
+
+['l', 'u', 'h', 'a', 'R']
+
+Why we don't use this:
+
+The problem requires the array to be modified in-place.
+Creating another array requires extra memory.
+
+Time Complexity:
+O(n)
+
+Space Complexity:
+O(n)
+
+
+Approach 2:
+Using Python's Built-in Reverse
+
+Python provides a built-in reverse() method:
+
+s.reverse()
+
+This reverses the list in-place.
+
+Why we don't use this:
+
+Although it satisfies the in-place requirement, it hides the actual
+algorithm.
+
+For a DSA problem, the goal is to understand how the reversal works
+internally.
+
+Time Complexity:
+O(n)
+
+Space Complexity:
+O(1)
+
+
+Approach 3:
+Two Pointer Technique
+
+This is the preferred approach for solving the problem manually.
+
+We use two pointers:
+
+left  -> starts at the beginning of the array
+right -> starts at the end of the array
+
+Then we swap the elements at left and right.
+
+After every swap:
+
+left  -> moves forward
+right -> moves backward
+
+We continue until left and right meet.
+
+
+Why does this work?
+
+Consider:
+
+['R', 'a', 'h', 'u', 'l']
+
+The first element needs to move to the last position:
+
+R <-> l
+
+The second element needs to move to the second-last position:
+
+a <-> u
+
+The middle element does not need to move:
+
+h
+
+So we process the array from both ends.
+
+
+Step 1:
+
+Initial array:
+
+['R', 'a', 'h', 'u', 'l']
+
+left = 0
+right = 4
+
+Swap:
+
+R <-> l
+
+Array becomes:
+
+['l', 'a', 'h', 'u', 'R']
+
+
+Step 2:
+
+Move both pointers:
+
+left += 1
+right -= 1
+
+Now:
+
+left = 1
+right = 3
+
+Swap:
+
+a <-> u
+
+Array becomes:
+
+['l', 'u', 'h', 'a', 'R']
+
+
+Step 3:
+
+Move both pointers:
+
+left = 2
+right = 2
+
+Now:
+
+left < right
+
+becomes:
+
+2 < 2
+
+which is false.
+
+Therefore, the loop stops.
+
+Final array:
+
+['l', 'u', 'h', 'a', 'R']
+
+
+How the Swap Works:
+
+We use a temporary variable because we need to preserve the original
+value of s[left].
+
+Suppose:
+
+s[left] = 'R'
+s[right] = 'l'
+
+First:
+
+temp = s[left]
+
+Now:
+
+temp = 'R'
+
+Then:
+
+s[left] = s[right]
+
+Now:
+
+s[left] = 'l'
+
+Finally:
+
+s[right] = temp
+
+Now:
+
+s[right] = 'R'
+
+Therefore:
+
+Before:
+
+['R', 'a', 'h', 'u', 'l']
+
+After:
+
+['l', 'a', 'h', 'u', 'R']
+
+
+The complete swap is:
+
+temp = s[left]
+s[left] = s[right]
+s[right] = temp
+
+
+Why use while left < right?
+
+We only need to swap elements until the two pointers meet.
+
+For example:
+
+['l', 'u', 'h', 'a', 'R']
+          ^
+       left/right
+
+When:
+
+left == right
+
+both pointers refer to the same element.
+
+There is nothing left to swap.
+
+Therefore:
+
+while left < right:
+
+is used.
+
+
+Why is this In-Place?
+
+The problem requires the original array to be modified.
+
+We directly modify:
+
+s[left]
+s[right]
+
+We do not create another array.
+
+We only use a few variables:
+
+left
+right
+temp
+
+Therefore, the algorithm uses constant auxiliary space.
+
+
+Python Solution:
+
+```python
+class Solution:
+
+    def reverseString(self, s: List[str]) -> None:
+
+        """
+        Do not return anything, modify s in-place instead.
+        """
+
+        left = 0
+
+        right = len(s) - 1
+
+        while left < right:
+
+            temp = s[left]
+
+            s[left] = s[right]
+
+            s[right] = temp
+
+            left += 1
+
+            right -= 1
