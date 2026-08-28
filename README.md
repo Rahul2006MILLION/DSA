@@ -10287,3 +10287,593 @@ class Solution:
             left += 1
 
             right -= 1
+
+```
+
+# Add Strings
+
+## Problem
+
+Given two non-negative integers `num1` and `num2` represented as strings, return the sum of `num1` and `num2`, also represented as a string.
+
+### Important
+
+You cannot directly convert the entire strings into integers.
+
+For example:
+
+```text
+num1 = "123"
+num2 = "456"
+```
+
+Return:
+
+```text
+"579"
+```
+
+---
+
+## Intuition
+
+Think about how we normally add numbers manually.
+
+For:
+
+```text
+   123
+ + 456
+ -----
+   579
+```
+
+We start from the **rightmost digit** and move toward the left.
+
+At every position:
+
+1. Take the current digit from `num1`.
+2. Take the current digit from `num2`.
+3. Add both digits.
+4. Add the `carry` from the previous position.
+5. The last digit of the sum becomes our current answer digit.
+6. The remaining part becomes the new `carry`.
+7. Move both pointers one position to the left.
+
+Since the result is generated from right to left, we reverse it at the end.
+
+---
+
+## Approach
+
+We use two pointers:
+
+```text
+i → points to the last digit of num1
+j → points to the last digit of num2
+```
+
+Initially:
+
+```python
+i = len(num1) - 1
+j = len(num2) - 1
+```
+
+We also maintain:
+
+```python
+carry = 0
+```
+
+And store the result in:
+
+```python
+res = []
+```
+
+---
+
+## Step-by-Step Logic
+
+### 1. Get the current digits
+
+If `i` is still inside `num1`, get its digit.
+
+Otherwise, use `0`.
+
+```python
+cur_i = int(num1[i]) if i >= 0 else 0
+```
+
+Similarly for `num2`:
+
+```python
+cur_j = int(num2[j]) if j >= 0 else 0
+```
+
+This is important because the two numbers may have different lengths.
+
+For example:
+
+```text
+   11
+  123
+```
+
+When we reach the position where `11` has no digit left, we treat it as:
+
+```text
+0
+```
+
+---
+
+### 2. Calculate the sum
+
+```python
+cur_sum = cur_i + cur_j + carry
+```
+
+For example:
+
+```text
+7 + 8 + 1 = 16
+```
+
+---
+
+### 3. Extract the current digit
+
+```python
+digit = cur_sum % 10
+```
+
+For:
+
+```text
+16
+```
+
+we get:
+
+```text
+16 % 10 = 6
+```
+
+So `6` becomes the current result digit.
+
+---
+
+### 4. Calculate the carry
+
+```python
+carry = cur_sum // 10
+```
+
+For:
+
+```text
+16
+```
+
+we get:
+
+```text
+16 // 10 = 1
+```
+
+So:
+
+```text
+carry = 1
+```
+
+---
+
+### 5. Store the digit
+
+```python
+res.append(str(digit))
+```
+
+We convert the digit to a string because the final answer needs to be a string.
+
+---
+
+### 6. Move both pointers
+
+```python
+i -= 1
+j -= 1
+```
+
+We move from right to left.
+
+---
+
+### 7. Handle the final carry
+
+After the loop, there may still be a carry.
+
+For example:
+
+```text
+  99
++  1
+----
+ 100
+```
+
+After processing all digits, we still have:
+
+```text
+carry = 1
+```
+
+So we append it:
+
+```python
+if carry == 1:
+    res.append(str(carry))
+```
+
+---
+
+### 8. Reverse the result
+
+Because we process digits from right to left, `res` contains the answer backwards.
+
+For:
+
+```text
+123 + 456
+```
+
+we build:
+
+```text
+['9', '7', '5']
+```
+
+So we reverse it:
+
+```python
+"".join(reversed(res))
+```
+
+Result:
+
+```text
+"579"
+```
+
+---
+
+## Dry Run
+
+Let's calculate:
+
+```text
+num1 = "11"
+num2 = "123"
+```
+
+Expected:
+
+```text
+134
+```
+
+Initially:
+
+```text
+i = 1
+j = 2
+carry = 0
+```
+
+### Iteration 1
+
+Digits:
+
+```text
+num1[i] = 1
+num2[j] = 3
+```
+
+Sum:
+
+```text
+1 + 3 + 0 = 4
+```
+
+Digit:
+
+```text
+4 % 10 = 4
+```
+
+Carry:
+
+```text
+4 // 10 = 0
+```
+
+Result:
+
+```text
+['4']
+```
+
+Move pointers:
+
+```text
+i = 0
+j = 1
+```
+
+---
+
+### Iteration 2
+
+Digits:
+
+```text
+num1[i] = 1
+num2[j] = 2
+```
+
+Sum:
+
+```text
+1 + 2 + 0 = 3
+```
+
+Digit:
+
+```text
+3
+```
+
+Carry:
+
+```text
+0
+```
+
+Result:
+
+```text
+['4', '3']
+```
+
+Move pointers:
+
+```text
+i = -1
+j = 0
+```
+
+---
+
+### Iteration 3
+
+`num1` has no digits left.
+
+So:
+
+```text
+cur_i = 0
+```
+
+`num2` still has:
+
+```text
+num2[j] = 1
+```
+
+Sum:
+
+```text
+0 + 1 + 0 = 1
+```
+
+Result:
+
+```text
+['4', '3', '1']
+```
+
+Now:
+
+```text
+i = -2
+j = -1
+```
+
+Loop ends.
+
+---
+
+### Reverse
+
+Current result:
+
+```text
+['4', '3', '1']
+```
+
+Reverse:
+
+```text
+['1', '3', '4']
+```
+
+Final answer:
+
+```text
+"134"
+```
+
+---
+
+## Why `% 10` and `// 10`?
+
+These two operations are the heart of the addition.
+
+Suppose:
+
+```text
+cur_sum = 17
+```
+
+The digit we want to put into the answer is:
+
+```python
+17 % 10
+```
+
+which gives:
+
+```text
+7
+```
+
+The carry is:
+
+```python
+17 // 10
+```
+
+which gives:
+
+```text
+1
+```
+
+So:
+
+```text
+17
+ ↓
+digit = 7
+carry = 1
+```
+
+This is exactly how normal addition works.
+
+---
+
+## Python Code
+
+```python
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        i = len(num1) - 1
+        j = len(num2) - 1
+        carry = 0
+        res = []
+
+        while i >= 0 or j >= 0:
+            cur_i = int(num1[i]) if i >= 0 else 0
+            cur_j = int(num2[j]) if j >= 0 else 0
+
+            cur_sum = cur_i + cur_j + carry
+
+            digit = cur_sum % 10
+            carry = cur_sum // 10
+
+            res.append(str(digit))
+
+            i -= 1
+            j -= 1
+
+        if carry == 1:
+            res.append(str(carry))
+
+        return "".join(reversed(res))
+```
+
+---
+
+## Complexity
+
+Let:
+
+```text
+n = length of num1
+m = length of num2
+```
+
+We process every digit once.
+
+### Time Complexity
+
+```text
+O(max(n, m))
+```
+
+### Space Complexity
+
+```text
+O(max(n, m))
+```
+
+The `res` list stores the resulting digits.
+
+---
+
+## Key Takeaways
+
+### Two pointers
+
+```python
+i = len(num1) - 1
+j = len(num2) - 1
+```
+
+Start from the **rightmost digit**.
+
+### Handle different lengths
+
+```python
+cur_i = int(num1[i]) if i >= 0 else 0
+cur_j = int(num2[j]) if j >= 0 else 0
+```
+
+If one number has no digit left, treat it as `0`.
+
+### Calculate digit
+
+```python
+digit = cur_sum % 10
+```
+
+### Calculate carry
+
+```python
+carry = cur_sum // 10
+```
+
+### Reverse at the end
+
+```python
+return "".join(reversed(res))
+```
+
+The most important pattern to remember is:
+
+```text
+Take digits
+    ↓
+Add digits + carry
+    ↓
+digit = sum % 10
+    ↓
+carry = sum // 10
+    ↓
+Move pointers left
+    ↓
+Reverse answer
+```
