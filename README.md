@@ -10877,3 +10877,137 @@ Move pointers left
     ↓
 Reverse answer
 ```
+
+
+
+# LeetCode 205 - Isomorphic Strings
+
+## Problem
+
+Given two strings `s` and `t`, check whether they are isomorphic.
+
+Two strings are isomorphic if:
+- Each character in `s` always maps to the same character in `t`.
+- Two different characters cannot map to the same character.
+
+Example:
+
+```text
+s = "egg"
+t = "add"
+
+e -> a
+g -> d
+
+Output: true
+```
+
+---
+
+## Intuition
+
+We need to maintain a **one-to-one mapping** from `s` to `t`.
+
+We use:
+
+- `d` → dictionary to store `s[i] -> t[i]`
+- `seen` → set to store characters of `t` that are already mapped
+
+For every character:
+
+1. If `s[i]` is new:
+   - If `t[i]` is already in `seen`, return `False`.
+   - Otherwise create the mapping.
+2. If `s[i]` already exists:
+   - Check that it maps to the same `t[i]`.
+   - If not, return `False`.
+
+If no conflict is found, return `True`.
+
+---
+
+## Python Code
+
+```python
+def g():
+    s = "egg"
+    t = "add"
+
+    d = {}
+    seen = set()
+
+    for i in range(len(s)):
+        if s[i] not in d:
+            if t[i] in seen:
+                return False
+
+            d[s[i]] = t[i]
+            seen.add(t[i])
+
+        else:
+            if d[s[i]] != t[i]:
+                return False
+
+    return True
+
+
+print(g())
+```
+
+---
+
+## Example
+
+```text
+s = "badc"
+t = "baba"
+```
+
+Mappings:
+
+```text
+b -> b
+a -> a
+d -> b  ❌
+```
+
+`b` is already used, so `d` cannot also map to `b`.
+
+Therefore:
+
+```text
+Output: false
+```
+
+---
+
+## Complexity
+
+**Time:** `O(n)`  
+We traverse the string once.
+
+**Space:** `O(n)`  
+The dictionary and set can store up to `n` characters.
+
+---
+
+## Key Takeaway
+
+```text
+Dictionary = s -> t mapping
+Set        = already-used characters in t
+```
+
+Two checks:
+
+```python
+t[i] in seen
+```
+
+→ Is this target character already taken?
+
+```python
+d[s[i]] != t[i]
+```
+
+→ Is an existing mapping being changed?
