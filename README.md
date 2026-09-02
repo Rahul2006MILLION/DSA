@@ -11011,3 +11011,528 @@ d[s[i]] != t[i]
 ```
 
 → Is an existing mapping being changed?
+
+
+
+
+# LeetCode — Word Pattern
+
+## Problem Description
+
+Given a pattern and a string `s`, determine whether `s` follows the same pattern.
+
+A string follows the pattern if there is a **one-to-one mapping** between each character in `pattern` and each word in `s`.
+
+This means:
+
+1. Each character must always map to the same word.
+2. Two different characters cannot map to the same word.
+3. The number of characters in `pattern` must equal the number of words in `s`.
+
+### Example
+
+```text
+Input:
+pattern = "abba"
+s = "dog cat cat dog"
+
+Output:
+true
+```
+
+The mapping is:
+
+```text
+a → dog
+b → cat
+```
+
+Therefore:
+
+```text
+a  b  b  a
+↓  ↓  ↓  ↓
+dog cat cat dog
+```
+
+So the pattern matches and the answer is `true`.
+
+---
+
+## Approach
+
+We use two data structures:
+
+- **Dictionary `d`** — stores the mapping from each pattern character to its corresponding word.
+- **Set `seen`** — stores all words that have already been assigned to a pattern character.
+
+### Why do we need both?
+
+The dictionary checks that the same character always maps to the same word.
+
+For example:
+
+```text
+a → dog
+```
+
+If we later see:
+
+```text
+a → cat
+```
+
+that is invalid.
+
+However, the dictionary alone is not enough.
+
+Consider:
+
+```text
+pattern = "ab"
+s = "dog dog"
+```
+
+Without `seen`, we could create:
+
+```text
+a → dog
+b → dog
+```
+
+But this is invalid because two different characters cannot map to the same word.
+
+The `seen` set prevents this:
+
+```text
+a → dog
+b → dog  ❌
+```
+
+Since `"dog"` is already in `seen`, we return `False`.
+
+---
+
+## Algorithm
+
+### Step 1 — Split the string into words
+
+```python
+words = s.split()
+```
+
+For example:
+
+```text
+s = "dog cat cat dog"
+
+words = ["dog", "cat", "cat", "dog"]
+```
+
+### Step 2 — Check the lengths
+
+The number of words must equal the number of characters in the pattern.
+
+```python
+if len(words) != len(pattern):
+    return False
+```
+
+For example:
+
+```text
+pattern = "abc"
+s = "dog cat"
+```
+
+There are 3 pattern characters but only 2 words.
+
+Therefore, return `False`.
+
+### Step 3 — Iterate through every character and word
+
+For every index:
+
+```text
+pattern[i] ↔ words[i]
+```
+
+If the pattern character has not been seen before:
+
+1. Check whether the word is already used by another character.
+2. If it is already used, return `False`.
+3. Otherwise create the mapping.
+4. Add the word to `seen`.
+
+If the pattern character already has a mapping:
+
+1. Check whether it maps to the current word.
+2. If not, return `False`.
+
+### Step 4 — Return `True`
+
+If every character-word pair is valid, return `True`.
+
+---
+
+## Python Solution
+
+```python
+class Solution:
+
+    def wordPattern(self, pattern: str, s: str) -> bool:
+
+        d = {}
+
+        seen = set()
+
+        words = s.split()
+
+        if len(words) != len(pattern):
+
+            return False
+
+        for i in range(len(words)):
+
+            if pattern[i] not in d:
+
+                if words[i] in seen:
+
+                    return False
+
+                d[pattern[i]] = words[i]
+
+                seen.add(words[i])
+
+            else:
+
+                if d[pattern[i]] != words[i]:
+
+                    return False
+
+        return True
+```
+
+---
+
+## Dry Run
+
+### Input
+
+```text
+pattern = "abba"
+s = "dog cat cat dog"
+```
+
+After splitting:
+
+```text
+words = ["dog", "cat", "cat", "dog"]
+```
+
+---
+
+### Iteration 1
+
+```text
+pattern[0] = 'a'
+words[0] = "dog"
+```
+
+`a` is not in the dictionary.
+
+`dog` is not in `seen`.
+
+So we create:
+
+```text
+d:
+a → dog
+
+seen:
+dog
+```
+
+---
+
+### Iteration 2
+
+```text
+pattern[1] = 'b'
+words[1] = "cat"
+```
+
+`b` is not in the dictionary.
+
+`cat` is not in `seen`.
+
+So we create:
+
+```text
+d:
+a → dog
+b → cat
+
+seen:
+dog
+cat
+```
+
+---
+
+### Iteration 3
+
+```text
+pattern[2] = 'b'
+words[2] = "cat"
+```
+
+`b` already exists in the dictionary.
+
+Its mapping is:
+
+```text
+b → cat
+```
+
+The current word is also:
+
+```text
+cat
+```
+
+So this is valid.
+
+---
+
+### Iteration 4
+
+```text
+pattern[3] = 'a'
+words[3] = "dog"
+```
+
+`a` already exists in the dictionary.
+
+Its mapping is:
+
+```text
+a → dog
+```
+
+The current word is also:
+
+```text
+dog
+```
+
+So this is valid.
+
+All iterations succeed.
+
+Therefore:
+
+```text
+Output:
+true
+```
+
+---
+
+## Visual Mapping
+
+```text
+Pattern:
+
+a  b  b  a
+↓  ↓  ↓  ↓
+dog cat cat dog
+
+Mapping:
+
+a → dog
+b → cat
+```
+
+The same pattern character always produces the same word.
+
+---
+
+## Invalid Example
+
+```text
+pattern = "abba"
+s = "dog cat cat fish"
+```
+
+The mappings start as:
+
+```text
+a → dog
+b → cat
+```
+
+When we reach the last character:
+
+```text
+a → fish
+```
+
+But `a` was already mapped to:
+
+```text
+a → dog
+```
+
+Therefore:
+
+```text
+a → dog
+a → fish
+```
+
+is inconsistent.
+
+So the answer is:
+
+```text
+false
+```
+
+---
+
+## Another Invalid Example
+
+```text
+pattern = "ab"
+s = "dog dog"
+```
+
+First:
+
+```text
+a → dog
+```
+
+Then we try:
+
+```text
+b → dog
+```
+
+But `"dog"` is already present in `seen`.
+
+Therefore:
+
+```text
+b → dog
+```
+
+is invalid because `dog` is already assigned to `a`.
+
+So:
+
+```text
+Output:
+false
+```
+
+---
+
+## Time Complexity
+
+Let `n` be the number of words in `s`.
+
+We process every word exactly once.
+
+Dictionary lookup, insertion, and set lookup are `O(1)` on average.
+
+Therefore:
+
+```text
+Time Complexity: O(n)
+```
+
+---
+
+## Space Complexity
+
+We store:
+
+- The words created by `s.split()`
+- The character-to-word mappings in the dictionary
+- The used words in the set
+
+Therefore:
+
+```text
+Space Complexity: O(n)
+```
+
+---
+
+## Key Insight
+
+The important part of this problem is that the mapping must be **one-to-one**.
+
+We need to guarantee:
+
+```text
+Pattern character → Word
+```
+
+is consistent.
+
+For example:
+
+```text
+a → dog
+b → cat
+```
+
+is valid.
+
+But:
+
+```text
+a → dog
+b → dog
+```
+
+is invalid.
+
+So we use:
+
+```text
+Dictionary + Set
+```
+
+The **dictionary** checks:
+
+```text
+character → word
+```
+
+The **set** makes sure that:
+
+```text
+word → character
+```
+
+is also unique.
+
+Together, they enforce a one-to-one mapping.
+
+---
+
+## Key Takeaway
+
+When you see a problem asking whether two sequences follow the same **one-to-one pattern**, think:
+
+```text
+HashMap / Dictionary
+        +
+HashSet
+```
+
+The dictionary remembers the mapping, while the set prevents multiple pattern characters from mapping to the same value.
