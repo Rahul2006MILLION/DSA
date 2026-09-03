@@ -11616,3 +11616,66 @@ Swap vowels
      ↓
 Move inward
 ```
+
+
+# LeetCode 2810 — Faulty Keyboard
+
+## Description
+
+Given a string `s`, whenever the character `'i'` is typed, reverse the string currently written on the screen. Other characters are added normally.
+
+## Example
+
+```text
+Input:  "string"
+Output: "rtsng"
+```
+
+Process:
+
+```text
+s → st → str → rts → rtsn → rtsng
+```
+
+The fourth character is `'i'`, so `"str"` is reversed to `"rts"`.
+
+## Intuition
+
+Use a list to store the characters currently on the screen.
+
+- If the character is `'i'`, reverse the list.
+- Otherwise, append the character.
+- Finally, join the list into a string.
+
+## Code
+
+```python
+class Solution:
+    def finalString(self, s: str) -> str:
+        l = []
+
+        for i in range(len(s)):
+            if s[i] == 'i':
+                l = l[::-1]
+            else:
+                l.append(s[i])
+
+        return "".join(l)
+```
+
+## Complexity
+
+- **Time:** `O(n²)`
+- **Space:** `O(n)`
+
+## Key Takeaway
+
+```text
+Character is 'i'
+       ↓
+Reverse current list
+       ↓
+Otherwise append
+       ↓
+Join into final string
+```
