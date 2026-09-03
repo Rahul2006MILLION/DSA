@@ -11536,3 +11536,83 @@ HashSet
 ```
 
 The dictionary remembers the mapping, while the set prevents multiple pattern characters from mapping to the same value.
+
+
+
+
+# LeetCode 345 — Reverse Vowels of a String
+
+## Description
+
+Given a string `s`, reverse only the vowels. All consonants and other characters remain in their original positions.
+
+Vowels:
+```text
+a, e, i, o, u, A, E, I, O, U
+```
+
+## Example
+
+```text
+Input:  "hello"
+Output: "holle"
+```
+
+The vowels `e` and `o` are swapped.
+
+## Intuition
+
+Use **two pointers**:
+
+- `i` starts from the left.
+- `j` starts from the right.
+- Skip non-vowels.
+- When both pointers find vowels, swap them.
+- Move both pointers inward.
+
+Since Python strings are immutable, convert the string to a list first.
+
+## Code
+
+```python
+class Solution:
+    def reverseVowels(self, s: str) -> str:
+        s = list(s)
+        vo = ['a','e','i','o','u','A','E','I','O','U']
+
+        i = 0
+        j = len(s) - 1
+
+        while i < j:
+            if s[i] in vo and s[j] in vo:
+                temp = s[i]
+                s[i] = s[j]
+                s[j] = temp
+                i += 1
+                j -= 1
+
+            if s[i] not in vo:
+                i += 1
+
+            if s[j] not in vo:
+                j -= 1
+
+        return "".join(s)
+```
+
+## Complexity
+
+- **Time:** `O(n)`
+- **Space:** `O(n)`
+
+## Key Takeaway
+
+```text
+Two pointers
+     ↓
+Skip non-vowels
+     ↓
+Swap vowels
+     ↓
+Move inward
+```
