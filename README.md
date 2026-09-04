@@ -11679,3 +11679,107 @@ Otherwise append
        ↓
 Join into final string
 ```
+
+
+# LeetCode — Find the Original Typed String I
+
+## Problem
+
+Alice may have held a key too long while typing, causing consecutive characters to repeat.
+
+Given the final typed string `word`, return the number of possible original strings.
+
+---
+
+## Intuition
+
+We only care about **consecutive duplicate characters**.
+
+For:
+
+    word = "abbcccc"
+
+We have:
+
+    a | bb | cccc
+
+Every time the current character equals the previous character, there is one additional possibility.
+
+    a b b c c c c
+      ↑   ↑ ↑ ↑
+
+There are `4` consecutive duplicates.
+
+We start with `1` because the typed string itself is always one possible original string.
+
+Therefore:
+
+    answer = 1 + consecutive duplicate pairs
+           = 1 + 4
+           = 5
+
+---
+
+## Approach
+
+1. Start `s = 1`.
+2. Traverse from index `1`.
+3. If `word[i] == word[i - 1]`, increment `s`.
+4. Return `s`.
+
+---
+
+## Python Code
+
+    class Solution:
+
+        def possibleStringCount(self, word: str) -> int:
+
+            s = 1
+
+            for i in range(1, len(word)):
+
+                if word[i] == word[i - 1]:
+                    s += 1
+
+            return s
+
+---
+
+## Example
+
+    Input:  "abbcccc"
+    Output: 5
+
+Consecutive duplicate pairs:
+
+    bb
+    cc
+    cc
+    cc
+
+So:
+
+    1 + 4 = 5
+
+---
+
+## Time Complexity
+
+    O(n)
+
+We traverse the string once.
+
+## Space Complexity
+
+    O(1)
+
+Only a few variables are used.
+
+---
+
+## Key Takeaway
+
+Count **consecutive duplicates**, then add `1`.
+
+    answer = 1 + number of times word[i] == word[i - 1]
