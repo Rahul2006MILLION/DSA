@@ -11903,3 +11903,277 @@ The list `l` can store up to `m` characters, where `m` is the length of `s`.
 This is a **Two Pointer** problem.
 
 We can skip characters in `t`, but we cannot change the order of characters in `s`.
+
+
+# 434. Number of Segments in a String
+
+## Description
+
+Given a string `s`, return the number of segments in the string.
+
+A segment is defined to be a contiguous sequence of non-space characters.
+
+For example:
+
+```text
+s = "Hello    my    name"
+
+Output: 3
+```
+
+The multiple spaces between words do not create additional segments.
+
+The segments are:
+
+```text
+Hello
+my
+name
+```
+
+An empty string or a string containing only spaces has `0` segments.
+
+---
+
+## Intuition
+
+The main idea is to remove unnecessary whitespace from the beginning and end, then split the string using one or more whitespace characters.
+
+First:
+
+```java
+s.trim()
+```
+
+removes whitespace from the beginning and end.
+
+For example:
+
+```text
+"   Hello    my    name   "
+```
+
+becomes:
+
+```text
+"Hello    my    name"
+```
+
+Then:
+
+```java
+.split("\\s+")
+```
+
+splits the string wherever there is one or more whitespace characters.
+
+Here:
+
+```text
+\\s
+```
+
+means whitespace.
+
+And:
+
+```text
++
+```
+
+means one or more.
+
+So:
+
+```java
+"Hello    my    name".split("\\s+")
+```
+
+produces:
+
+```text
+["Hello", "my", "name"]
+```
+
+Therefore:
+
+```text
+length = 3
+```
+
+---
+
+## Why We Check `isEmpty()`
+
+Consider:
+
+```text
+s = ""
+```
+
+If we directly split it, Java can produce an unexpected result for counting segments.
+
+So first:
+
+```java
+if (s.trim().isEmpty()) {
+    return 0;
+}
+```
+
+This handles:
+
+```text
+""
+"   "
+"      "
+```
+
+All of these contain no segments, so the answer is:
+
+```text
+0
+```
+
+---
+
+## Code
+
+```java
+public class Number_of_Segments_in_a_String {
+
+    public static int check(String s) {
+
+        if (s.trim().isEmpty()) {
+            return 0;
+        }
+
+        String[] d = s.trim().split("\\s+");
+
+        return d.length;
+    }
+
+    public static void main(String[] args) {
+
+        String h = "Hello    my    name";
+
+        int v = check(h);
+
+        System.out.println(v);
+    }
+}
+```
+
+---
+
+## Python Equivalent
+
+In Python, the equivalent approach is:
+
+```python
+class Solution:
+    def countSegments(self, s: str) -> int:
+        return len(s.split())
+```
+
+Python's `split()` without an argument automatically handles multiple whitespace characters and ignores leading/trailing whitespace.
+
+For example:
+
+```python
+s = "Hello    my    name"
+
+print(s.split())
+```
+
+produces:
+
+```text
+['Hello', 'my', 'name']
+```
+
+Therefore:
+
+```python
+len(s.split())
+```
+
+returns:
+
+```text
+3
+```
+
+---
+
+## Time Complexity
+
+```text
+O(n)
+```
+
+where `n` is the length of the string.
+
+The string needs to be processed to remove whitespace and identify the segments.
+
+---
+
+## Space Complexity
+
+```text
+O(n)
+```
+
+The `split()` operation creates an array containing the segments.
+
+In the worst case, the string can contain many individual segments, so the additional space can be proportional to the length of the string.
+
+---
+
+## Key Takeaway
+
+The important Java expression is:
+
+```java
+s.trim().split("\\s+")
+```
+
+Think of it as:
+
+```text
+trim()
+  ↓
+Remove whitespace from the beginning and end
+
+split("\\s+")
+  ↓
+Split on one or more whitespace characters
+
+length
+  ↓
+Number of segments
+```
+
+The important difference is:
+
+```java
+split(" ")
+```
+
+means:
+
+```text
+Split on exactly one space
+```
+
+while:
+
+```java
+split("\\s+")
+```
+
+means:
+
+```text
+Split on one or more whitespace characters
+```
