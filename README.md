@@ -11783,3 +11783,123 @@ Only a few variables are used.
 Count **consecutive duplicates**, then add `1`.
 
     answer = 1 + number of times word[i] == word[i - 1]
+
+
+# 392. Is Subsequence
+
+## Description
+
+Given two strings `s` and `t`, return `true` if `s` is a subsequence of `t`, or `false` otherwise.
+
+A subsequence is a string that can be formed from another string by deleting some (or none) of its characters without changing the relative order of the remaining characters.
+
+### Example
+
+```text
+s = "abc"
+t = "ahbgdc"
+
+Output: true
+```
+
+We can find `a`, then `b`, then `c` in `t` while moving only from left to right.
+
+```text
+a h b g d c
+↑   ↑     ↑
+a   b     c
+```
+
+## Intuition
+
+Use two pointers:
+
+- `i` points to the current character we need to find in `s`.
+- `j` searches through `t`.
+
+If:
+
+```python
+s[i] == t[j]
+```
+
+move both pointers:
+
+```python
+i += 1
+j += 1
+```
+
+If they do not match, only move `j`:
+
+```python
+j += 1
+```
+
+The main idea is:
+
+```text
+i → tracks what we need from s
+j → searches through t
+
+Match:
+    i++
+    j++
+
+No match:
+    j++
+```
+
+## Code
+
+```python
+class Solution:
+
+    def isSubsequence(self, s: str, t: str) -> bool:
+
+        l = []
+
+        i = 0
+
+        j = 0
+
+        flag = 0
+
+        while(i < len(s) and j < len(t)):
+
+            if(s[i] == t[j]):
+
+                l.append(s[i])
+
+                i += 1
+
+                j += 1
+
+            else:
+
+                j += 1
+
+        if(len(s) == len(l)):
+
+            return True
+
+        return False
+```
+
+## Time Complexity
+
+`O(n)`
+
+The `j` pointer moves through `t` at most once.
+
+## Space Complexity
+
+`O(m)`
+
+The list `l` can store up to `m` characters, where `m` is the length of `s`.
+
+## Key Takeaway
+
+This is a **Two Pointer** problem.
+
+We can skip characters in `t`, but we cannot change the order of characters in `s`.
