@@ -12177,3 +12177,179 @@ means:
 ```text
 Split on one or more whitespace characters
 ```
+
+
+# Maximum Average Subarray I
+
+## Problem
+
+Given an integer array `nums` and an integer `k`, find a contiguous subarray of exactly `k` elements with the maximum average.
+
+---
+
+## Intuition
+
+Since every subarray has exactly `k` elements:
+
+```text
+average = sum / k
+```
+
+Because `k` is fixed, the subarray with the **maximum sum** will also have the **maximum average**.
+
+So we use a **fixed-size sliding window**.
+
+---
+
+## Sliding Window
+
+First calculate the sum of the first `k` elements.
+
+Example:
+
+```text
+nums = [1, 12, -5, -6, 50, 3]
+k = 4
+
+First window:
+[1, 12, -5, -6]
+sum = 2
+```
+
+Now slide the window:
+
+```text
+[1, 12, -5, -6]
+       ↓
+
+[12, -5, -6, 50]
+```
+
+`1` leaves and `50` enters.
+
+Instead of recalculating the entire sum:
+
+```text
+new sum = old sum - element leaving + element entering
+```
+
+So:
+
+```python
+cur_sum = cur_sum - nums[i-k] + nums[i]
+```
+
+For the example:
+
+```text
+2 - 1 + 50 = 51
+```
+
+Next:
+
+```text
+[12, -5, -6, 50]
+       ↓
+
+[-5, -6, 50, 3]
+```
+
+```text
+51 - 12 + 3 = 42
+```
+
+Maximum sum = `51`
+
+Maximum average:
+
+```text
+51 / 4 = 12.75
+```
+
+---
+
+## Why `nums[i-k]`?
+
+`nums[i]` is the **new element entering** the window.
+
+`nums[i-k]` is the **old element leaving** the window.
+
+Example:
+
+```text
+i = 4
+k = 4
+
+nums[i]   = nums[4] = 50  → enters
+nums[i-k] = nums[0] = 1   → leaves
+```
+
+So:
+
+```python
+cur_sum = cur_sum - nums[i-k] + nums[i]
+```
+
+means:
+
+```text
+REMOVE the old element
+ADD the new element
+```
+
+---
+
+## Code
+
+```python
+class Solution:
+    def findMaxAverage(self, nums: List[int], k: int) -> float:
+        max_sum = 0
+        cur_sum = 0
+
+        for i in range(k):
+            cur_sum += nums[i]
+
+        max_sum = cur_sum
+
+        for i in range(k, len(nums)):
+            cur_sum = cur_sum - nums[i-k] + nums[i]
+
+            if cur_sum > max_sum:
+                max_sum = cur_sum
+
+        return max_sum / k
+```
+
+---
+
+## Complexity
+
+**Time:** `O(n)`
+
+**Space:** `O(1)`
+
+---
+
+## Key Takeaway
+
+For a **contiguous subarray of exactly `k` elements**, think:
+
+**Fixed-Size Sliding Window**
+
+```text
+First window → calculate sum
+
+Every slide:
+    remove nums[i-k]
+    add nums[i]
+    update max_sum
+```
+
+The main pattern:
+
+```python
+cur_sum = cur_sum - nums[i-k] + nums[i]
+```
+
+**Remove one + Add one = Slide the window.**
