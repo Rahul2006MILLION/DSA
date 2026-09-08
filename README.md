@@ -12477,3 +12477,100 @@ class Solution:
                 least_count = min_count
 
         return least_count
+```
+
+# Convert to Base 7
+
+## Description
+
+Given an integer `num`, convert it into its base-7 representation as a string.
+
+The idea is to repeatedly divide by `7`:
+
+```python
+num % 7
+```
+
+gives the last digit, and
+
+```python
+num // 7
+```
+
+removes that digit.
+
+For example:
+
+```python
+10 % 7 = 3
+10 // 7 = 1
+
+1 % 7 = 1
+1 // 7 = 0
+```
+
+Digits are collected as:
+
+```python
+[3, 1]
+```
+
+After reversing:
+
+```python
+[1, 3]
+```
+
+So:
+
+```text
+10 → "13"
+```
+
+## Python Code
+
+```python
+class Solution:
+
+    def convertToBase7(self, num: int) -> str:
+
+        if num == 0:
+            return '0'
+
+        a = num
+        num = abs(num)
+        l = []
+
+        while num > 0:
+            r = num % 7
+            num = num // 7
+            l.append(r)
+
+        l.reverse()
+
+        if a < 0:
+            return '-' + ''.join(map(str, l))
+
+        return ''.join(map(str, l))
+```
+
+## Time Complexity
+
+**O(log₇(n))**
+
+The number is divided by `7` repeatedly.
+
+## Space Complexity
+
+**O(log₇(n))**
+
+The list stores the base-7 digits.
+
+## Key Takeaway
+
+```python
+digit = num % base
+num = num // base
+```
+
+The digits are generated backwards, so reverse them before creating the final string.
