@@ -12424,3 +12424,56 @@ The outgoing element is always:
 ```python
 s[i - k]
 ```
+
+
+
+# Minimum Recolors to Get K Consecutive Black Blocks
+
+## Description
+
+Given a string `blocks` containing only `W` (white) and `B` (black), and an integer `k`, find the minimum number of white blocks that need to be recolored so that there are at least `k` consecutive black blocks.
+
+The key observation is that for every window of size `k`, the number of `W`s in that window represents exactly how many recoloring operations are needed to make that entire window black.
+
+So, we use a **sliding window**:
+
+1. Count the number of `W`s in the first `k` blocks.
+2. Store this count as the current minimum.
+3. Slide the window one position at a time:
+   - Remove the character leaving the window.
+   - Add the new character entering the window.
+   - Update the minimum number of `W`s.
+4. Return the minimum count.
+
+## Python Code
+
+```python
+class Solution:
+    def minimumRecolors(self, blocks: str, k: int) -> int:
+
+        min_count = 0
+        least_count = 0
+
+        # Count W's in the first window of size k
+        for i in range(k):
+            if blocks[i] == 'W':
+                min_count += 1
+
+        least_count = min_count
+
+        # Slide the window
+        for i in range(k, len(blocks)):
+
+            # Remove the character leaving the window
+            if blocks[i - k] == 'W':
+                min_count -= 1
+
+            # Add the new character entering the window
+            if blocks[i] == 'W':
+                min_count += 1
+
+            # Keep track of the minimum number of W's
+            if min_count < least_count:
+                least_count = min_count
+
+        return least_count
