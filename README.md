@@ -12353,3 +12353,74 @@ cur_sum = cur_sum - nums[i-k] + nums[i]
 ```
 
 **Remove one + Add one = Slide the window.**
+
+
+
+# 1456. Maximum Number of Vowels in a Substring of Given Length
+
+## Description
+
+Given a string `s` and an integer `k`, find the maximum number of vowels in any substring of `s` with length exactly `k`.
+
+Use a **fixed-size sliding window**.
+
+- First, count the vowels in the first `k` characters.
+- Then slide the window one character at a time.
+- Add the new character entering the window.
+- Remove the character leaving the window using `i - k`.
+- Keep track of the maximum vowel count.
+
+## Python Code
+
+```python
+class Solution:
+    def maxVowels(self, s: str, k: int) -> int:
+        d = list(s)
+        max_sum = 0
+        cur_sum = 0
+        l = ['a', 'e', 'i', 'o', 'u']
+
+        for i in range(0, k):
+            if d[i] in l:
+                cur_sum += 1
+
+        max_sum = cur_sum
+
+        for i in range(k, len(d)):
+            if d[i] in l:
+                cur_sum += 1
+
+            if d[i-k] in l:
+                cur_sum -= 1
+
+            if cur_sum > max_sum:
+                max_sum = cur_sum
+
+        return max_sum
+```
+
+## Time Complexity
+
+**O(n)** — Each character is processed at most once when entering and leaving the window.
+
+## Space Complexity
+
+**O(n)** — `list(s)` creates a list containing all characters of the string.
+
+## Key Takeaway
+
+For a fixed-size window:
+
+```text
+Add the incoming element
+        ↓
+Remove the outgoing element
+        ↓
+Update the answer
+```
+
+The outgoing element is always:
+
+```python
+s[i - k]
+```
