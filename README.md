@@ -12721,7 +12721,7 @@ class Solution:
             cur += arr[i]
 
         # Check first window
-        if cur >= threshold * k:
+        if cur >= threshold * k: #curr/k >=threshold : curr=threshold*k
             count += 1
 
         # Slide the window
