@@ -12574,3 +12574,268 @@ num = num // base
 ```
 
 The digits are generated backwards, so reverse them before creating the final string.
+
+
+
+# 1343. Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+
+## Description
+
+Given an integer array `arr`, an integer `k`, and an integer `threshold`, find the number of contiguous sub-arrays of size `k` whose **average is greater than or equal to `threshold`**.
+
+We use a **fixed-size sliding window** because every sub-array must have exactly `k` elements.
+
+---
+
+## Intuition
+
+For every window of size `k`, we need to check:
+
+```text
+average >= threshold
+```
+
+Average is:
+
+```text
+sum / k >= threshold
+```
+
+Instead of calculating the average every time, multiply both sides by `k`:
+
+```text
+sum >= threshold * k
+```
+
+So we compare the **window sum** directly with:
+
+```text
+threshold * k
+```
+
+### Why multiply `threshold` by the window size?
+
+For example:
+
+```text
+k = 3
+threshold = 4
+```
+
+Instead of checking:
+
+```text
+sum / 3 >= 4
+```
+
+we check:
+
+```text
+sum >= 4 * 3
+sum >= 12
+```
+
+This avoids calculating the average.
+
+---
+
+## Sliding Window
+
+First, calculate the sum of the first `k` elements.
+
+Then move the window one position at a time.
+
+When the window moves:
+
+```text
+Remove the element leaving the window
+Add the new element entering the window
+```
+
+So:
+
+```python
+cur = cur - arr[i-k] + arr[i]
+```
+
+Here:
+
+- `arr[i-k]` → element leaving the window
+- `arr[i]` → element entering the window
+- `cur` → sum of the current window
+
+Then check:
+
+```python
+if cur >= threshold * k:
+    count += 1
+```
+
+---
+
+## Example
+
+```text
+arr = [2,2,2,2,5,5,5,8]
+k = 3
+threshold = 4
+```
+
+Required sum:
+
+```text
+threshold * k
+= 4 * 3
+= 12
+```
+
+Windows:
+
+```text
+[2,2,2] → sum = 6  → ❌
+[2,2,2] → sum = 6  → ❌
+[2,2,5] → sum = 9  → ❌
+[2,5,5] → sum = 12 → ✅
+[5,5,5] → sum = 15 → ✅
+[5,5,8] → sum = 18 → ✅
+```
+
+Answer:
+
+```text
+3
+```
+
+---
+
+## Python Code
+
+```python
+class Solution:
+    def numOfSubarrays(self, arr: List[int], k: int, threshold: int) -> int:
+        count = 0
+        cur = 0
+
+        # Sum of the first window
+        for i in range(0, k):
+            cur += arr[i]
+
+        # Check first window
+        if cur >= threshold * k:
+            count += 1
+
+        # Slide the window
+        for i in range(k, len(arr)):
+            cur = cur - arr[i-k] + arr[i]
+
+            if cur >= threshold * k:
+                count += 1
+
+        return count
+```
+
+---
+
+## Important Line
+
+```python
+if cur >= threshold * k:
+```
+
+This is the key idea of the problem.
+
+We are **not calculating the average**.
+
+Instead of:
+
+```text
+cur / k >= threshold
+```
+
+we use:
+
+```text
+cur >= threshold * k
+```
+
+Because:
+
+```text
+cur / k >= threshold
+```
+
+multiply both sides by `k`:
+
+```text
+cur >= threshold * k
+```
+
+---
+
+## Time Complexity
+
+```text
+O(n)
+```
+
+where `n` is the length of `arr`.
+
+We visit each element at most a constant number of times.
+
+---
+
+## Space Complexity
+
+```text
+O(1)
+```
+
+We only use a few variables:
+
+```text
+count
+cur
+i
+```
+
+No additional array or data structure is created.
+
+---
+
+## Key Takeaway
+
+For a **fixed-size window**, maintain the window sum.
+
+Instead of calculating:
+
+```text
+average >= threshold
+```
+
+convert it to:
+
+```text
+sum >= threshold * k
+```
+
+Then use sliding window:
+
+```python
+cur = cur - arr[i-k] + arr[i]
+```
+
+**Pattern:**
+
+```text
+Build first window
+       ↓
+Check condition
+       ↓
+Remove left element
+       ↓
+Add right element
+       ↓
+Check condition
+       ↓
+Repeat
+```
