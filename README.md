@@ -12839,3 +12839,34 @@ Check condition
        ↓
 Repeat
 ```
+
+
+# 50. Pow(x, n)
+
+## Description
+
+Calculate `x` raised to the power `n`.
+
+For example:
+
+```text
+x = 2.1, n = 3
+Output = 9.261
+```
+
+## Python Code
+
+```python
+class Solution:
+    def myPow(self, x: float, n: int) -> float:
+        return pow(x, n)
+```
+
+## Complexity
+
+- **Time:** O(1)
+- **Space:** O(1)
+
+## Key Takeaway
+
+Python's `pow(x, n)` directly calculates `x^n`.
