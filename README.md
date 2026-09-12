@@ -12870,3 +12870,219 @@ class Solution:
 ## Key Takeaway
 
 Python's `pow(x, n)` directly calculates `x^n`.
+
+
+
+
+# 209. Minimum Size Subarray Sum
+
+## Problem
+
+Given positive integers `nums` and a positive integer `target`, return the **minimum length** of a contiguous subarray whose sum is `>= target`.
+
+If no such subarray exists, return `0`.
+
+Example:
+    target = 7
+    nums = [2,3,1,2,4,3]
+    Output = 2
+
+Because `[4,3]` has sum `7`.
+
+---
+
+# Core Idea — Variable Sliding Window
+
+Maintain a window:
+
+    [left ........ right]
+
+and a running `sum`.
+
+### Rules
+
+    sum < target
+    → window too small
+    → move right
+    → add nums[right]
+
+    sum >= target
+    → valid window
+    → update minimum length
+    → move left
+    → subtract nums[left]
+
+### Pointer Roles
+
+    right → expands the window
+    left  → shrinks the window
+
+Most important:
+
+    right moves → sum += nums[right]
+    left moves  → sum -= nums[left]
+
+`sum` always represents the elements from `left` to `right`.
+
+---
+
+# Intuition
+
+We want the **smallest valid window**.
+
+    EXPAND until valid
+            ↓
+    RECORD window length
+            ↓
+    SHRINK while valid
+            ↓
+    EXPAND again
+
+So:
+
+    sum < target
+        → expand
+
+    sum >= target
+        → record answer
+        → shrink
+        → keep shrinking while valid
+
+---
+
+# Example Trace
+
+    target = 7
+    nums = [2,3,1,2,4,3]
+
+### Expand
+
+    [2]
+    sum = 2 < 7
+    → expand
+
+    [2,3]
+    sum = 5 < 7
+    → expand
+
+    [2,3,1]
+    sum = 6 < 7
+    → expand
+
+Now:
+
+    [2,3,1,2]
+    sum = 8 >= 7
+    length = 4
+    minLen = 4
+
+### Shrink
+
+Remove `2`:
+
+    [3,1,2]
+    sum = 6 < 7
+
+So stop shrinking and expand again.
+
+### Expand
+
+    [3,1,2,4]
+    sum = 10 >= 7
+    length = 4
+
+Shrink:
+
+    [1,2,4]
+    sum = 7 >= 7
+    length = 3
+    minLen = 3
+
+Shrink again:
+
+    [2,4]
+    sum = 6 < 7
+
+### Expand
+
+    [2,4,3]
+    sum = 9 >= 7
+    length = 3
+
+Shrink:
+
+    [4,3]
+    sum = 7 >= 7
+    length = 2
+    minLen = 2
+
+Shrink again:
+
+    [3]
+    sum = 3 < 7
+
+Final answer:
+
+    2
+
+Minimum subarray:
+
+    [4,3]
+
+---
+
+# Mental Pattern
+
+Remember:
+
+    EXPAND
+       ↓
+    sum >= target
+       ↓
+    RECORD
+       ↓
+    SHRINK
+       ↓
+    sum < target
+       ↓
+    EXPAND again
+
+---
+
+# Why Sliding Window Works
+
+The array contains **positive integers**.
+
+Therefore:
+
+    Adding an element → sum increases
+    Removing an element → sum decreases
+
+This makes it possible to efficiently expand and shrink the window.
+
+---
+
+# Code
+
+```python
+class Solution:
+    def minSubArrayLen(self, target: int, nums: List[int]) -> int:
+        left = 0
+        summ = 0
+        min_len = float('inf')
+
+        for right in range(len(nums)):
+            summ += nums[right]
+
+            while summ >= target:
+                a = right - left + 1
+                min_len = min(min_len, a)
+
+                summ -= nums[left]
+                left += 1
+
+        if min_len == float('inf'):
+            return 0
+
+        return min_len
+```
