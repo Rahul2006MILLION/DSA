@@ -13086,3 +13086,52 @@ class Solution:
 
         return min_len
 ```
+
+
+# 904. Fruit Into Baskets
+
+## Description
+
+Given an integer array `fruits`, find the length of the longest contiguous subarray containing **at most 2 distinct fruit types**.
+
+This is a **variable-size sliding window** problem.
+
+Use:
+- `right` to expand the window.
+- `left` to shrink the window when there are more than 2 fruit types.
+- A dictionary `d` to store the frequency of each fruit inside the current window.
+- `res` to store the maximum valid window length.
+
+## Python Code
+
+```python
+class Solution:
+    def totalFruit(self, fruits: List[int]) -> int:
+        left, right, res = 0, 0, 0
+        d = {}
+
+        for right in range(len(fruits)):
+            if fruits[right] not in d:
+                d[fruits[right]] = 1
+            else:
+                d[fruits[right]] += 1
+
+            while len(d) > 2:
+                d[fruits[left]] -= 1
+
+                if d[fruits[left]] == 0:
+                    del d[fruits[left]]
+
+                left += 1
+
+            a = right - left + 1
+            res = max(res, a)
+
+        return res
+```
+Time Complexity
+O(n)
+Each element is added to the window once and removed at most once.
+Space Complexity
+O(1)
+The dictionary stores at most 3 fruit types temporarily, and after shrinking it contains at most 2.
