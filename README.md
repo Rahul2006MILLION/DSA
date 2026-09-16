@@ -13135,3 +13135,59 @@ Each element is added to the window once and removed at most once.
 Space Complexity
 O(1)
 The dictionary stores at most 3 fruit types temporarily, and after shrinking it contains at most 2.
+
+
+# Longest Substring Without Repeating Characters
+
+## Description
+
+Given a string `s`, find the length of the longest substring without repeating characters.
+
+### Approach
+
+Use the **Sliding Window** technique with a `set`.
+
+- `left` represents the start of the current window.
+- `right` moves through the string.
+- `seen` stores the characters currently inside the window.
+- If `s[right]` is already in `seen`, move `left` forward and remove characters until the duplicate is gone.
+- After maintaining a valid window, update `longest`.
+- Add the current character to `seen`.
+
+## Python Code
+
+```python
+class Solution:
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+
+        if len(s) == 0:
+            return 0
+
+        left = 0
+        seen = set()
+        longest = 0
+
+        for right in range(len(s)):
+
+            while s[right] in seen:
+                seen.remove(s[left])
+                left += 1
+
+            longest = max(longest, (right - left) + 1)
+            seen.add(s[right])
+
+        return longest
+```
+
+## Time Complexity
+
+**O(n)**
+
+Each character is added to the set once and removed from the set at most once. Therefore, the total number of operations is linear in the length of the string.
+
+## Space Complexity
+
+**O(min(n, k))**, commonly written as **O(n)**.
+
+The `seen` set stores the characters in the current window. In the worst case, it can contain up to `n` distinct characters.
