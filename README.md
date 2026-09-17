@@ -13230,3 +13230,54 @@ Key Pattern: Expand with right; when a duplicate appears, shrink with left until
 Time Complexity: O(n) — each element is added and removed at most once.
 
 Space Complexity: O(n) — the HashSet can store up to n elements.
+
+
+
+# Minimum Consecutive Cards to Pick Up
+
+## Description
+
+Use a **Sliding Window + HashSet** to find the minimum number of consecutive cards containing a matching pair.
+
+- `seen` stores the unique cards currently inside the window.
+- `left` and `right` represent the sliding window.
+- When `cards[right]` is already in `seen`, a matching pair is found.
+- Calculate the current window length using `(right - left) + 1`.
+- Update `min_dist` with the smallest valid distance.
+- Remove cards from the left until the duplicate is removed.
+- If no duplicate is ever found, return `-1`.
+
+## Python
+
+```python
+class Solution:
+
+    def minimumCardPickup(self, cards: List[int]) -> int:
+
+        distance = 0
+        min_dist = len(cards)
+        left = 0
+        seen = set()
+
+        for right in range(len(cards)):
+
+            while cards[right] in seen:
+
+                distance = (right - left) + 1
+                min_dist = min(distance, min_dist)
+
+                seen.remove(cards[left])
+                left += 1
+
+            seen.add(cards[right])
+
+        if len(seen) == len(cards):
+            return -1
+
+        return min_dist
+```
+Time Complexity
+
+Time: O(n) — each card is added to and removed from the set at most once.
+
+Space: O(n) — the seen set can contain up to n elements.
