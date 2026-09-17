@@ -13191,3 +13191,42 @@ Each character is added to the set once and removed from the set at most once. T
 **O(min(n, k))**, commonly written as **O(n)**.
 
 The `seen` set stores the characters in the current window. In the worst case, it can contain up to `n` distinct characters.
+
+
+# Maximum Erasure Value
+
+## Approach
+Use **Sliding Window + HashSet**.
+
+Maintain a window from `left` to `right` containing only unique elements.
+- `seen` stores elements currently in the window.
+- `summ` stores the current window sum.
+- If `nums[right]` is already in `seen`, remove elements from the left until the duplicate is gone.
+- Subtract removed elements from `summ`.
+- Add `nums[right]` and update `max_sum`.
+
+## Python
+```python
+class Solution:
+    def maximumUniqueSubarray(self, nums: List[int]) -> int:
+        left = 0
+        max_sum, summ = 0, 0
+        seen = set()
+
+        for right in range(len(nums)):
+            while nums[right] in seen:
+                seen.remove(nums[left])
+                summ -= nums[left]
+                left += 1
+
+            seen.add(nums[right])
+            summ += nums[right]
+            max_sum = max(max_sum, summ)
+
+        return max_sum
+```
+Key Pattern: Expand with right; when a duplicate appears, shrink with left until the window is valid again.
+
+Time Complexity: O(n) — each element is added and removed at most once.
+
+Space Complexity: O(n) — the HashSet can store up to n elements.
