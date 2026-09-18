@@ -13281,3 +13281,182 @@ Time Complexity
 Time: O(n) — each card is added to and removed from the set at most once.
 
 Space: O(n) — the seen set can contain up to n elements.
+
+
+
+
+# Longest Repeating Character Replacement
+
+## Python Code
+
+```python
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+
+        left, longest = 0, 0
+
+        counts = [0] * 26
+
+        for right in range(0, len(s)):
+
+            counts[ord(s[right]) - 65] += 1
+
+            while (right - left + 1) - max(counts) > k:
+
+                counts[ord(s[left]) - 65] -= 1
+
+                left += 1
+
+            longest = max(longest, (right - left) + 1)
+
+        return longest
+```
+
+## Description
+
+This solution uses the **Sliding Window** technique.
+
+We maintain a window between `left` and `right`. The window represents the current substring we are checking.
+
+The `counts` array stores the frequency of each uppercase English character.
+
+```text
+A -> counts[0]
+B -> counts[1]
+C -> counts[2]
+...
+Z -> counts[25]
+```
+
+We use `ord(s[right]) - 65` to convert a character into an index.
+
+For example:
+
+```text
+'A' -> 65 - 65 = 0
+'B' -> 66 - 65 = 1
+'C' -> 67 - 65 = 2
+```
+
+### Why do we use the `while` loop?
+
+The current window size is:
+
+```text
+right - left + 1
+```
+
+The most frequent character in the window is:
+
+```text
+max(counts)
+```
+
+To make every character in the window the same, we need to replace all characters except the most frequent character.
+
+Therefore:
+
+```text
+Characters to replace = Window Size - Most Frequent Character Count
+```
+
+which is:
+
+```text
+(right - left + 1) - max(counts)
+```
+
+We are allowed to make at most `k` replacements.
+
+So the window is valid when:
+
+```text
+(right - left + 1) - max(counts) <= k
+```
+
+If:
+
+```text
+(right - left + 1) - max(counts) > k
+```
+
+the window is invalid because it requires more than `k` replacements.
+
+Therefore, we use the `while` loop to shrink the window:
+
+```python
+while (right - left + 1) - max(counts) > k:
+    counts[ord(s[left]) - 65] -= 1
+    left += 1
+```
+
+We use `while` instead of `if` because removing one character may not be enough to make the window valid. The window keeps shrinking until the number of required replacements is at most `k`.
+
+Once the window becomes valid, we calculate its length and update the longest valid window:
+
+```python
+longest = max(longest, (right - left) + 1)
+```
+
+## Example
+
+For:
+
+```text
+s = "AABABBA"
+k = 1
+```
+
+Consider the window:
+
+```text
+A A B A
+```
+
+The window size is `4`.
+
+The most frequent character is `A`, which appears `3` times.
+
+Therefore:
+
+```text
+Replacements needed = 4 - 3 = 1
+```
+
+Since `k = 1`, the window is valid.
+
+We can replace `B` with `A`:
+
+```text
+A A B A
+    ↓
+A A A A
+```
+
+So the longest valid substring has length `4`.
+
+## Time Complexity
+
+**O(n)**
+
+The `counts` array has only 26 elements, so finding `max(counts)` takes `O(26)`, which is effectively `O(1)`.
+
+Both `left` and `right` move through the string at most `n` times.
+
+Therefore, the overall time complexity is:
+
+```text
+O(n)
+```
+
+## Space Complexity
+
+**O(1)**
+
+The `counts` array always contains exactly 26 elements, regardless of the input size.
+
+Therefore:
+
+```text
+O(26) = O(1)
+```
