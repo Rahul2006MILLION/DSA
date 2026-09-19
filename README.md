@@ -13460,3 +13460,52 @@ Therefore:
 ```text
 O(26) = O(1)
 ```
+
+
+# Count Primes
+
+## Description
+
+The goal is to count the number of prime numbers that are strictly less than `n`.
+
+This solution uses the **Sieve of Eratosthenes**.
+
+- Create a boolean array `dp` where every number is initially considered prime.
+- Set `0` and `1` to `False` because they are not prime.
+- We only need to check numbers up to `√n`, because every composite number has at least one factor less than or equal to `√n`.
+- For every prime `i`, mark all of its multiples as `False`.
+- Start marking from `i * i` because smaller multiples have already been handled by smaller prime numbers.
+- `range(i*i, n, i)` moves through the multiples of `i` by jumping `i` positions each time.
+- Finally, `sum(dp)` counts all the remaining `True` values, which represent prime numbers.
+
+## Python Code
+
+```python
+class Solution:
+    def countPrimes(self, n: int) -> int:
+        if(n<=2):
+            return 0
+
+        dp=[True]*n
+        dp[0]=False
+        dp[1]=False
+
+        for i in range(2,int(math.sqrt(n)+1)): # reduces the time complexity in the next for loop
+            if(dp[i]==True):
+                for num in range(i*i,n,i):
+                    dp[num]=False
+
+        return sum(dp)
+```
+Time Complexity
+
+O(n log log n)
+
+The Sieve of Eratosthenes efficiently marks the composite numbers.
+The outer loop only goes up to √n, while the inner loops mark multiples of each prime.
+
+Space Complexity
+
+O(n)
+
+The dp array stores one boolean value for every number from 0 to n-1.
