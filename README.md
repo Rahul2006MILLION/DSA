@@ -13509,3 +13509,41 @@ Space Complexity
 O(n)
 
 The dp array stores one boolean value for every number from 0 to n-1.
+
+
+
+# Max Consecutive Ones III
+
+## Description
+Given a binary array `nums` and an integer `k`, find the maximum number of consecutive `1`s that can be obtained by flipping at most `k` zeros.
+
+The solution uses the **Sliding Window** technique. We maintain a window containing at most `k` zeros. If the number of zeros becomes greater than `k`, move the left pointer until the window becomes valid again.
+
+## Python Code
+```python
+def longestOnes(nums, k):
+    left = 0
+    zero_count = 0
+    max_length = 0
+
+    for right in range(len(nums)):
+        if nums[right] == 0:
+            zero_count += 1
+
+        while zero_count > k:
+            if nums[left] == 0:
+                zero_count -= 1
+            left += 1
+
+        max_length = max(max_length, right - left + 1)
+
+    return max_length
+
+```
+Time Complexity
+
+O(n) — Each element is visited at most twice.
+
+Space Complexity
+
+O(1) — Only a few variables are used.
