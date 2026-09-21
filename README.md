@@ -13547,3 +13547,67 @@ O(n) — Each element is visited at most twice.
 Space Complexity
 
 O(1) — Only a few variables are used.
+
+
+# Longest Subarray of 1's After Deleting One Element
+
+## Description
+
+Use a sliding window to find the longest subarray containing at most one `0`.
+
+Since exactly one element must be deleted, the valid window length is:
+
+`right - left`
+
+instead of:
+
+`right - left + 1`
+
+because one element from the window must be removed.
+
+The window is adjusted whenever the number of zeros becomes greater than `1`.
+
+## Python Code
+
+class Solution:
+    def longestSubarray(self, nums: list[int]) -> int:
+
+        left=0
+
+        max_zero=0
+
+        max_count=0
+
+        k=1
+
+        for right in range(0,len(nums)):
+
+            if(nums[right]==0):
+
+                max_zero+=1
+
+            while(max_zero>k):
+
+                if(nums[left]==0):
+
+                    max_zero-=1
+
+                left+=1
+
+            w=right-left
+
+            max_count=max(max_count,w)
+
+        return max_count
+
+## Time Complexity
+
+O(n)
+
+Each element is visited by `right` once and removed from the window by `left` at most once.
+
+## Space Complexity
+
+O(1)
+
+Only a constant number of variables are used.
