@@ -13611,3 +13611,45 @@ Each element is visited by `right` once and removed from the window by `left` at
 O(1)
 
 Only a constant number of variables are used.
+
+
+
+# LeetCode 167 — Two Sum II – Input Array Is Sorted
+
+## Python Code
+
+```python
+class Solution:
+    def twoSum(self, numbers: list[int], target: int) -> list[int]:
+        d = {}
+
+        for i in range(len(numbers)):
+            y = target - numbers[i]
+
+            if y in d:
+                return [d[y] + 1, i + 1]
+            else:
+                d[numbers[i]] = i
+
+        return []
+```
+
+## Description
+
+Given a **1-indexed sorted array** `numbers` and a target value, find two numbers whose sum equals the target.
+
+The solution uses a **HashMap** to store each number along with its index.
+
+For every element:
+1. Calculate its complement: `target - numbers[i]`.
+2. Check if the complement already exists in the HashMap.
+3. If it exists, return the two **1-based indices**.
+4. Otherwise, store the current number and its index in the HashMap.
+
+## Time Complexity
+
+**O(n)** — We traverse the array once.
+
+## Space Complexity
+
+**O(n)** — The HashMap can store up to `n` elements.
