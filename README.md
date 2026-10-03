@@ -13653,3 +13653,56 @@ For every element:
 ## Space Complexity
 
 **O(n)** — The HashMap can store up to `n` elements.
+
+
+
+# Longest Harmonious Subsequence
+
+## Description
+
+A harmonious subsequence is a subsequence where the difference between its maximum value and minimum value is exactly `1`.
+
+The approach used here is:
+
+1. Sort the array.
+2. Use two pointers, `start` and `end`, to maintain a sliding window.
+3. If `nums[end] - nums[start] == 1`, the current window is harmonious, so update the maximum length.
+4. If the difference is greater than `1`, move `start` forward to reduce the window.
+5. If the difference is `0`, move `end` forward to include more elements.
+6. Continue until `end` reaches the end of the array.
+
+Since the array is sorted, all values between `start` and `end` will be within the current minimum and maximum values.
+
+## Python Code
+
+```python
+class Solution:
+    def findLHS(self, nums: list[int]) -> int:
+        g = sorted(nums)
+        start = 0
+        end = 0
+        max_c = 0
+
+        while end < len(g):
+            if g[end] - g[start] == 1:
+                max_c = max(max_c, (end - start) + 1)
+                end += 1
+
+            elif g[end] - g[start] > 1:
+                start += 1
+
+            else:
+                end += 1
+
+        return max_c
+```
+Time Complexity
+- Sorting the array takes O(n log n).
+- The two-pointer traversal takes O(n).
+- Therefore, the overall time complexity is:
+O(n log n)
+Space Complexity
+- sorted(nums) creates a new sorted array.
+- Therefore, the space complexity is:
+O(n)
+```
