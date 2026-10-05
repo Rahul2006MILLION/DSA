@@ -13706,7 +13706,7 @@ Space Complexity
 - Therefore, the space complexity is:
 O(n)
 ```
-
+```
 
 # Rotate Array
 
