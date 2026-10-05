@@ -13706,3 +13706,233 @@ Space Complexity
 - Therefore, the space complexity is:
 O(n)
 ```
+
+
+# Rotate Array
+
+## Description
+
+Given an integer array `nums`, rotate the array to the right by `k` positions.
+
+The solution uses the **three-reversal technique** to rotate the array **in-place** without using an additional array.
+
+### Example
+
+```text
+Input:
+nums = [1,2,3,4,5,6,7]
+k = 3
+
+Output:
+[5,6,7,1,2,3,4]
+```
+
+### Approach — Three Reversals
+
+The array is rotated using three reversal operations:
+
+1. **Reverse the entire array**
+2. **Reverse the first `k` elements**
+3. **Reverse the remaining elements from index `k` to `n-1`**
+
+For example:
+
+```text
+Original:
+[1,2,3,4,5,6,7]
+
+Reverse entire array:
+[7,6,5,4,3,2,1]
+
+Reverse first k = 3 elements:
+[5,6,7,4,3,2,1]
+
+Reverse remaining elements:
+[5,6,7,1,2,3,4]
+```
+
+### Why `k % n`?
+
+We use:
+
+```python
+k = k % n
+```
+
+because rotating an array by its length produces the same array.
+
+For example, if:
+
+```text
+n = 5
+k = 7
+```
+
+then:
+
+```text
+7 % 5 = 2
+```
+
+So rotating 7 times is equivalent to rotating 2 times.
+
+This removes complete cycles and keeps only the rotations that actually change the array.
+
+### Why `k - 1`?
+
+In the second reversal:
+
+```python
+l = 0
+r = k - 1
+```
+
+we need to reverse the **first `k` elements**.
+
+Since array indices start from `0`, the first `k` elements occupy:
+
+```text
+0, 1, 2, ..., k - 1
+```
+
+Therefore, the right pointer is:
+
+```python
+r = k - 1
+```
+
+Similarly, the third reversal starts at:
+
+```python
+l = k
+```
+
+because it reverses the remaining elements from index `k` to `n - 1`.
+
+## Python Code
+
+```python
+class Solution:
+    def rotate(self, nums: list[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        k = k % n
+
+        # Reverse the entire array
+        l = 0
+        r = n - 1
+
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r -= 1
+
+        # Reverse the first k elements
+        l = 0
+        r = k - 1
+
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r -= 1
+
+        # Reverse the remaining elements
+        l = k
+        r = n - 1
+
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r -= 1
+```
+
+## Swapping Elements
+
+The Python code uses:
+
+```python
+nums[l], nums[r] = nums[r], nums[l]
+```
+
+Python allows two values to be swapped directly using tuple unpacking.
+
+The same swap can also be written using a temporary variable:
+
+```python
+temp = nums[l]
+nums[l] = nums[r]
+nums[r] = temp
+```
+
+Both approaches perform the same operation.
+
+The temporary-variable approach is especially useful when implementing the same algorithm in languages such as Java.
+
+## Complexity
+
+### Time Complexity
+
+**O(n)**
+
+Each of the three reversal operations takes at most `O(n)` time.
+
+```text
+Reverse entire array  → O(n)
+Reverse first k       → O(k)
+Reverse remaining     → O(n-k)
+
+Overall               → O(n)
+```
+
+Since:
+
+```text
+O(n) + O(k) + O(n-k) = O(n)
+```
+
+the overall time complexity is:
+
+**O(n)**
+
+### Space Complexity
+
+**O(1)**
+
+The array is modified **in-place**.
+
+Only a few variables are used:
+
+```python
+l
+r
+n
+k
+```
+
+No additional array or data structure is created.
+
+Therefore:
+
+**Space Complexity = O(1)**
+
+## Key Idea
+
+The main idea is:
+
+```text
+Rotate Right by k
+
+        ↓
+
+Reverse everything
+        ↓
+Reverse first k elements
+        ↓
+Reverse remaining elements
+        ↓
+Rotated Array
+```
+
+This gives an **in-place O(n) time and O(1) space** solution.
