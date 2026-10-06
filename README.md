@@ -13936,3 +13936,46 @@ Rotated Array
 ```
 
 This gives an **in-place O(n) time and O(1) space** solution.
+
+
+# Sort Array By Parity
+
+## Description
+
+Given an integer array `nums`, rearrange the array so that all **even numbers appear before all odd numbers**.
+
+This solution uses the **two-pointer approach**:
+
+- `left` starts from the beginning of the array.
+- `right` starts from the end.
+- If `left` points to an odd number and `right` points to an even number, swap them.
+- If the left element is already even, move `left` forward.
+- Otherwise, move `right` backward.
+
+The array is modified **in-place** without using an additional array.
+
+## Python Code
+
+```python
+class Solution:
+    def sortArrayByParity(self, nums: list[int]) -> list[int]:
+        left = 0
+        right = len(nums) - 1
+
+        while left < right:
+            if nums[left] % 2 != 0 and nums[right] % 2 == 0:
+                nums[left], nums[right] = nums[right], nums[left]
+            elif nums[left] % 2 == 0:
+                left += 1
+            else:
+                right -= 1
+
+        return nums
+
+```
+Time Complexity
+O(n)
+Each element is visited at most a constant number of times using the two-pointer approach.
+Space Complexity
+O(1)
+The array is modified in-place, so no additional array or data structure is used.
