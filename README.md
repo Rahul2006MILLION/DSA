@@ -13979,3 +13979,48 @@ Each element is visited at most a constant number of times using the two-pointer
 Space Complexity
 O(1)
 The array is modified in-place, so no additional array or data structure is used.
+
+
+
+# Remove All Adjacent Duplicates in String
+
+## Description
+Given a string `s`, remove all adjacent duplicate characters by repeatedly removing pairs of identical adjacent characters until no such pairs remain.
+
+The solution uses a stack to process the string from left to right. If the current character matches the top element of the stack, the top element is removed. Otherwise, the current character is pushed onto the stack.
+
+After processing all characters, the remaining stack elements are joined to form the resulting string.
+
+**Example:**
+
+- **Input:** `s = "abbaca"`
+- **Output:** `"ca"`
+
+**Explanation:**
+
+- `"abbaca"` → `"aaca"` after removing `"bb"`
+- `"aaca"` → `"ca"` after removing `"aa"`
+
+## Python Solution
+
+```python
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        l = [s[0]]
+
+        for i in range(1, len(s)):
+            if l and s[i] == l[-1]:
+                l.pop()
+            else:
+                l.append(s[i])
+
+        return "".join(l)
+```
+
+## Time Complexity
+
+**O(n)** — The string is traversed once. Each character is pushed onto the stack at most once and popped at most once, making the total processing time linear, where `n` is the length of the string.
+
+## Space Complexity
+
+**O(n)** — The stack can store up to `n` characters in the worst case, where no adjacent duplicates are removed.
