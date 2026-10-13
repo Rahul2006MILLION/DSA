@@ -14024,3 +14024,40 @@ class Solution:
 ## Space Complexity
 
 **O(n)** — The stack can store up to `n` characters in the worst case, where no adjacent duplicates are removed.
+
+
+
+# Backspace String Compare
+
+## Description
+Given two strings `s` and `t`, determine whether they are equal after processing backspaces. The character `#` represents a backspace that removes the previous character, if one exists.
+
+The solution traverses both strings from right to left, counts pending backspaces, and builds the resulting strings without using a stack.
+
+## Python Code
+```python
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        def build(s):
+            l = []
+            hashh = 0
+
+            for i in range(len(s) - 1, -1, -1):
+                if s[i] == "#":
+                    hashh += 1
+                elif hashh > 0:
+                    hashh -= 1
+                else:
+                    l.append(s[i])
+
+            a = reversed(l)
+            return "".join(a)
+
+        return build(s) == build(t)
+```
+
+## Time Complexity
+**O(n + m)** — Each string is traversed once, where `n` and `m` are the lengths of `s` and `t`.
+
+## Space Complexity
+**O(n + m)** — Additional lists store the remaining characters of both strings.
