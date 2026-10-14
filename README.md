@@ -14061,3 +14061,50 @@ class Solution:
 
 ## Space Complexity
 **O(n + m)** — Additional lists store the remaining characters of both strings.
+
+
+# 1544. Make The String Great
+
+## Description
+
+Given a string `s` consisting of lowercase and uppercase English letters, remove adjacent characters that represent the same letter but have opposite cases. Repeat this process until the string becomes good.
+
+Return the resulting string. An empty string is also considered good.
+
+## Approach: Stack
+
+Use a stack to keep track of characters that remain in the string.
+
+- If the stack is not empty and its top character differs from the current character but matches it when converted to lowercase, pop the top character.
+- Otherwise, push the current character onto the stack.
+- After processing all characters, join the stack to obtain the final string.
+
+The stack automatically handles newly adjacent pairs created after a removal.
+
+## Python Solution
+
+```python
+class Solution:
+    def makeGood(self, s: str) -> str:
+        i = 0
+        stack = []
+
+        while i < len(s):
+            if (stack and
+                stack[-1] != s[i] and
+                stack[-1].lower() == s[i].lower()):
+                stack.pop()
+            else:
+                stack.append(s[i])
+
+            i += 1
+
+        return "".join(stack)
+```
+
+## Complexity Analysis
+
+- **Time Complexity:** O(n) — Each character is pushed and popped at most once.
+- **Space Complexity:** O(n) — In the worst case, the stack stores all characters.
+
+Here, `n` is the length of the input string.
