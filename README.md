@@ -14108,3 +14108,38 @@ class Solution:
 - **Space Complexity:** O(n) — In the worst case, the stack stores all characters.
 
 Here, `n` is the length of the input string.
+
+
+
+# 2390. Removing Stars From a String
+
+## Description
+Given a string `s` containing lowercase English letters and `'*'` characters, remove all stars by repeatedly performing the following operation:
+
+- Choose a star `'*'` in the string.
+- Remove the closest non-star character to its left and remove the star itself.
+
+Return the string after all stars have been removed.
+
+### Python Code
+```python
+class Solution:
+    def removeStars(self, s: str) -> str:
+        l = []
+        i = 0
+
+        while i < len(s):
+            if s[i] == "*":
+                l.pop()
+            else:
+                l.append(s[i])
+            i += 1
+
+        return "".join(l)
+```
+
+## Time Complexity
+**O(n)** — We traverse the string once, and each character is appended to or removed from the list at most once.
+
+## Space Complexity
+**O(n)** — The list can store up to `n` characters in the worst case, where `n` is the length of the input string.
