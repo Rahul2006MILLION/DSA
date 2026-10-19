@@ -14217,3 +14217,88 @@ class Solution:
 
 - **Problem:** 1209. Remove All Adjacent Duplicates in String II
 - **Topic:** Stack, String
+
+
+
+# Asteroid Collision
+
+## Description
+Given an array of integers representing asteroids in a row, determine the state of the asteroids after all collisions.
+
+- The absolute value represents the asteroid's size.
+- The sign represents its direction: positive means right, and negative means left.
+- Asteroids moving in the same direction never collide.
+- When two asteroids collide, the smaller asteroid explodes.
+- If both asteroids have the same size, both explode.
+- Asteroids moving in opposite directions collide only when the right-moving asteroid is to the left of the left-moving asteroid.
+
+Return the final state of the asteroids after all collisions.
+
+## Approach: Stack
+
+1. Initialize an empty stack to store surviving asteroids.
+2. Iterate through each asteroid in the input array.
+3. Set `alive = True` to track whether the current asteroid survives.
+4. While the stack is not empty, the top asteroid is moving right, and the current asteroid is moving left, a collision may occur.
+5. Pop the top asteroid and compare its size with the current asteroid:
+   - If the top asteroid is larger, push it back, mark the current asteroid as destroyed, and stop the collision loop.
+   - If both asteroids have equal sizes, both are destroyed, so mark the current asteroid as destroyed and stop the loop.
+   - If the current asteroid is larger, the popped asteroid is destroyed, and the current asteroid continues checking for further collisions.
+6. If the current asteroid survives, push it onto the stack.
+7. Return the stack containing the surviving asteroids.
+
+## Python Solution
+
+```python
+class Solution:
+    def asteroidCollision(self, asteroids: list[int]) -> list[int]:
+        s = []
+
+        for i in range(0, len(asteroids)):
+            alive = True
+
+            while s and s[-1] > 0 and asteroids[i] < 0:
+                last = s.pop()
+
+                if last > abs(asteroids[i]):
+                    s.append(last)
+                    alive = False
+                    break
+
+                if last == abs(asteroids[i]):
+                    alive = False
+                    break
+
+            if alive == True:
+                s.append(asteroids[i])
+
+        return s
+```
+
+## Example
+
+**Input:**
+```python
+asteroids = [5, 10, -5]
+```
+
+**Output:**
+```python
+[5, 10]
+```
+
+**Explanation:**
+
+- Asteroids `5` and `10` move to the right.
+- Asteroid `-5` moves to the left and collides with `10`.
+- Since `10` is larger than `5`, asteroid `-5` is destroyed.
+- The remaining asteroids are `[5, 10]`.
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)` — Each asteroid is pushed onto and popped from the stack at most once, so the total number of stack operations is linear.
+- **Space Complexity:** `O(n)` — In the worst case, all asteroids survive and are stored in the stack.
+
+## Key Takeaway
+
+The stack efficiently handles collisions by comparing the current asteroid with previously surviving asteroids. The `while` loop is essential because a single asteroid can collide with multiple asteroids before either surviving or being destroyed.
