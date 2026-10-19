@@ -14143,3 +14143,77 @@ class Solution:
 
 ## Space Complexity
 **O(n)** — The list can store up to `n` characters in the worst case, where `n` is the length of the input string.
+
+
+# Remove All Adjacent Duplicates in String II
+
+## Problem Description
+
+Given a string `s` and an integer `k`, repeatedly remove `k` adjacent and equal characters from the string until no more such removals are possible.
+
+Return the final string after all possible removals.
+
+### Example
+
+**Input:**
+```python
+s = "deeedbbcccbdaa"
+k = 3
+```
+
+**Output:**
+```python
+"aa"
+```
+
+**Explanation:**
+
+- Remove `"eee"` from `"deeedbbcccbdaa"` → `"ddbbcccbdaa"`.
+- Remove `"ccc"` → `"ddbbbdaa"`.
+- Remove `"bbb"` → `"ddddaa"`.
+- Remove `"ddd"` → `"daa"`? 
+
+The removals continue until no group of `k` adjacent equal characters remains. The final result is `"aa"`.
+
+## Approach: Stack
+
+- Use a stack to store each character along with its consecutive occurrence count.
+- If the current character matches the character at the top of the stack, increment its count.
+- Otherwise, push the current character with a count of `1`.
+- Whenever a character's count reaches `k`, remove that entry from the stack.
+- Reconstruct the final string using the remaining characters and their counts.
+
+## Python Solution
+
+```python
+class Solution:
+    def removeDuplicates(self, s: str, k: int) -> str:
+        stack = []
+
+        for c in s:
+            if stack and stack[-1][0] == c:
+                stack[-1][1] += 1
+            else:
+                stack.append([c, 1])
+
+            if stack[-1][1] == k:
+                stack.pop()
+
+        res = ""
+        for cha, cou in stack:
+            res += cha * cou
+
+        return res
+```
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(n)` — Each character is processed once, and each stack entry is pushed and popped at most once. Strictly speaking, repeatedly concatenating immutable strings during reconstruction can take up to `O(n²)` time in the worst case.
+- **Space Complexity:** `O(n)` — The stack can store up to `n` character-count entries.
+
+**Note:** Using `"".join(cha * cou for cha, cou in stack)` instead of repeated string concatenation makes reconstruction more efficient.
+
+## LeetCode
+
+- **Problem:** 1209. Remove All Adjacent Duplicates in String II
+- **Topic:** Stack, String
