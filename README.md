@@ -14302,3 +14302,76 @@ asteroids = [5, 10, -5]
 ## Key Takeaway
 
 The stack efficiently handles collisions by comparing the current asteroid with previously surviving asteroids. The `while` loop is essential because a single asteroid can collide with multiple asteroids before either surviving or being destroyed.
+
+
+
+# 901. Online Stock Span
+
+## Problem Description
+
+Design a `StockSpanner` class that collects daily stock prices and returns the **span** of the stock's price for each day.
+
+The span is the maximum number of consecutive days, ending on the current day, for which the stock price was less than or equal to the current day's price.
+
+### Example
+
+**Input:**
+```python
+obj = StockSpanner()
+print(obj.next(100))
+print(obj.next(80))
+print(obj.next(60))
+print(obj.next(70))
+print(obj.next(60))
+print(obj.next(75))
+print(obj.next(85))
+```
+
+**Output:**
+```text
+1
+1
+1
+2
+1
+4
+6
+```
+
+## Python Solution
+
+```python
+class StockSpanner:
+
+    def __init__(self):
+        self.stack = []
+
+    def next(self, price: int) -> int:
+        span = 1
+
+        while self.stack and self.stack[-1][0] <= price:
+            span += self.stack[-1][1]
+            self.stack.pop()
+
+        self.stack.append((price, span))
+        return span
+```
+
+## Approach: Monotonic Stack
+
+- Use a stack to store pairs of `(price, span)`.
+- Initialize the current span to `1`, since the current day always counts.
+- While the stack is not empty and the top price is less than or equal to the current price, pop the pair and add its span to the current span.
+- Push the current `(price, span)` pair onto the stack.
+- Return the calculated span.
+
+The stack maintains prices in strictly decreasing order from bottom to top. Storing previously calculated spans allows multiple days to be processed efficiently without checking each day individually.
+
+## Complexity Analysis
+
+- **Time Complexity:** `O(1)` amortized per `next()` call, because each entry is pushed onto the stack once and popped at most once. For `n` calls, the total time complexity is `O(n)`.
+- **Space Complexity:** `O(n)` in the worst case, because the stack may store all `n` prices when prices are strictly decreasing.
+
+## Topics
+
+`Stack` · `Monotonic Stack` · `Design` · `Data Structures`
