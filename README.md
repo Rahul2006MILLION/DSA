@@ -14375,3 +14375,104 @@ The stack maintains prices in strictly decreasing order from bottom to top. Stor
 ## Topics
 
 `Stack` · `Monotonic Stack` · `Design` · `Data Structures`
+
+
+
+# How Many Numbers Are Smaller Than the Current Number
+
+## Problem Description
+
+Given an array `nums`, return an array `answer` such that `answer[i]` is the number of elements in `nums` that are strictly smaller than `nums[i]`.
+
+### Example
+
+**Input:**
+```python
+nums = [8, 1, 2, 2, 3]
+```
+
+**Output:**
+```python
+[4, 0, 1, 1, 3]
+```
+
+**Explanation:**
+- 8 has 4 numbers smaller than it.
+- 1 has 0 numbers smaller than it.
+- 2 has 1 number smaller than it.
+- 2 has 1 number smaller than it.
+- 3 has 3 numbers smaller than it.
+
+## Approach: Sorting + HashMap
+
+1. Create a copy of the original array to preserve its order.
+2. Sort the array in ascending order.
+3. Create a HashMap (Python dictionary) to store each unique number and its first occurrence index in the sorted array.
+4. The first occurrence index represents the number of elements strictly smaller than that number.
+5. Iterate through the original array and retrieve the corresponding count from the dictionary.
+6. Return the result array.
+
+## Python Code
+
+```python
+def smallerNumbersThanCurrent(nums):
+    arr = nums.copy()
+    arr.sort()
+
+    d = {}
+
+    for i in range(len(arr)):
+        if arr[i] not in d:
+            d[arr[i]] = i
+
+    res = []
+
+    for i in range(len(nums)):
+        res.append(d[nums[i]])
+
+    return res
+
+
+nums = [8, 1, 2, 2, 3]
+print(smallerNumbersThanCurrent(nums))
+```
+
+**Output:**
+```python
+[4, 0, 1, 1, 3]
+```
+
+## Complexity Analysis
+
+### Time Complexity: O(n log n)
+
+- Copying the array: O(n)
+- Sorting the array: O(n log n)
+- Building the dictionary: O(n)
+- Constructing the result array: O(n)
+
+Therefore, the overall time complexity is:
+
+**O(n log n)**
+
+### Space Complexity: O(n)
+
+- Copy of the original array: O(n)
+- Dictionary storage: O(n)
+- Result array: O(n)
+
+Therefore, the overall auxiliary space complexity is:
+
+**O(n)**
+
+## Key Concepts Used
+
+- Arrays
+- Sorting
+- HashMap / Dictionary
+- Array Traversal
+- Duplicate Handling
+
+## LeetCode Pattern
+
+**Sorting + HashMap (First Occurrence Index)**
