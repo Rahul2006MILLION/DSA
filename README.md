@@ -9313,26 +9313,23 @@ A **stack** is used to store opening brackets.
 
 def g():
 
-    d = {')': '(', '}': '{', ']': '['}
-    s = "()[]{[]}"
-    
-    l = []
-    
-    for i in s:
-        if i not in d:
-            l.append(i)
-        else:
-            if not l:
-                return False
-
-            pop = l.pop()
-
-            if pop != d[i]:
-                return False
-
-    return not l
-
-
+    class Solution:
+    def isValid(self, s: str) -> bool:
+        d={
+        '}':'{',
+        ']':'[',
+        ')':'('
+        }
+        l=[]
+        for i in range(0,len(s)):
+            if(s[i] in d):
+                if(l and (d[s[i]] in l[-1])):
+                    l.pop()
+                else:
+                    return False
+            else:
+                l.append(s[i])
+        return len(l)==0
 print(g())
 
 ## Time Complexity
