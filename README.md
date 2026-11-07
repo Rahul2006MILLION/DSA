@@ -14473,3 +14473,48 @@ Therefore, the overall auxiliary space complexity is:
 ## LeetCode Pattern
 
 **Sorting + HashMap (First Occurrence Index)**
+
+
+
+# Daily Temperatures
+
+## Description
+
+Given an array of integers `temperatures` representing the daily temperatures, return an array `res` such that `res[i]` is the number of days you have to wait after the `i-th` day to get a warmer temperature.
+
+If there is no future day for which this is possible, keep `res[i] = 0`.
+
+### Approach: Monotonic Stack
+
+- Use a stack to store the indices of the temperatures.
+- Iterate through the temperatures array.
+- For every current temperature, compare it with the temperature at the index on top of the stack.
+- If the current temperature is higher, pop the previous index from the stack.
+- Calculate the number of days waited using `i - previous_day` and store it in the result array.
+- Push the current index into the stack.
+- Return the result array.
+
+The stack maintains indices of temperatures in decreasing order.
+
+## Python Solution
+
+```python
+class Solution:
+    def dailyTemperatures(self, temperatures: list[int]) -> list[int]:
+        stack = []
+        res = [0] * len(temperatures)
+
+        for i in range(len(temperatures)):
+            while stack and temperatures[i] > temperatures[stack[-1]]:
+                previous_day = stack.pop()
+                res[previous_day] = i - previous_day
+
+            stack.append(i)
+
+        return res
+```
+
+## Complexity Analysis
+
+- **Time Complexity:** O(n) — Each index is pushed into the stack once and popped at most once.
+- **Space Complexity:** O(n) — The stack and result array can each store up to n elements.
