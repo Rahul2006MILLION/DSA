@@ -14518,3 +14518,71 @@ class Solution:
 
 - **Time Complexity:** O(n) — Each index is pushed into the stack once and popped at most once.
 - **Space Complexity:** O(n) — The stack and result array can each store up to n elements.
+
+
+
+# 3174. Clear Digits
+
+## Problem Description
+
+Given a string `s`, repeatedly remove the first digit and the closest non-digit character to its left.
+
+Return the resulting string after removing all digits.
+
+## Python Solution
+
+```python
+class Solution:
+    def clearDigits(self, s: str) -> str:
+        stk = []
+
+        for i in range(0, len(s)):
+            while stk and s[i].isdigit() == True:
+                stk.pop()
+                break
+            else:
+                stk.append(s[i])
+
+        return "".join(stk)
+```
+
+## Approach: Stack
+
+- Initialize an empty stack.
+- Traverse the string character by character.
+- If the current character is a digit and the stack is not empty, pop the top element.
+- Otherwise, append the current character to the stack.
+- Join the remaining stack elements to form the resulting string.
+
+## Complexity Analysis
+
+**Time Complexity: O(n)**
+
+- Traversing the string takes O(n).
+- Each character is pushed onto the stack at most once and popped at most once.
+- Joining the remaining stack elements takes O(n).
+
+**Space Complexity: O(n)**
+
+- The stack can store up to n characters in the worst case.
+- The resulting string also requires O(n) space.
+
+Where `n` is the length of the input string.
+
+## Example
+
+**Input:**
+```python
+s = "cb34"
+```
+
+**Output:**
+```python
+""
+```
+
+**Explanation:**
+- `3` removes `b`.
+- `4` removes `c`.
+- No characters remain.
+  
